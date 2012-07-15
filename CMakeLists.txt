@@ -4,12 +4,16 @@ PROJECT(Mehteor)
 
 set(
         MEHTEOR_SOURCES
+# core
         src/core/system.cpp
+        src/core/bytebuffer.cpp
+# ui
         src/ui/canvas.cpp
         src/ui/shader.cpp
         src/ui/shaderprogram.cpp
         src/ui/vbo.cpp
         src/ui/texture.cpp
+        src/ui/bitmap.cpp
         src/ui/vertexattributes.cpp
         src/ui/vertexattribute.cpp
 # SOIL

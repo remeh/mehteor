@@ -1,9 +1,5 @@
-#include "core/system.h"
-#include "ui/canvas.h"
-#include "ui/shader.h"
-#include "ui/shaderprogram.h"
-#include "ui/vbo.h"
 #include "GL/glew.h"
+#include "mehteor.h"
 
 using namespace meh;
 
@@ -13,18 +9,53 @@ int main(int argc, char* argv[]) {
     Canvas canvas(640,480);
     
     float vertices[] = {
-        0.0f, 0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f
+        0.0f, 0.5f,
+        0.5f, -0.5f,
+        -0.5f, -0.5f
     };
 
+    ByteBuffer buffer(50);
+    printf("%c %c %c\n",buffer.readChar(),buffer.readChar(),buffer.readChar());
+    buffer.reset();
+    buffer.writeChar('a');
+    buffer.writeChar('b');
+    buffer.writeChar('c');
+    char* a = "def";
+    buffer.write(a,3);
+    buffer.write("ghi",3);
+    buffer.reset();
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    buffer.resize(3,true);
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    buffer.resize(3,false);
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+    printf("%c\n",buffer.readChar());
+
+    Texture t;
+    printf("Texture loaded: %i\n", t.load("res/test.png"));
+    
+
+    /*
     float vertices2[] = {
         0.0f, 0.8f, 0.0f,
         0.8f, -0.8f, 0.0f,
         -0.8f, -0.8f, 0.0f
     };
-    VBO vbo(3,3,vertices);
-    VBO vbo2(3,3,vertices2);
+    */
+    VBO vbo(3,2,vertices);
 
     Shader vertex("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
     Shader fragment("res/shaders/fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER);
@@ -45,8 +76,6 @@ int main(int argc, char* argv[]) {
 
     shaderProgram.enable();
     vbo.bind(&shaderProgram);
-    glDrawArrays(GL_TRIANGLES,0,3);
-    vbo2.bind(&shaderProgram);
     glDrawArrays(GL_TRIANGLES,0,3);
 
     printf("%s\n",gluErrorString(glGetError()));

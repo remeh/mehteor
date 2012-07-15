@@ -17,7 +17,7 @@ VBO::VBO(unsigned int size, unsigned int dimension, float* vertices) :
     unsigned int totalSize = size*dimension;
     vrtices = new float[totalSize];
     // TODO use a memcpy
-    //memcpy(vrtices, vertices, totalSize);
+    //vrtices = (float*)memcpy(vrtices, vertices, totalSize);
     for (unsigned int i = 0; i < totalSize; i++) {
         vrtices[i] = vertices[i];
     }

@@ -1,4 +1,4 @@
-mehteor
+Mehteor
 =======
 
-OpenGL Game engine
+OpenGL 3.2 Game engine
