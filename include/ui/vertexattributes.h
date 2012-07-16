@@ -13,9 +13,13 @@ namespace meh {
 class VertexAttributes {
     public:
         static string positionAttribute;
+        static string textureCoordinatesAttribute;
 
     private:
         vector<VertexAttribute> attributes;
+
+        int totalDim;
+        int ffset;
 
     protected:
     public:
@@ -26,7 +30,15 @@ class VertexAttributes {
         /*
          * NOTE: assumes GL_FLOAT
          */
-        void enable(ShaderProgram* shaderProgram); 
+        void enable(ShaderProgram& shaderProgram); 
+
+        /**
+         * The total dimension of these vertices (every components of every attributes added).
+         * @return the total dimension of these vertices.
+         */
+        int totalDimension() {
+            return totalDim;
+        }
 };
 
 }

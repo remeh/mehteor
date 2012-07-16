@@ -11,3 +11,4 @@
 #include "ui/shaderprogram.h"
 #include "ui/canvas.h"
 #include "ui/texture.h"
+#include "ui/mesh.h"

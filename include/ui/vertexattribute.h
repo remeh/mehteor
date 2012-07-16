@@ -13,14 +13,21 @@ namespace meh {
 class VertexAttribute {
         string nme;
         int dim;
+        int off;
+
     private:
     protected:
     public:
-        VertexAttribute(int dimension, string name);
+        VertexAttribute(int dimension, int offset, string name);
 
         int dimension() {
             return dim;
         }
+
+        int offset() {
+            return off;
+        }
+
         string name() {
             return nme;
         }

@@ -49,7 +49,15 @@ class VBO {
         /**
          * Binds the VBO to the current target buffer.
          */
-        void bind(ShaderProgram* shaderProgram);
+        void bind(ShaderProgram& shaderProgram);
+
+        int size() {
+            return sze;
+        }
+
+        int dimension() {
+            return dim;
+        }
 };
 
 }

@@ -16,6 +16,7 @@ set(
         src/ui/bitmap.cpp
         src/ui/vertexattributes.cpp
         src/ui/vertexattribute.cpp
+        src/ui/mesh.cpp
 # SOIL
         src/soil/image_DXT.c
         src/soil/image_helper.c

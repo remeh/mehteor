@@ -7,9 +7,10 @@ using namespace std;
 
 namespace meh {
 
-VertexAttribute::VertexAttribute(int dimension, string name) :
+VertexAttribute::VertexAttribute(int dimension, int offset, string name) :
     nme(name),
-    dim(dimension) {
+    dim(dimension),
+    off(offset) {
 }
 
 } // namespace meh

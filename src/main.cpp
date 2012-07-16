@@ -9,44 +9,19 @@ int main(int argc, char* argv[]) {
     Canvas canvas(640,480);
     
     float vertices[] = {
-        0.0f, 0.5f,
-        0.5f, -0.5f,
-        -0.5f, -0.5f
+        -0.5f, 0.5f, 0.0f,
+        0.5f, 0.5f, 0.0f,
+        -0.5f, -0.5f, 0.0f,
+
+        0.5f,0.5f, 0.0f,
+        -0.5f,-0.5f, 0.0f,
+        0.5f,-0.5f, 0.0f
     };
 
-    ByteBuffer buffer(50);
-    printf("%c %c %c\n",buffer.readChar(),buffer.readChar(),buffer.readChar());
-    buffer.reset();
-    buffer.writeChar('a');
-    buffer.writeChar('b');
-    buffer.writeChar('c');
-    char* a = "def";
-    buffer.write(a,3);
-    buffer.write("ghi",3);
-    buffer.reset();
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    buffer.resize(3,true);
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    buffer.resize(3,false);
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-    printf("%c\n",buffer.readChar());
-
-    Texture t;
-    printf("Texture loaded: %i\n", t.load("res/test.png"));
-    
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 
     /*
     float vertices2[] = {
@@ -55,7 +30,12 @@ int main(int argc, char* argv[]) {
         -0.8f, -0.8f, 0.0f
     };
     */
-    VBO vbo(3,2,vertices);
+
+    VertexAttributes vrtexAttributes;
+    vrtexAttributes.addAttribute(VertexAttribute(3,0,VertexAttributes::positionAttribute));
+    //vrtexAttributes.addAttribute(VertexAttribute(2,VertexAttributes::textureAttribute));
+    Mesh mesh(vrtexAttributes);
+    mesh.setVertices(6,3,vertices);
 
     Shader vertex("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
     Shader fragment("res/shaders/fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER);
@@ -71,12 +51,14 @@ int main(int argc, char* argv[]) {
     shaderProgram2.addShader(&fragment2);
     shaderProgram2.link();
 
+    Texture t;
+    printf("Texture loaded: %i\n", t.load("res/test.png"));
+
     glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
     glClear( GL_COLOR_BUFFER_BIT );
 
-    shaderProgram.enable();
-    vbo.bind(&shaderProgram);
-    glDrawArrays(GL_TRIANGLES,0,3);
+    mesh.bind(shaderProgram);
+    mesh.render(shaderProgram);
 
     printf("%s\n",gluErrorString(glGetError()));
     canvas.flip();

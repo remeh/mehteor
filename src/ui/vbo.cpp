@@ -17,12 +17,11 @@ VBO::VBO(unsigned int size, unsigned int dimension, float* vertices) :
     unsigned int totalSize = size*dimension;
     vrtices = new float[totalSize];
     // TODO use a memcpy
-    //vrtices = (float*)memcpy(vrtices, vertices, totalSize);
+    // memcpy(vrtices, &vertices, totalSize);
     for (unsigned int i = 0; i < totalSize; i++) {
         vrtices[i] = vertices[i];
     }
     glGenBuffers(1, &vboId);
-    vrtexAttributes.addAttribute(VertexAttribute(dimension,VertexAttributes::positionAttribute));
     // The vertices will be upload on the GPU on the first call of bind(ShaderProgram)
     drty = true;
 }
@@ -32,15 +31,13 @@ VBO::~VBO() {
     delete[] vrtices;
 }
 
-void VBO::bind(ShaderProgram* shaderProgram) {
+void VBO::bind(ShaderProgram& shaderProgram) {
     glBindBuffer(GL_ARRAY_BUFFER, vboId);
     if (drty) {
-        glBufferData(GL_ARRAY_BUFFER, sizeof(dim*sze)*sizeof(GLfloat), vrtices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*dim*sze, vrtices, GL_STATIC_DRAW);
         printf("Uploaded data to the GPU.\n");
         drty = false;
     }
-
-   vrtexAttributes.enable(shaderProgram); 
 }
 
 }

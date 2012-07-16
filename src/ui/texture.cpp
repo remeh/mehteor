@@ -39,8 +39,10 @@ bool Texture::load(string filename) {
     bitmap = new Bitmap(totalSize);
     bitmap->buffer().write((char*)img, totalSize); 
 
-    // Create and upload the OpenGL texture using SOIL
-    SOIL_create_OGL_texture(img, width, height, channels, texId, SOIL_FLAG_POWER_OF_TWO);
+    // Upload the OpenGL texture using SOIL
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
+    // Was copied into the bitmap buffer.
+    SOIL_free_image_data(img);
 
     return true;
 }
