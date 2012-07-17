@@ -2,7 +2,7 @@
 #include <SDL/SDL.h>
 #include "GL/glew.h"
 
-#include "ui/canvas.h"
+#include "graphics/canvas.h"
 
 using namespace std;
 

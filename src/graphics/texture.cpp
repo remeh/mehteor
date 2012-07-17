@@ -1,7 +1,7 @@
 #include <string>
 
-#include "ui/texture.h"
-#include "ui/bitmap.h"
+#include "graphics/texture.h"
+#include "graphics/bitmap.h"
 #include "core/bytebuffer.h"
 
 using namespace std;

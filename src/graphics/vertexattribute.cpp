@@ -1,7 +1,7 @@
 #include <string>
 
-#include "ui/vertexattribute.h"
-#include "ui/shaderprogram.h"
+#include "graphics/vertexattribute.h"
+#include "graphics/shaderprogram.h"
 
 using namespace std;
 

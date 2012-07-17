@@ -1,4 +1,4 @@
-#include "ui/bitmap.h"
+#include "graphics/bitmap.h"
 
 namespace meh {
 

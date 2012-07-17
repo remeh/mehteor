@@ -1,5 +1,5 @@
 #include <cstdio>
-#include "ui/ibo.h"
+#include "graphics/ibo.h"
 
 namespace meh {
 

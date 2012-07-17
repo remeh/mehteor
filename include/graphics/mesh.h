@@ -1,10 +1,10 @@
 #ifndef MEH_MESH_H
 #define MEH_MESH_H
 
-#include "ui/vbo.h"
-#include "ui/ibo.h"
-#include "ui/vertexattributes.h"
-#include "ui/shaderprogram.h"
+#include "graphics/vbo.h"
+#include "graphics/ibo.h"
+#include "graphics/vertexattributes.h"
+#include "graphics/shaderprogram.h"
 #include "GL/glew.h"
 
 namespace meh {

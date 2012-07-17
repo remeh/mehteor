@@ -7,7 +7,7 @@
 #include "GL/glew.h"
 #include "core/vector2d.h"
 
-#include "ui/shader.h"
+#include "graphics/shader.h"
 
 using namespace std;
 

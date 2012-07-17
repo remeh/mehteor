@@ -8,16 +8,16 @@ set(
         src/core/system.cpp
         src/core/bytebuffer.cpp
 # ui
-        src/ui/canvas.cpp
-        src/ui/shader.cpp
-        src/ui/shaderprogram.cpp
-        src/ui/vbo.cpp
-        src/ui/ibo.cpp
-        src/ui/texture.cpp
-        src/ui/bitmap.cpp
-        src/ui/vertexattributes.cpp
-        src/ui/vertexattribute.cpp
-        src/ui/mesh.cpp
+        src/graphics/canvas.cpp
+        src/graphics/shader.cpp
+        src/graphics/shaderprogram.cpp
+        src/graphics/vbo.cpp
+        src/graphics/ibo.cpp
+        src/graphics/texture.cpp
+        src/graphics/bitmap.cpp
+        src/graphics/vertexattributes.cpp
+        src/graphics/vertexattribute.cpp
+        src/graphics/mesh.cpp
 # SOIL
         src/soil/image_DXT.c
         src/soil/image_helper.c

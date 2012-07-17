@@ -1,8 +1,8 @@
 #include <vector>
 
-#include "ui/vertexattributes.h"
-#include "ui/vertexattribute.h"
-#include "ui/shaderprogram.h"
+#include "graphics/vertexattributes.h"
+#include "graphics/vertexattribute.h"
+#include "graphics/shaderprogram.h"
 
 using namespace std;
 

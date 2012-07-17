@@ -1,4 +1,4 @@
-#include "ui/mesh.h"
+#include "graphics/mesh.h"
 #include "GL/glew.h"
 
 namespace meh {

@@ -3,8 +3,8 @@
 #include <SDL/SDL.h>
 #include "GL/glew.h"
 
-#include "ui/shaderprogram.h"
-#include "ui/shader.h"
+#include "graphics/shaderprogram.h"
+#include "graphics/shader.h"
 
 using namespace std;
 

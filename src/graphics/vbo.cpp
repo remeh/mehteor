@@ -3,7 +3,7 @@
 #include <SDL/SDL.h>
 #include "GL/glew.h"
 
-#include "ui/vbo.h"
+#include "graphics/vbo.h"
 
 using namespace std;
 

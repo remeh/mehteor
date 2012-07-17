@@ -2,8 +2,8 @@
 #define MEH_VBO_H
 
 #include "GL/glew.h"
-#include "ui/shaderprogram.h"
-#include "ui/vertexattributes.h"
+#include "graphics/shaderprogram.h"
+#include "graphics/vertexattributes.h"
 
 namespace meh {
 

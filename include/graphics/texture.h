@@ -6,7 +6,7 @@
 #include <SDL/SDL.h>
 #include "GL/glew.h"
 #include "SOIL/SOIL.h"
-#include "ui/bitmap.h"
+#include "graphics/bitmap.h"
 
 using namespace std;
 
