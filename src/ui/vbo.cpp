@@ -49,7 +49,7 @@ void VBO::bind(ShaderProgram& shaderProgram) {
     glBindBuffer(GL_ARRAY_BUFFER, vboId);
     if (drty) {
         glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*dim*sze, vrtices, dyn ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
-        printf("Uploaded data to the GPU.\n");
+        printf("Uploaded vertices data to the GPU.\n");
         drty = false;
     }
     printf("VBO binded : %i\n",vboId);

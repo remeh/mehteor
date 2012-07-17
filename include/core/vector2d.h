@@ -30,16 +30,18 @@ class Vector2d {
          * Sets the value of x.
          * @param x the new value
          */
-        void setX(T x) {
+        Vector2d<T>& setX(T x) {
             _x = x;
+            return *this;
         }
 
         /**
          * Sets the value of y.
          * @param y the new value
          */
-        void setY(T y) {
+        Vector2d<T>& setY(T y) {
             _y = y;
+            return *this;
         }
 
         /**
@@ -47,9 +49,10 @@ class Vector2d {
          * @param x the new value for x
          * @param y the new value for y
          */
-        void setXY(T x, T y) {
+        Vector2d<T>& setXY(T x, T y) {
             _x = x;
             _y = y;
+            return *this;
         }
 
         /**
@@ -99,12 +102,13 @@ class Vector2d {
         /**
          * Normalizes this vector.
          */
-        void normalize() {
+        Vector2d<T> normalize() {
             T len = length();
             if (len != 0) {
                 _x /= len;
                 _y /= len;
             }
+            return *this;
         }
 
         /**

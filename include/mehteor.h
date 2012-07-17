@@ -2,6 +2,7 @@
 #include "core/bytebuffer.h"
 #include "core/rect.h"
 #include "core/vector2d.h"
+#include "core/matrix4x4.h"
 
 #include "ui/bitmap.h"
 #include "ui/vbo.h"

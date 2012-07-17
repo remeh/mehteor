@@ -1,6 +1,7 @@
 #include "GL/glew.h"
 #include "mehteor.h"
 
+
 using namespace meh;
 
 int main(int argc, char* argv[]) {
@@ -20,10 +21,15 @@ int main(int argc, char* argv[]) {
         2, 3, 0
     };
 
+
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+
+    Matrix4x4<float> a;
+    a = a.mul(a);
+    a = a.invert();
 
     /*
     float vertices2[] = {

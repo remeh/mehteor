@@ -19,6 +19,7 @@ IBO::~IBO() {
 void IBO::bind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
     if (drty) {
+        printf("Uploaded elements data to the GPU.\n");
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sze*dim*sizeof(GLuint), elems, dyn ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
     }
     printf("IBO binded : %i\n",iboId);
