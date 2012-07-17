@@ -37,7 +37,7 @@ bool Texture::load(string filename) {
     }
     int totalSize = width*height*channels;
     bitmap = new Bitmap(totalSize);
-    bitmap->buffer().write((char*)img, totalSize); 
+    bitmap->buffer().write(img, totalSize); 
 
     // Upload the OpenGL texture using SOIL
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);

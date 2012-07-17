@@ -47,10 +47,10 @@ Shader::Shader(string file, ShaderType type) :
             // doesn't seem ok, display the log
             GLint length;
             glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &length);
-            char* log = (char*)malloc(length);
+            char* log = new char[length]; 
             glGetShaderInfoLog(shaderId,512,nullptr,log);
             printf("Error loading shader '%s' :\n%s\n",file.c_str(),log);
-            free(log);
+            delete[] log;
         }
     }
 }

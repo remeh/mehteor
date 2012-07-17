@@ -11,11 +11,13 @@ int main(int argc, char* argv[]) {
     float vertices[] = {
         -0.5f, 0.5f, 0.0f,
         0.5f, 0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-
-        0.5f,0.5f, 0.0f,
-        -0.5f,-0.5f, 0.0f,
         0.5f,-0.5f, 0.0f
+        -0.5f, -0.5f, 0.0f,
+    };
+
+    float elements[] = {
+        0, 1 ,2,
+        2, 3, 0
     };
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
@@ -36,6 +38,7 @@ int main(int argc, char* argv[]) {
     //vrtexAttributes.addAttribute(VertexAttribute(2,VertexAttributes::textureAttribute));
     Mesh mesh(vrtexAttributes);
     mesh.setVertices(6,3,vertices);
+    mesh.setElements(6,3,elements);
 
     Shader vertex("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
     Shader fragment("res/shaders/fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER);
@@ -59,6 +62,7 @@ int main(int argc, char* argv[]) {
 
     mesh.bind(shaderProgram);
     mesh.render(shaderProgram);
+    mesh.unbind();
 
     printf("%s\n",gluErrorString(glGetError()));
     canvas.flip();

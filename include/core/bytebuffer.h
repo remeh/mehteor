@@ -85,6 +85,14 @@ class ByteBuffer {
          * @return 0 if everything is wrote, -1 otherwise.
          */
         int write(char* data, int len);
+
+        /**
+         * Writes data at the current position.
+         * @param data the data to write.
+         * @param len the length of the data to write.
+         * @return 0 if everything is wrote, -1 otherwise.
+         */
+        int write(unsigned char* data, int len);
 };
 
 }

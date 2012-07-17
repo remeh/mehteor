@@ -1,4 +1,5 @@
 #include <string>
+#include <cstdio> // printf
 #include <SDL/SDL.h>
 #include "GL/glew.h"
 
@@ -8,10 +9,6 @@
 using namespace std;
 
 namespace meh {
-
-string ShaderProgram::positionAttribute = "a_position";
-string ShaderProgram::textureCoordinateAttribute = "a_texcoord";
-string ShaderProgram::colorAttribute = "a_color";
 
 ShaderProgram::ShaderProgram() {
     shaderProgramId = glCreateProgram();
@@ -34,10 +31,10 @@ void ShaderProgram::link() {
         // doesn't seem ok, display the log
         GLint length;
         glGetProgramiv(shaderProgramId, GL_INFO_LOG_LENGTH, &length);
-        char* log = (char*)malloc(length);
+        char* log = new char[length];
         glGetProgramInfoLog(shaderProgramId,length,nullptr,log);
         printf("Error linking shader :\n%s\n",log);
-        free(log);
+        delete[] log;
     }
 }
 

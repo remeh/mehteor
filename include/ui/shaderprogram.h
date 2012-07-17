@@ -14,11 +14,6 @@ using namespace std;
 namespace meh {
 
 class ShaderProgram {
-    public: // static
-        static string positionAttribute;
-        static string textureCoordinateAttribute;
-        static string colorAttribute;
-
     private:
         GLuint shaderProgramId;
         list<Shader*> shders;

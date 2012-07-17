@@ -12,7 +12,7 @@ class VBO {
         unsigned int sze;
         unsigned int dim;
 
-        float* vrtices;
+        GLfloat* vrtices;
 
         /**
          * OpenGL VBO id.
@@ -33,17 +33,20 @@ class VBO {
 
         VertexAttributes vrtexAttributes;
 
+        /**
+         * When this VBO is dynamic, we should use GL_DYNAMIC_DRAW instead of GL_STATIC_DRAW
+         */
+        bool dyn;
+
     protected:
     public:
         /**
          * Creates a VBO containing 'size' vertex of 'dimension'.
          * The content of the vertices data is copied.
          *
-         * @param size number of vertices.
-         * @param dimension dimension of a vertex.
-         * @param vertices vertices data. A copy of the data is done.
+         * @param dynamic whether this VBO is dynamic (vertices will regularly change).
          */
-        VBO(unsigned int size, unsigned int dimension, float* vertices);
+        VBO(bool dynamic = false);
         ~VBO();
 
         /**
@@ -51,11 +54,25 @@ class VBO {
          */
         void bind(ShaderProgram& shaderProgram);
 
-        int size() {
+        /**
+         * Unbinds the VBO.
+         */
+        void unbind();
+
+        /**
+         * Sets the vertices of this VBO.
+         *
+         * @param size number of vertices.
+         * @param dimension dimension of a vertex.
+         * @param vertices vertices data. A copy of the data is done.
+         */
+        void setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices);
+
+        const int size() {
             return sze;
         }
 
-        int dimension() {
+        const int dimension() {
             return dim;
         }
 };

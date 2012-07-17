@@ -12,6 +12,7 @@ set(
         src/ui/shader.cpp
         src/ui/shaderprogram.cpp
         src/ui/vbo.cpp
+        src/ui/ibo.cpp
         src/ui/texture.cpp
         src/ui/bitmap.cpp
         src/ui/vertexattributes.cpp

@@ -47,6 +47,10 @@ int ByteBuffer::write(char* data, int length) {
     return 0;
 }
 
+int ByteBuffer::write(unsigned char* data, int length) {
+    return write((char*)data,length);
+}
+
 void ByteBuffer::resize(int newLength, bool saveData) {
     if (!saveData) {
         // Deletes the old buffer

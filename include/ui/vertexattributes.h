@@ -11,7 +11,7 @@ using namespace std;
 namespace meh {
 
 class VertexAttributes {
-    public:
+    public: // static
         static string positionAttribute;
         static string textureCoordinatesAttribute;
 
