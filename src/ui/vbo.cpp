@@ -21,7 +21,10 @@ VBO::VBO(bool dynamic) :
 
 VBO::~VBO() {
     glDeleteBuffers(1,&vboId);
-    delete[] vrtices;
+    if (vrtices) {
+        delete[] vrtices;
+        vrtices = nullptr;
+    }
 }
 
 void VBO::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices) {
@@ -48,7 +51,7 @@ void VBO::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertic
 void VBO::bind(ShaderProgram& shaderProgram) {
     glBindBuffer(GL_ARRAY_BUFFER, vboId);
     if (drty) {
-        glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*dim*sze, vrtices, dyn ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*sze*dim, vrtices, dyn ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
         printf("Uploaded vertices data to the GPU.\n");
         drty = false;
     }

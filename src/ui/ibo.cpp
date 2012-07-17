@@ -14,13 +14,18 @@ IBO::IBO(bool dynamic) :
 
 IBO::~IBO() {
     glDeleteBuffers(1,&iboId);
+    if (elems) {
+        delete[] elems;
+        elems = nullptr;
+    }
 }
 
 void IBO::bind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
     if (drty) {
         printf("Uploaded elements data to the GPU.\n");
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sze*dim*sizeof(GLuint), elems, dyn ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*sze*dim, elems, dyn ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+        drty = false;
     }
     printf("IBO binded : %i\n",iboId);
 }
@@ -30,7 +35,7 @@ void IBO::unbind() {
     printf("IBO unbinded : %i\n",iboId);
 }
 
-void IBO::setElements(unsigned int size, unsigned int dimension, GLfloat* elements) {
+void IBO::setElements(unsigned int size, unsigned int dimension, GLuint* elements) {
     sze = size;
     dim = dimension;
 
@@ -41,7 +46,7 @@ void IBO::setElements(unsigned int size, unsigned int dimension, GLfloat* elemen
     }
     // Store new values
     int totalSize = sze*dim;
-    elems = new GLfloat[totalSize];
+    elems = new GLuint[totalSize];
     // TODO use memcpy
     for (int i =0; i < totalSize; i++) {
         elems[i] = elements[i];

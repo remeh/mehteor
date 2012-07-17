@@ -14,7 +14,7 @@ class IBO {
          */
         bool drty;
 
-        GLfloat* elems;
+        GLuint* elems;
 
         /**
          * Number of elements.
@@ -41,7 +41,7 @@ class IBO {
         IBO(bool dynamic = false);
         ~IBO();
     
-        void setElements(unsigned int size, unsigned int dimension, float* elements);
+        void setElements(unsigned int size, unsigned int dimension, GLuint* elements);
 
         /**
          * Binds the IBO.

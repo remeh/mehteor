@@ -10,13 +10,14 @@ int main(int argc, char* argv[]) {
     Canvas canvas(640,480);
     
     float vertices[] = {
-        -0.5f, 0.5f, 0.0f,
-        0.5f, 0.5f, 0.0f,
-        0.5f,-0.5f, 0.0f
-        -0.5f, -0.5f, 0.0f,
+        // Vertex          // Texcoord
+        -0.5f, 0.5f, 0.0f, 0.0f, 0.0f,
+        0.5f,0.5f, 0.0f,   1.0f, 0.0f,
+        0.5f,-0.5f, 0.0f,  1.0f, 1.0f,
+        -0.5,-0.5f,0.0f,   0.0f, 1.0f
     };
 
-    float elements[] = {
+    GLuint elements[] = {
         0, 1 ,2,
         2, 3, 0
     };
@@ -31,20 +32,12 @@ int main(int argc, char* argv[]) {
     a = a.mul(a);
     a = a.invert();
 
-    /*
-    float vertices2[] = {
-        0.0f, 0.8f, 0.0f,
-        0.8f, -0.8f, 0.0f,
-        -0.8f, -0.8f, 0.0f
-    };
-    */
-
     VertexAttributes vrtexAttributes;
     vrtexAttributes.addAttribute(VertexAttribute(3,0,VertexAttributes::positionAttribute));
-    //vrtexAttributes.addAttribute(VertexAttribute(2,VertexAttributes::textureAttribute));
+    vrtexAttributes.addAttribute(VertexAttribute(2,3,VertexAttributes::textureCoordinatesAttribute));
     Mesh mesh(vrtexAttributes);
-    mesh.setVertices(6,3,vertices);
-    mesh.setElements(6,3,elements);
+    mesh.setVertices(4,5,vertices);
+    mesh.setElements(2,3,elements);
 
     Shader vertex("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
     Shader fragment("res/shaders/fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER);
@@ -60,20 +53,33 @@ int main(int argc, char* argv[]) {
     shaderProgram2.addShader(&fragment2);
     shaderProgram2.link();
 
-    Texture t;
-    printf("Texture loaded: %i\n", t.load("res/test.png"));
-
-    glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
+    glClearColor( 0.0f, 0.1f, 0.0f, 0.5f );
     glClear( GL_COLOR_BUFFER_BIT );
+
+    shaderProgram.enable();
+
+    Texture tex1;
+    printf("Texture loaded: %i\n", tex1.load("res/test.png"));
+
+    GLint meh_texture = glGetUniformLocation(shaderProgram.id(), "meh_texture");
+    tex1.bind(0);
+    glUniform1i(meh_texture, 0);
+
+    /*
+    GLint s_textureId2 = glGetUniformLocation(shaderProgram.id(), "tex");
+    lama2.bind(1);
+    glUniform1i(s_textureId2, 1);
+    */
 
     mesh.bind(shaderProgram);
     mesh.render(shaderProgram);
     mesh.unbind();
-
-    printf("%s\n",gluErrorString(glGetError()));
+    glUseProgram(0);
     canvas.flip();
 
-    System::sleep(2000);
+    System::sleep(1000);
+
+    printf("%s\n",gluErrorString(glGetError()));
 
     System::deinit();
     return 0;

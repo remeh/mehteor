@@ -11,6 +11,7 @@ Mesh::Mesh(VertexAttributes attributes) :
 
 Mesh::~Mesh() {
     deleteVBO();
+    deleteIBO();
 }
 
 void Mesh::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices) {
@@ -19,10 +20,10 @@ void Mesh::setVertices(unsigned int size, unsigned int dimension, GLfloat* verti
     vbo->setVertices(size, dimension, vertices);
 }
 
-void Mesh::setElements(unsigned int size, unsigned int dimension, GLfloat* vertices) {
+void Mesh::setElements(unsigned int size, unsigned int dimension, GLuint* elements) {
     deleteIBO();
     ibo = new IBO(false); // TODO assume static for the moment
-    ibo->setElements(size,dimension,vertices);
+    ibo->setElements(size,dimension,elements);
 }
 
 void Mesh::deleteVBO() {
@@ -33,7 +34,7 @@ void Mesh::deleteVBO() {
 }
 
 void Mesh::deleteIBO() {
-    if (!ibo) {
+    if (ibo) {
         delete ibo;
         ibo = nullptr;
     }
@@ -48,11 +49,12 @@ void Mesh::bind(ShaderProgram& shaderProgram) {
 }
 
 void Mesh::render(ShaderProgram& shaderProgram) {
-    shaderProgram.enable();
     if (ibo) {
         // TODO offset
-        glDrawElements(GL_TRIANGLES, ibo->size(), GL_UNSIGNED_INT, 0);
+        printf("Draw elements.\n");
+        glDrawElements(GL_TRIANGLES, ibo->dimension()*ibo->size(), GL_UNSIGNED_INT, 0);
     } else {
+        printf("Draw arrays.\n");
         glDrawArrays(GL_TRIANGLES, 0, vbo->size());
     }
 }

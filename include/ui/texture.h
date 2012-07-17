@@ -13,14 +13,15 @@ using namespace std;
 namespace meh {
 
 class Texture {
-        GLuint texId;
-        
     private:
-        /**
-         * Updates the texture pixels on the GPU.
-         */
-        void updateGPU();
         Bitmap* bitmap;
+
+        GLuint texId;
+
+        int w;
+        int h;
+
+        unsigned char* d;
 
     protected:
     public:
@@ -29,8 +30,9 @@ class Texture {
         /**
          * Binds the texture to the given texture unit.
          * @param unit the unit.
+         * @return true if the texture is correctly bound, false whether no texture were loaded before a call to bind()
          */
-        void bind(GLint unit);
+        bool bind(GLint unit);
 
         /**
          * Loads the content of an image and upload it to the GPU.

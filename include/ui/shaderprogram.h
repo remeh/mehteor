@@ -32,7 +32,9 @@ class ShaderProgram {
 
         void enableVertexAttribute(string name);
 
-        void setVertexAttribute(string name, int dimension, int type, bool normalize);
+        void sizeOneVertex();
+
+        void setVertexAttribute(string name, int dimension, int offset, int dimVertex, int type, bool normalize);
 
         const GLuint id() {
             return shaderProgramId;

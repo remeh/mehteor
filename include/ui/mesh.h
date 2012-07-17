@@ -23,7 +23,7 @@ class Mesh {
         void setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices);
         void deleteVBO();
 
-        void setElements(unsigned int size, unsigned int dimension, GLfloat* vertices);
+        void setElements(unsigned int size, unsigned int dimension, GLuint* elements);
         void deleteIBO();
 
         void bind(ShaderProgram& shaderProgram);

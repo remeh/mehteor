@@ -13,9 +13,13 @@ Texture::Texture() :
     glGenTextures(1, &texId);
 }
 
-void Texture::bind(int unit) {
+bool Texture::bind(int unit) {
+    if (!bitmap) {
+        return false;
+    }
     glActiveTexture(GL_TEXTURE0 + unit);
     glBindTexture(GL_TEXTURE_2D, texId);
+    return true;
 }
 
 bool Texture::load(string filename) {
@@ -24,7 +28,7 @@ bool Texture::load(string filename) {
     int channels;
 
     // Loads the image 
-    unsigned char* img = SOIL_load_image(filename.c_str(), &width, &height, &channels, SOIL_LOAD_AUTO);
+    unsigned char* img = SOIL_load_image(filename.c_str(), &width, &height, &channels, SOIL_LOAD_RGB);
 
     if (!img) {
         return false;
@@ -35,14 +39,24 @@ bool Texture::load(string filename) {
         delete bitmap;
         bitmap = nullptr;
     }
+    w = width;
+    h = height;
     int totalSize = width*height*channels;
     bitmap = new Bitmap(totalSize);
+    bitmap->buffer().reset();
     bitmap->buffer().write(img, totalSize); 
+    // Upload the OpenGL texture loaded by SOIL
+    glBindTexture(GL_TEXTURE_2D, texId);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, img); 
 
-    // Upload the OpenGL texture using SOIL
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+
     // Was copied into the bitmap buffer.
     SOIL_free_image_data(img);
+
 
     return true;
 }
