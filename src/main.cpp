@@ -60,10 +60,9 @@ int main(int argc, char* argv[]) {
 
     Texture tex1;
     printf("Texture loaded: %i\n", tex1.load("res/test.png"));
-
-    GLint meh_texture = glGetUniformLocation(shaderProgram.id(), "meh_texture");
     tex1.bind(0);
-    glUniform1i(meh_texture, 0);
+
+    shaderProgram.setUniformi("meh_texture",0);
 
     /*
     GLint s_textureId2 = glGetUniformLocation(shaderProgram.id(), "tex");

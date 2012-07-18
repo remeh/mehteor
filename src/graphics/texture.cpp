@@ -42,8 +42,7 @@ bool Texture::load(string filename) {
     w = width;
     h = height;
     int totalSize = width*height*channels;
-    bitmap = new Bitmap(totalSize);
-    bitmap->buffer().reset();
+    bitmap = new Bitmap(width,height,channels);
     bitmap->buffer().write(img, totalSize); 
     // Upload the OpenGL texture loaded by SOIL
     glBindTexture(GL_TEXTURE_2D, texId);

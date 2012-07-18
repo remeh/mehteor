@@ -41,6 +41,10 @@ class Matrix4x4 {
             v[indice] = value;
         }
 
+        T* values() {
+            return v;
+        }
+
         Matrix4x4<T>& toIdentity() {
            v[M00] = 1; v[M01] = 0; v[M02] = 0; v[M03] = 0;
            v[M10] = 0; v[M11] = 1; v[M12] = 0; v[M13] = 0;

@@ -6,7 +6,7 @@ namespace meh {
 
 ByteBuffer::ByteBuffer(int length) :
     len(length) {
-    dta = new char[length];
+    dta = new unsigned char[length];
     // Reset the cursor position
     reset();
 }
@@ -15,7 +15,7 @@ ByteBuffer::~ByteBuffer() {
     delete[] dta;
 }
 
-char ByteBuffer::readChar() {
+unsigned char ByteBuffer::readUChar() {
     if (crsor >= len) {
         return -1;
     }
@@ -23,7 +23,7 @@ char ByteBuffer::readChar() {
     return c;
 }
 
-int ByteBuffer::writeChar(char c) {
+int ByteBuffer::writeUChar(unsigned char c) {
     if (crsor >= len) {
         return -1;
     }
@@ -36,7 +36,7 @@ void ByteBuffer::reset() {
     crsor = 0;
 }
 
-int ByteBuffer::write(char* data, int length) {
+int ByteBuffer::write(unsigned char* data, int length) {
     if (length+crsor >= len) {
         return -1;
     }
@@ -47,8 +47,8 @@ int ByteBuffer::write(char* data, int length) {
     return 0;
 }
 
-int ByteBuffer::write(unsigned char* data, int length) {
-    return write((char*)data,length);
+int ByteBuffer::write(char* data, int length) {
+    return write((unsigned char*)data,length);
 }
 
 void ByteBuffer::resize(int newLength, bool saveData) {
@@ -56,12 +56,12 @@ void ByteBuffer::resize(int newLength, bool saveData) {
         // Deletes the old buffer
         delete[] dta;
         // Allocates the new buffer
-        dta = new char[newLength];
+        dta = new unsigned char[newLength];
     } else {
         // Keep the data somewhere
-        char* tmp = dta;
+        unsigned char* tmp = dta;
         // Allocates the new buffer
-        dta = new char[newLength];
+        dta = new unsigned char[newLength];
         // Do not copy too much if the new 
         // ByteBuffer if smaller
         int l = len;
@@ -77,6 +77,12 @@ void ByteBuffer::resize(int newLength, bool saveData) {
     }
     len = newLength;
     reset();
+}
+
+ByteBuffer* ByteBuffer::clone() {
+    ByteBuffer* copy = new ByteBuffer(len);
+    copy->write(dta, len);
+    return copy;
 }
 
 }

@@ -5,7 +5,7 @@ namespace meh {
 
 class ByteBuffer {
     private:
-        char* dta;
+        unsigned char* dta;
         int len;
         int crsor;
 
@@ -26,7 +26,7 @@ class ByteBuffer {
         /**
          * Direct pointer to the data of this buffer.
          */
-        char* data() {
+        unsigned char* data() {
             return dta;
         }
         
@@ -38,9 +38,9 @@ class ByteBuffer {
         }
 
         /**
-         * Returns how many bytes left before to reach the end of this buffer.
+         * Returns how many bytes remain before to reach the end of this buffer.
          */
-        int leftLength() {
+        int bytesRemaining() {
             return len-crsor;
         }
 
@@ -66,17 +66,34 @@ class ByteBuffer {
         void reset();
 
         /**
-         * Reads and returns a char in the ByteBuffer and move the cursor of 1 byte.
-         * If the end of the ByteBuffer is already reached, the returned value is unknown.
+         * Alias for readUChar().
          */
-        char readChar();
+        unsigned char readByte() {
+            return readUChar();
+        }
 
         /**
-         * Writes a char in the buffer at the current position and moves the cursor of 1 byte.
-         * @return 0 if the write succeed, -1 whether the end of the buffer is reached.
-         * @param c the char to write in the buffer. 
+         * Reads and returns an unsigned char in the ByteBuffer and move the cursor of 1 byte.
+         * If the end of the ByteBuffer is already reached, the returned value is unknown.
          */
-        int writeChar(char c);
+        unsigned char readUChar();
+
+        /**
+         * Alias for writeUChar(unsigned char).
+         * Writes an unsigned char in the buffer at the current position and moves the cursor of 1 byte.
+         * @return 0 if the write succeed, -1 whether the end of the buffer is reached.
+         * @param c the unsigned char to write.
+         */
+        int writeByte(unsigned char c) {
+            return writeUChar(c);
+        }
+
+        /**
+         * Writes an unsigned char in the buffer at the current position and moves the cursor of 1 byte.
+         * @return 0 if the write succeed, -1 whether the end of the buffer is reached.
+         * @param c the unsigned char to write in the buffer. 
+         */
+        int writeUChar(unsigned char c);
 
         /**
          * Writes data at the current position.
@@ -93,6 +110,12 @@ class ByteBuffer {
          * @return 0 if everything is wrote, -1 otherwise.
          */
         int write(unsigned char* data, int len);
+
+        /**
+         * Returns a copy of this ByteBuffer.
+         * @return a copy of this ByteBuffer.
+         */
+        ByteBuffer* clone();
 };
 
 }
