@@ -13,6 +13,13 @@ Texture::Texture() :
     glGenTextures(1, &texId);
 }
 
+Texture::~Texture() {
+    if (bitmap) {
+        delete bitmap;
+        bitmap = nullptr;
+    }
+}
+
 bool Texture::bind(int unit) {
     if (!bitmap) {
         return false;

@@ -40,9 +40,8 @@ int ByteBuffer::write(unsigned char* data, int length) {
     if (length+crsor >= len) {
         return -1;
     }
-    for (int i = 0; i < length; i++) {
-        dta[crsor+i] = data[i];
-    }
+    // Copy the data
+    memcpy(dta+crsor,data,length);
     crsor += length;
     return 0;
 }
@@ -69,9 +68,7 @@ void ByteBuffer::resize(int newLength, bool saveData) {
             l = newLength;
         }
         // Copy the data
-        for (int i = 0; i < l; i++) {
-            dta[i] = tmp[i];
-        }
+        memcpy(dta,tmp,l);
         // Releases the old buffer
         delete[] tmp;
     }

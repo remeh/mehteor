@@ -4,6 +4,7 @@
 #include <string>
 #include <SDL/SDL.h>
 #include "core/vector2d.h"
+#include "core/inputdevicesmanager.h"
 
 using namespace std;
 
@@ -17,6 +18,11 @@ class Canvas {
         // Init GLEW once
         static bool glewIsInit;
 
+        /**
+         * EventsManager of this Canvas.
+         */
+        InputDevicesManager inputManager;
+
     protected:
     public:
         /**
@@ -29,7 +35,8 @@ class Canvas {
         virtual ~Canvas();
 
         /**
-         * Returns the pointer to the ALLEGRO_DISPLAY
+         * Returns the pointer to the SDL_Surface.
+         * @return the pointer to the SDL_Surface.
          */
         SDL_Surface* surface() {
             return sdlSurface;
@@ -68,6 +75,10 @@ class Canvas {
          * the Canvas, you display the modified buffer.
          */
         void flip();
+
+        InputDevicesManager& inputDevicesManager() {
+            return inputManager;
+        }
 };
 
 } // namespace meh

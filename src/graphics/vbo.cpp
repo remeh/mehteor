@@ -39,11 +39,8 @@ void VBO::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertic
 
     unsigned int totalSize = size*dimension;
     vrtices = new GLfloat[totalSize];
-    // TODO use a memcpy
-    // memcpy(vrtices, &vertices, totalSize);
-    for (unsigned int i = 0; i < totalSize; i++) {
-        vrtices[i] = vertices[i];
-    }
+    // Copy the values
+    memcpy(vrtices, vertices, totalSize);
 
     drty = true;
 }

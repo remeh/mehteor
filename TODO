@@ -1,4 +1,3 @@
-vbo.cpp : use a memcpy
 bytebuffer.cpp : more functions read/write
-bytebuffer.cpp : use memcpy
+threads
 

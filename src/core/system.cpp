@@ -10,11 +10,16 @@
 namespace meh {
 
 bool System::initializated = false;
+bool System::graphics = false;
 
-void System::init() {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
-        // TODO log
-        printf("Unable to initialize SDL...\n");
+void System::init(bool initGraphics) {
+    System::graphics = initGraphics;
+
+    if (initGraphics) {
+        if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
+            // TODO log
+            printf("Unable to initialize SDL...\n");
+        }
     }
 
     // Init random seed
@@ -28,6 +33,10 @@ void System::deinit() {
 
 bool System::isInitializated() {
     return initializated;
+}
+
+bool System::graphicsEnabled() {
+    return graphics;
 }
 
 int System::rnd(int min, int max) {

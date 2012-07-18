@@ -7,6 +7,7 @@ set(
 # core
         src/core/system.cpp
         src/core/bytebuffer.cpp
+        src/core/inputdevicesmanager.cpp
 # ui
         src/graphics/canvas.cpp
         src/graphics/shader.cpp

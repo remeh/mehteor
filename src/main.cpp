@@ -7,7 +7,19 @@ using namespace meh;
 int main(int argc, char* argv[]) {
     System::init();
 
+    ByteBuffer buffer(5);
+    buffer.write("abc",3);
+    buffer.reset();
+    buffer.resize(3,true);
+    printf("%c\n",buffer.readByte());
+    printf("%c\n",buffer.readByte());
+    printf("%c\n",buffer.readByte());
+    buffer.reset();
+
     Canvas canvas(640,480);
+    if (!canvas.surface()) {
+        return -1;
+    }
     
     float vertices[] = {
         // Vertex          // Texcoord
@@ -59,7 +71,7 @@ int main(int argc, char* argv[]) {
     shaderProgram.enable();
 
     Texture tex1;
-    printf("Texture loaded: %i\n", tex1.load("res/test.png"));
+    printf("Texture loaded: %i\n",tex1.load("res/test.png"));
     tex1.bind(0);
 
     shaderProgram.setUniformi("meh_texture",0);
@@ -75,6 +87,10 @@ int main(int argc, char* argv[]) {
     mesh.unbind();
     glUseProgram(0);
     canvas.flip();
+
+    InputDevicesManager& idm = canvas.inputDevicesManager();
+    idm.update();
+    printf("%i %i\n",idm.mouseX(),idm.mouseY());
 
     System::sleep(1000);
 

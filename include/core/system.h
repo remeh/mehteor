@@ -8,16 +8,20 @@ namespace meh {
 class System {
     private:
         static bool initializated;
+        static bool graphics;
+
     protected:
     public:
+
         /**
          * Initialization.
          *
          * Must be called at the very beginning
          * in order to init every sub-systems (mouse, 
          * keyboard, sound, ...)
+         * @param initGraphics should the graphic system be init? 
          */
-        static void init();
+        static void init(bool initGraphics = true);
 
         /**
          * Deinitialization.
@@ -28,6 +32,11 @@ class System {
          * Returns whether the system has been correctly initializated.
          */
         static bool isInitializated();
+
+        /**
+         * Returns whether the graphics subsystem is enabled.
+         */
+        static bool graphicsEnabled();
 
         /**
          * Returns a random number between min (inlcuded) and max (excluded).

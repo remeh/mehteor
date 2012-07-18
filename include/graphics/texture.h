@@ -26,6 +26,7 @@ class Texture {
     protected:
     public:
         Texture();
+        ~Texture();
 
         /**
          * Binds the texture to the given texture unit.

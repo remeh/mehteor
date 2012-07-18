@@ -2,6 +2,7 @@
 #include <SDL/SDL.h>
 #include "GL/glew.h"
 
+#include "core/system.h"
 #include "graphics/canvas.h"
 
 using namespace std;
@@ -12,22 +13,26 @@ bool Canvas::glewIsInit = false;
 
 Canvas::Canvas(int w, int h) :
     sdlSurface(nullptr) {
-    sdlSurface = SDL_SetVideoMode(w,h,0,SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
-    
-    // Init OpenGL extensions and check versions
-    glewExperimental = GL_TRUE;
-    if (!Canvas::glewIsInit) {
-        if (glewInit() != GLEW_OK) {
-            printf("Unable to initialize GLEW...\n");
-            Canvas::glewIsInit = true;
+    if (System::graphicsEnabled()) {
+        sdlSurface = SDL_SetVideoMode(w,h,0,SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
+        
+        // Init OpenGL extensions and check versions
+        glewExperimental = GL_TRUE;
+        if (!Canvas::glewIsInit) {
+            if (glewInit() != GLEW_OK) {
+                printf("Unable to initialize GLEW...\n");
+                Canvas::glewIsInit = true;
+            }
+            const unsigned char* version = glGetString(GL_VERSION);
+            printf("GL version : %s\n",version);
+            if (version[0] != '3' && version[0] != '4') {
+                printf("ERROR: OpenGL version < 3.\nMehteor will probably not work correctly.\n");
+            }
+            version = glGetString(GL_SHADING_LANGUAGE_VERSION);
+            printf("GLSL version : %s\n",version);
         }
-        const unsigned char* version = glGetString(GL_VERSION);
-        printf("GL version : %s\n",version);
-        if (version[0] != '3' && version[0] != '4') {
-            printf("ERROR: OpenGL version < 3.\nMehteor will probably not work correctly.\n");
-        }
-        version = glGetString(GL_SHADING_LANGUAGE_VERSION);
-        printf("GLSL version : %s\n",version);
+    } else {
+        printf("ERROR: Mehteor graphics disabled. You can't create a Canvas.\n");
     }
 }
 
