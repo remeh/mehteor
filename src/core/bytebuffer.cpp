@@ -41,7 +41,10 @@ int ByteBuffer::write(unsigned char* data, int length) {
         return -1;
     }
     // Copy the data
-    memcpy(dta+crsor,data,length);
+    // memcpy(dta+crsor,data,length); XXX
+    for (int i = 0; i < length; i++) {
+        dta[crsor+i] = data[i];
+    }
     crsor += length;
     return 0;
 }

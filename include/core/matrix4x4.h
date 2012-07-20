@@ -1,7 +1,9 @@
 #ifndef MEH_MATRIX4X4_H
 #define MEH_MATRIX4X4_H
 
+#include <cstdio> // printf
 #include "core/vector2d.h"
+#include "core/vector3d.h"
 
 namespace meh {
 
@@ -31,7 +33,7 @@ class Matrix4x4 {
     protected:
     public:
         Matrix4x4() {
-            v[M00] = v[M11] = v[M22] = v[M33] = 1;
+            toIdentity();
         }
 
         /**
@@ -72,7 +74,7 @@ class Matrix4x4 {
         /**
         * Multiplies this Matrix4x4 by another one.
         */
-        Matrix4x4<T>& mul(Matrix4x4<T>& other) {
+        Matrix4x4<T> operator*(Matrix4x4<T>& other) {
             Matrix4x4<T> tmp;
             tmp[M00] = v[M00] * other.value(M00) + v[M01] * other.value(M10) + v[M02] * other.value(M20) + v[M03] * other.value(M30);
             tmp[M01] = v[M00] * other.value(M01) + v[M01] * other.value(M11) + v[M02] * other.value(M21) + v[M03] * other.value(M31);
@@ -93,8 +95,7 @@ class Matrix4x4 {
             tmp[M31] = v[M30] * other.value(M01) + v[M31] * other.value(M11) + v[M32] * other.value(M21) + v[M33] * other.value(M31);
             tmp[M32] = v[M30] * other.value(M02) + v[M31] * other.value(M12) + v[M32] * other.value(M22) + v[M33] * other.value(M32);
             tmp[M33] = v[M30] * other.value(M03) + v[M31] * other.value(M13) + v[M32] * other.value(M23) + v[M33] * other.value(M33);
-            this->set(tmp);
-            return *this;
+            return tmp;
         }
 
         /**
@@ -188,6 +189,76 @@ class Matrix4x4 {
             v[M33] = tmp[M33] * invDet;
             return *this;
         }
+        
+        /**
+         * Sets the matrix to an orthographic projection.
+         */
+        Matrix4x4<T>& toOrtho(T left, T right, T bottom, T top, T near, T far) {
+            toIdentity();
+            T xOrth = 2 / (right-left);
+            T yOrth = 2 / (top-bottom);
+            T zOrth = -2 / (far-near);
+            float tx = -(right+left)/(right-left);
+            float ty = -(top+bottom)/(top-bottom);
+            float tz = -(far+near)/(far-near);
+
+            v[M00] = xOrth; v[M01] = 0; v[M02] = 0; v[M03] = tx;
+            v[M10] = 0; v[M11] = yOrth; v[M12] = 0; v[M13] = ty;
+            v[M20] = 0; v[M21] = 0; v[M22] = zOrth; v[M23] = tz;
+            v[M30] = 0; v[M31] = 0; v[M32] = 0; v[M33] = 1.0f;
+
+            return *this;
+        }
+
+        /**
+         * Sets this matrix to a translation matrix.
+         * @param vector the translation vector.
+         * @return this matrix set to a translation matrix.
+         */
+        Matrix4x4<T>& toTranslation(Vector3d<T>& vector) {
+            toIdentity();
+            v[M03] = vector.x();
+            v[M13] = vector.y();
+            v[M23] = vector.z();
+            return *this;
+        }
+
+        Matrix4x4<T>& lookAt(Vector3d<T> position, Vector3d<T> target, Vector3d<T> upVector) {
+            Vector3d<T> tmp(target.x(), target.y(), target.z());
+            tmp = tmp - position;
+
+            lookAt(tmp,upVector);
+
+            Matrix4x4<T> mat;
+            Vector3d<T> posTmp(position.x(),position.y(),position.z());
+            posTmp = posTmp*-1.0f;
+            mat.toTranslation(posTmp);
+
+            *this = (*this)*mat;
+
+            return *this;
+        }
+
+        Matrix4x4<T>& lookAt(Vector3d<T> direction, Vector3d<T> up) {
+            Vector3d<T> vecZ(direction.x(), direction.y(), direction.z());
+            vecZ.normalize();
+
+            Vector3d<T> vecX(direction.x(), direction.y(), direction.z());
+            vecX = vecX.normalize();
+            vecX.crossProduct(up);
+            vecX = vecX.normalize();
+
+            Vector3d<T> vecY(vecX.x(),vecX.y(),vecX.z());
+            vecY = vecY.crossProduct(vecZ).normalize();
+
+            toIdentity();
+
+            v[M00] = vecX.x(); v[M01] = vecX.y(); v[M02] = vecX.z();
+            v[M10] = vecY.x(); v[M11] = vecY.y(); v[M12] = vecY.z();
+            v[M20] = -vecZ.x(); v[M21] = -vecZ.y(); v[M22] = -vecZ.z();
+
+            return *this;
+        }
 
         /**
          * Returns the value of the specified member.
@@ -197,6 +268,13 @@ class Matrix4x4 {
             return v[indice];
         }
 
+        // XXX to remove
+        void print() {
+            printf("%f %f %f %f\n",v[M00], v[M01], v[M02], v[M03]);
+            printf("%f %f %f %f\n",v[M10], v[M11], v[M12], v[M13]);
+            printf("%f %f %f %f\n",v[M20], v[M21], v[M22], v[M23]);
+            printf("%f %f %f %f\n",v[M30], v[M31], v[M32], v[M33]);
+        }
 };
 
 } // namespace meh

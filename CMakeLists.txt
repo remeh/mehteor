@@ -8,7 +8,7 @@ set(
         src/core/system.cpp
         src/core/bytebuffer.cpp
         src/core/inputdevicesmanager.cpp
-# ui
+# graphics
         src/graphics/canvas.cpp
         src/graphics/shader.cpp
         src/graphics/shaderprogram.cpp
@@ -19,6 +19,8 @@ set(
         src/graphics/vertexattributes.cpp
         src/graphics/vertexattribute.cpp
         src/graphics/mesh.cpp
+        src/graphics/camera.cpp
+        src/graphics/orthographiccamera.cpp
 # SOIL
         src/soil/image_DXT.c
         src/soil/image_helper.c

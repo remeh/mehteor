@@ -63,7 +63,6 @@ bool Texture::load(string filename) {
     // Was copied into the bitmap buffer.
     SOIL_free_image_data(img);
 
-
     return true;
 }
 

@@ -21,12 +21,21 @@ int main(int argc, char* argv[]) {
         return -1;
     }
     
+    /*
     float vertices[] = {
         // Vertex          // Texcoord
         -0.5f, 0.5f, 0.0f, 0.0f, 0.0f,
         0.5f,0.5f, 0.0f,   1.0f, 0.0f,
         0.5f,-0.5f, 0.0f,  1.0f, 1.0f,
         -0.5,-0.5f,0.0f,   0.0f, 1.0f
+    };
+    */
+    float vertices[] = {
+        // Vertex          // Texcoord
+        100.0f,100.0f, 0.0f, 0.0f, 0.0f,
+        100.0f,150.0f, 0.0f,   1.0f, 0.0f,
+        150.0f,150.0f, 0.0f,  1.0f, 1.0f,
+        150.0f,100.0f,0.0f,   0.0f, 1.0f
     };
 
     GLuint elements[] = {
@@ -41,7 +50,7 @@ int main(int argc, char* argv[]) {
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 
     Matrix4x4<float> a;
-    a = a.mul(a);
+    a = a*a;
     a = a.invert();
 
     VertexAttributes vrtexAttributes;
@@ -53,34 +62,29 @@ int main(int argc, char* argv[]) {
 
     Shader vertex("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
     Shader fragment("res/shaders/fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER);
-    Shader fragment2("res/shaders/fragment2.glsl",Shader::ShaderType::FRAGMENT_SHADER);
 
     ShaderProgram shaderProgram;
     shaderProgram.addShader(&vertex);
     shaderProgram.addShader(&fragment);
     shaderProgram.link();
 
-    ShaderProgram shaderProgram2;
-    shaderProgram2.addShader(&vertex);
-    shaderProgram2.addShader(&fragment2);
-    shaderProgram2.link();
-
     glClearColor( 0.0f, 0.1f, 0.0f, 0.5f );
     glClear( GL_COLOR_BUFFER_BIT );
 
+    glFrustum(0, 640,480, 0, 1,2);
+
     shaderProgram.enable();
 
+    OrthographicCamera camera(640,480);
+    camera.setPosition(320,240,0);
+    camera.update();
+    shaderProgram.setUniformMatrix4x4("meh_modelViewProjection", camera.invertModelViewProjection());
+    camera.modelViewProjection().print();
+
     Texture tex1;
-    printf("Texture loaded: %i\n",tex1.load("res/test.png"));
+    printf("Texture loaded: %i\n",tex1.load("res/lum.png"));
     tex1.bind(0);
-
     shaderProgram.setUniformi("meh_texture",0);
-
-    /*
-    GLint s_textureId2 = glGetUniformLocation(shaderProgram.id(), "tex");
-    lama2.bind(1);
-    glUniform1i(s_textureId2, 1);
-    */
 
     mesh.bind(shaderProgram);
     mesh.render(shaderProgram);
@@ -92,7 +96,9 @@ int main(int argc, char* argv[]) {
     idm.update();
     printf("%i %i\n",idm.mouseX(),idm.mouseY());
 
-    System::sleep(1000);
+    System::sleep(2000);
+    idm.update();
+    printf("%i %i\n",idm.mouseX(),idm.mouseY());
 
     printf("%s\n",gluErrorString(glGetError()));
 

@@ -9,6 +9,7 @@ out vec4 outColor;
 
 void main()
 {
-        outColor = mix(texture2D(meh_texture,Texcoord) , texture2D(tex, Texcoord), 0.5);
+        // outColor = mix(texture2D(meh_texture,Texcoord) , texture2D(tex, Texcoord), 0.5);
+        outColor = texture2D(meh_texture,Texcoord);
         // outColor = vec4( 1.0, 1.0, 1.0, 1.0 );
 }

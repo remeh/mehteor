@@ -13,3 +13,5 @@
 #include "graphics/canvas.h"
 #include "graphics/texture.h"
 #include "graphics/mesh.h"
+#include "graphics/camera.h"
+#include "graphics/orthographiccamera.h"
