@@ -3,6 +3,7 @@
 namespace meh {
 
 Camera::Camera() :
+    pos(0.0f,0.0f,0.0f),
     dir(0.0f,0.0f,-1.0f),
     u(0.0f,1.0f,0.0f),
     viewportW(0.0f),
@@ -23,6 +24,10 @@ void Camera::lookAt(float x, float y, float z) {
 
 void Camera::setPosition(float x, float y, float z) {
     pos.setXYZ(x,y,z);
+}
+
+void Camera::translate(Vector3d<float> translation) {
+    pos = pos + translation;
 }
 
 }

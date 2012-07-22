@@ -211,6 +211,15 @@ class Matrix4x4 {
         }
 
         /**
+         * Sets the matrix to an orthographic projection with the origin at x,y seeing width and height.
+         * The near plane is set to 0 and the far plane to 1.
+         */
+        Matrix4x4<T>& toOrtho2D(T x, T y, T width, T height) {
+            toOrtho(x, x+width, y, y+height, 0, 1);
+            return *this;
+        }
+
+        /**
          * Sets this matrix to a translation matrix.
          * @param vector the translation vector.
          * @return this matrix set to a translation matrix.

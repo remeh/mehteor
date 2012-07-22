@@ -1,7 +1,6 @@
 #include "GL/glew.h"
 #include "mehteor.h"
 
-
 using namespace meh;
 
 int main(int argc, char* argv[]) {
@@ -21,21 +20,18 @@ int main(int argc, char* argv[]) {
         return -1;
     }
     
-    /*
-    float vertices[] = {
+    GLfloat vertices[] = {
         // Vertex          // Texcoord
-        -0.5f, 0.5f, 0.0f, 0.0f, 0.0f,
-        0.5f,0.5f, 0.0f,   1.0f, 0.0f,
-        0.5f,-0.5f, 0.0f,  1.0f, 1.0f,
-        -0.5,-0.5f,0.0f,   0.0f, 1.0f
-    };
-    */
-    float vertices[] = {
-        // Vertex          // Texcoord
-        100.0f,100.0f, 0.0f, 0.0f, 0.0f,
-        100.0f,150.0f, 0.0f,   1.0f, 0.0f,
-        150.0f,150.0f, 0.0f,  1.0f, 1.0f,
-        150.0f,100.0f,0.0f,   0.0f, 1.0f
+        /*
+        -310.0f,230.0f, 0.0f, 0.0f, 0.0f,
+        310.0f,230.0f, 0.0f,   1.0f, 0.0f,
+        310.0f,-230.0f, 0.0f,  1.0f, 1.0f,
+        -310.0,-230.0f,0.0f,   0.0f, 1.0f
+        */
+        0.0f,0.0f, 0.0f, 0.0f, 0.0f,
+        80.0f,0.0f,0.0f,   1.0f, 0.0f,
+        80.0f,-50.0f, 0.0f,  1.0f, 1.0f,
+        0.0f,-50.0f,0.0f,   0.0f, 1.0f
     };
 
     GLuint elements[] = {
@@ -43,21 +39,11 @@ int main(int argc, char* argv[]) {
         2, 3, 0
     };
 
-
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-
-    Matrix4x4<float> a;
-    a = a*a;
-    a = a.invert();
-
     VertexAttributes vrtexAttributes;
     vrtexAttributes.addAttribute(VertexAttribute(3,0,VertexAttributes::positionAttribute));
     vrtexAttributes.addAttribute(VertexAttribute(2,3,VertexAttributes::textureCoordinatesAttribute));
     Mesh mesh(vrtexAttributes);
-    mesh.setVertices(4,5,vertices);
+    mesh.setVertices(4,6,vertices);
     mesh.setElements(2,3,elements);
 
     Shader vertex("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
@@ -68,18 +54,15 @@ int main(int argc, char* argv[]) {
     shaderProgram.addShader(&fragment);
     shaderProgram.link();
 
-    glClearColor( 0.0f, 0.1f, 0.0f, 0.5f );
-    glClear( GL_COLOR_BUFFER_BIT );
-
-    glFrustum(0, 640,480, 0, 1,2);
+    OrthographicCamera camera(640,480);
 
     shaderProgram.enable();
 
-    OrthographicCamera camera(640,480);
-    camera.setPosition(320,240,0);
-    camera.update();
-    shaderProgram.setUniformMatrix4x4("meh_modelViewProjection", camera.invertModelViewProjection());
-    camera.modelViewProjection().print();
+    /*
+    int loc = glGetAttribLocation(shaderProgram.id(),"meh_modelViewMatrix");
+    printf("loc: %i\n", loc);
+    glEnableVertexAttribArray(loc);
+    */
 
     Texture tex1;
     printf("Texture loaded: %i\n",tex1.load("res/lum.png"));
@@ -88,9 +71,19 @@ int main(int argc, char* argv[]) {
 
     mesh.bind(shaderProgram);
     mesh.render(shaderProgram);
-    mesh.unbind();
-    glUseProgram(0);
-    canvas.flip();
+
+    float a= 0.0f;
+    while (a < 5.0f) {
+        glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
+        glClear( GL_COLOR_BUFFER_BIT );
+        a += 0.05f;
+        camera.setPosition(a,0.0f,0.0f);
+        camera.update();
+        shaderProgram.setUniformMatrix4x4("meh_modelViewMatrix", camera.modelViewProjection());
+        mesh.render(shaderProgram);
+        canvas.flip();
+    }
+    
 
     InputDevicesManager& idm = canvas.inputDevicesManager();
     idm.update();
