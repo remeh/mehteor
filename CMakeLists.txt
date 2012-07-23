@@ -21,6 +21,8 @@ set(
         src/graphics/mesh.cpp
         src/graphics/camera.cpp
         src/graphics/orthographiccamera.cpp
+# tests
+        src/tests/testsmatrix4x4f.cpp
 # SOIL
         src/soil/image_DXT.c
         src/soil/image_helper.c
@@ -28,9 +30,9 @@ set(
         src/soil/stb_image_aug.c
 # GLEW
         src/glew.c
-        src/glew.c
 # Main
-        src/main.cpp
+     src/main.cpp
+#       src/tests.cpp
 )
 
 # Search in the `cmake' directory for additional CMake modules.
@@ -63,6 +65,6 @@ link_libraries (
     ${OPENGL_LIBRARY} # if using SDL_image, obviously
 )
 add_executable(
-    main
+    main 
     ${MEHTEOR_SOURCES}
 )

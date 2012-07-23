@@ -11,20 +11,20 @@ template<typename T>
 class Matrix4x4 {
     public: // static
         const static int M00 = 0;
-        const static int M01 = 1;
-        const static int M02 = 2;
-        const static int M03 = 3;
-        const static int M10 = 4;
+        const static int M10 = 1;
+        const static int M20 = 2;
+        const static int M30 = 3;
+        const static int M01 = 4;
         const static int M11 = 5;
-        const static int M12 = 6;
-        const static int M13 = 7;
-        const static int M20 = 8;
-        const static int M21 = 9;
+        const static int M21 = 6;
+        const static int M31 = 7;
+        const static int M02 = 8;
+        const static int M12 = 9;
         const static int M22 = 10;
-        const static int M23 = 11;
-        const static int M30 = 12;
-        const static int M31 = 13;
-        const static int M32 = 14;
+        const static int M32 = 11;
+        const static int M03 = 12;
+        const static int M13 = 13;
+        const static int M23 = 14;
         const static int M33 = 15;
 
     private:
@@ -202,10 +202,22 @@ class Matrix4x4 {
             float ty = -(top+bottom)/(top-bottom);
             float tz = -(far+near)/(far-near);
 
-            v[M00] = xOrth; v[M01] = 0; v[M02] = 0; v[M03] = tx;
-            v[M10] = 0; v[M11] = yOrth; v[M12] = 0; v[M13] = ty;
-            v[M20] = 0; v[M21] = 0; v[M22] = zOrth; v[M23] = tz;
-            v[M30] = 0; v[M31] = 0; v[M32] = 0; v[M33] = 1.0f;
+            v[M00] = xOrth;
+            v[M10] = 0;
+            v[M20] = 0;
+            v[M30] = 0.0f;
+            v[M01] = 0;
+            v[M11] = yOrth;
+            v[M21] = 0;
+            v[M31] = 0.0f;
+            v[M02] = 0;
+            v[M12] = 0;
+            v[M22] = zOrth;
+            v[M32] = 0.0f;
+            v[M03] = tx;
+            v[M13] = ty;
+            v[M23] = tz;
+            v[M33] = 1.0f;
 
             return *this;
         }
@@ -262,9 +274,15 @@ class Matrix4x4 {
 
             toIdentity();
 
-            v[M00] = vecX.x(); v[M01] = vecX.y(); v[M02] = vecX.z();
-            v[M10] = vecY.x(); v[M11] = vecY.y(); v[M12] = vecY.z();
-            v[M20] = -vecZ.x(); v[M21] = -vecZ.y(); v[M22] = -vecZ.z();
+            v[M00] = vecX.x();
+            v[M01] = vecX.y();
+            v[M02] = vecX.z();
+            v[M10] = vecY.x();
+            v[M11] = vecY.y();
+            v[M12] = vecY.z();
+            v[M20] = -vecZ.x();
+            v[M21] = -vecZ.y();
+            v[M22] = -vecZ.z();
 
             return *this;
         }

@@ -29,9 +29,9 @@ int main(int argc, char* argv[]) {
         -310.0,-230.0f,0.0f,   0.0f, 1.0f
         */
         0.0f,0.0f, 0.0f, 0.0f, 0.0f,
-        80.0f,0.0f,0.0f,   1.0f, 0.0f,
-        80.0f,-50.0f, 0.0f,  1.0f, 1.0f,
-        0.0f,-50.0f,0.0f,   0.0f, 1.0f
+        180.0f,0.0f,0.0f,   1.0f, 0.0f,
+        180.0f,100.0f, 0.0f,  1.0f, 1.0f,
+        0.0f,100.0f,0.0f,   0.0f, 1.0f
     };
 
     GLuint elements[] = {
@@ -72,19 +72,19 @@ int main(int argc, char* argv[]) {
     mesh.bind(shaderProgram);
     mesh.render(shaderProgram);
 
-    float a= 0.0f;
-    while (a < 5.0f) {
+    float a = 0.0f;
+    while (a < 100.0f) {
+
         glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
         glClear( GL_COLOR_BUFFER_BIT );
-        a += 0.05f;
-        camera.setPosition(a,0.0f,0.0f);
+        camera.setPosition(320.0f-a,240.0f,0.0f);
         camera.update();
         shaderProgram.setUniformMatrix4x4("meh_modelViewMatrix", camera.modelViewProjection());
         mesh.render(shaderProgram);
         canvas.flip();
+       
+        a += 0.1f;
     }
-    
-
     InputDevicesManager& idm = canvas.inputDevicesManager();
     idm.update();
     printf("%i %i\n",idm.mouseX(),idm.mouseY());
