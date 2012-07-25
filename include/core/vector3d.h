@@ -71,6 +71,19 @@ class Vector3d {
         }
 
         /**
+         * Sets the value with another vector values.
+         * @param other the other vector.
+         */
+        /*
+        Vector3d<T>& operator=(Vector3d<T>& other) {
+            _x = other.x();
+            _y = other.y();
+            _z = other.z();
+            return *this;
+        }
+        */
+
+        /**
          * Adds this vector to another one and returns the result.
          * @param other the other vector
          * @return the result of the addition

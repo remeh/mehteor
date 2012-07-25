@@ -1,6 +1,8 @@
 #include "GL/glew.h"
 #include "mehteor.h"
 
+#include "core/quaternion.h"
+
 using namespace meh;
 
 int main(int argc, char* argv[]) {
@@ -29,9 +31,9 @@ int main(int argc, char* argv[]) {
         -310.0,-230.0f,0.0f,   0.0f, 1.0f
         */
         0.0f,0.0f, 0.0f, 0.0f, 0.0f,
-        180.0f,0.0f,0.0f,   1.0f, 0.0f,
-        180.0f,100.0f, 0.0f,  1.0f, 1.0f,
-        0.0f,100.0f,0.0f,   0.0f, 1.0f
+        350.0f,0.0f,0.0f,   0.0f, 1.0f,
+        350.0f,250.0f, 0.0f,  1.0f, 1.0f,
+        0.0f,250.0f,0.0f,   1.0f, 0.0f
     };
 
     GLuint elements[] = {
@@ -65,33 +67,47 @@ int main(int argc, char* argv[]) {
     */
 
     Texture tex1;
-    printf("Texture loaded: %i\n",tex1.load("res/lum.png"));
+    printf("Texture loaded: %i\n",tex1.load("res/test.png"));
+    tex1.bind(0);
+    Texture tex2;
+    /*
+    printf("Texture loaded: %i\n",tex2.load("res/lama1.png"));
     tex1.bind(0);
     shaderProgram.setUniformi("meh_texture",0);
+    */
 
     mesh.bind(shaderProgram);
     mesh.render(shaderProgram);
 
-    float a = 0.0f;
-    while (a < 100.0f) {
+    InputDevicesManager& idm = canvas.inputDevicesManager();
 
-        glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
-        glClear( GL_COLOR_BUFFER_BIT );
-        camera.setPosition(320.0f-a,240.0f,0.0f);
+    float a = 0.0f;
+    while (a < 20.0f) {
+        canvas.clear(0.0f,0.0f,0.0f,1.0f);
+        idm.update();
+        printf("%i %i\n",idm.mouseX(),idm.mouseY());
+        camera.setPosition(320.0f,240.0f,0.0f);
         camera.update();
+
+        if (idm.keyPressed(SDLK_SPACE)) {
+            printf("SPACE!\n");
+        }
+
+        if (idm.leftButton()) {
+            printf("left button\n");
+        }
+        if (idm.middleButton()) {
+            printf("middle button\n");
+        }
+        if (idm.rightButton()) {
+            printf("right button\n");
+        }
+
         shaderProgram.setUniformMatrix4x4("meh_modelViewMatrix", camera.modelViewProjection());
         mesh.render(shaderProgram);
         canvas.flip();
-       
         a += 0.1f;
     }
-    InputDevicesManager& idm = canvas.inputDevicesManager();
-    idm.update();
-    printf("%i %i\n",idm.mouseX(),idm.mouseY());
-
-    System::sleep(2000);
-    idm.update();
-    printf("%i %i\n",idm.mouseX(),idm.mouseY());
 
     printf("%s\n",gluErrorString(glGetError()));
 

@@ -51,10 +51,8 @@ void Mesh::bind(ShaderProgram& shaderProgram) {
 void Mesh::render(ShaderProgram& shaderProgram) {
     if (ibo) {
         // TODO offset
-        printf("Draw elements.\n");
         glDrawElements(GL_TRIANGLES, ibo->dimension()*ibo->size(), GL_UNSIGNED_INT, 0);
     } else {
-        printf("Draw arrays.\n");
         glDrawArrays(GL_TRIANGLES, 0, vbo->size());
     }
 }

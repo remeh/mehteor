@@ -12,7 +12,8 @@ namespace meh {
 bool Canvas::glewIsInit = false;
 
 Canvas::Canvas(int w, int h) :
-    sdlSurface(nullptr) {
+    sdlSurface(nullptr),
+    inputManager(w,h) {
     if (System::graphicsEnabled()) {
         sdlSurface = SDL_SetVideoMode(w,h,0,SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
         
@@ -46,6 +47,11 @@ void Canvas::flip() {
 
 void Canvas::setTitle(string title) {
     SDL_WM_SetCaption(title.c_str(),nullptr);
+}
+
+void Canvas::clear(float r, float g, float b, float a) {
+    glClearColor(r,g,b,a);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 } // namespace meh

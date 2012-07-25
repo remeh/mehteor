@@ -1,26 +1,12 @@
-/*
- *      quaternion.h
- *      
- *      Copyright 2009 Remy Mathieu <remeh@remeh.fr>
- *      
- */
-
-/**
- * \file
- * 	quaternion.h
- * \brief
- * 	A simple quaternion implementation.
- * 	The quaternion can be used to apply a rotation on a vector
- * \author
- * 	Remy Mathieu
- * \version
- * 	0.1
- * \date
- * 	14 mai 2009
- */
-
 #ifndef MEH_QUATERNION_H
 #define MEH_QUATERNION_H
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+#ifndef M_PIOVER180
+#define M_PIOVER180 0.017453292519943295
+#endif
 
 #include <iostream>
 #include <cmath>
@@ -28,6 +14,12 @@
 
 namespace meh
 {
+
+/**
+ * 	A simple quaternion implementation.
+ *
+ * 	The quaternion can be used to apply a rotation on vectors.
+ */
 template<typename T>
 class Quaternion
 {
@@ -41,6 +33,8 @@ class Quaternion
         Quaternion() : x(0), y(0), z(0), w(1) {};
 
         Quaternion(const Vector2d<T>& vec, T nz, T nw) : x(vec.x()), y(vec.y()), z(nz), w(nw) {};
+
+        Quaternion(const Vector3d<T>& vec, T nw) : x(vec.x()), y(vec.y()), z(vec.z()), w(nw) {};
 
         Quaternion(T nx, T ny, T nz, T nw) : x(nx), y (ny), z(nz), w(nw) {};
 
@@ -76,7 +70,7 @@ class Quaternion
         /**
          * Return the conjuguate of the quaternion
          */
-        Quaternion<T> getConjuguate()
+        Quaternion<T> conjuguate()
         {
             return Quaternion<T>(-x,-y,-z,w);
         }
@@ -84,34 +78,32 @@ class Quaternion
         /**
          * Setter from a vector
          */
-        Quaternion<T>
-        operator=(const Vector<T>& v)
+        Quaternion<T>&
+        operator=(const Vector3d<T>& v)
         {
-            Quaternion<T> tmp;
-            tmp.x = v.x;
-            tmp.y = v.y;
-            tmp.z = v.z;
-            tmp.w = 0;
-            return tmp;
+            x = v.x();
+            y = v.y();
+            z = v.z();
+            w = 0;
+            return *this;
         }
         
         /**
          * Quaternion multiplication
          */
-        Quaternion<T> operator*(const Quaternion<T>& q) {
-            Quaternion<T> tmp;
-            tmp.w = this->w*q.w - this->x*q.x - this->y*q.y - this->z*q.z;
-            tmp.x = this->w*q.x + this->x*q.w + this->y*q.z - this->z*q.y;
-            tmp.y = this->w*q.y - this->x*q.z + this->y*q.w + this->z*q.x;
-            tmp.z = this->w*q.z + this->x*q.y - this->y*q.x + this->z*q.w;
-            return tmp;
+        Quaternion<T>& operator*(const Quaternion<T>& q) {
+            w = this->w*q.w - this->x*q.x - this->y*q.y - this->z*q.z;
+            x = this->w*q.x + this->x*q.w + this->y*q.z - this->z*q.y;
+            y = this->w*q.y - this->x*q.z + this->y*q.w + this->z*q.x;
+            z = this->w*q.z + this->x*q.y - this->y*q.x + this->z*q.w;
+            return *this;
         }
 
         /**
          * Apply a q-rotation on a vector
          */
-        Vector<T> operator*(const Vector<T>& vec) {
-            Vector<T> vn = vec;
+        Vector3d<T>& operator*(const Vector3d<T>& vec) {
+            Vector3d<T> vn = vec;
             vn.normalize();
 
             Quaternion<T> vecQ;
@@ -120,10 +112,10 @@ class Quaternion
             vecQ.z = vn.z;
             vecQ.w = 0.0f;
 
-            Quaternion<T> res = vecQ * getConjuguate();
+            Quaternion<T> res = vecQ * conjuguate();
             res = *this * res;
 
-            return (Vector<T>(res.x, res.y, res.z));
+            return (Vector3d<T>(res.x, res.y, res.z));
         }
 
         /**
@@ -133,23 +125,22 @@ class Quaternion
          * \param axis : the axis around which the rotation is computed
          * \param degree : the degree of rotation
          */
-        void
-        fromAxis(const Vector<T>& axis, float degree) {
+        void fromAxis(const Vector3d<T>& axis, float degree) {
             float angle = degree*M_PIOVER180;
 
             float angleOverTwo = angle*0.5;
             float fSin = sin(angleOverTwo);
                     
             w = cos(angleOverTwo);
-            x = (axis.x*fSin);
-            y = (axis.y*fSin);
-            z = (axis.z*fSin);
+            x = (axis.x()*fSin);
+            y = (axis.y()*fSin);
+            z = (axis.z()*fSin);
         }
 
         /**
          * Reset the quaternion to the identity matrix
          */
-        void identity() {
+        void toIdentity() {
             x = y = z = 0;
             w = 1;
         }

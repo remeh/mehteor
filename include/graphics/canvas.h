@@ -35,6 +35,11 @@ class Canvas {
         virtual ~Canvas();
 
         /**
+         * Clears the screen with the provided color.
+         */
+        void clear(float r, float g, float b, float a);
+
+        /**
          * Returns the pointer to the SDL_Surface.
          * @return the pointer to the SDL_Surface.
          */

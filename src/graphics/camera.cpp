@@ -18,7 +18,7 @@ Camera::~Camera() {
 
 void Camera::lookAt(float x, float y, float z) {
     dir.setXYZ(x,y,z);
-    dir = dir - pos;
+    dir = (dir - pos);
     dir.normalize();
 }
 
