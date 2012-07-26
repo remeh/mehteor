@@ -60,6 +60,9 @@ class Camera {
         Camera();
         virtual ~Camera();
 
+        /**
+         * Move the target of this Camera to the provided position.
+         */
         void lookAt(float x, float y, float z);
 
         virtual void update() = 0;

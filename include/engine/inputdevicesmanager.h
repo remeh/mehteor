@@ -34,11 +34,20 @@ class InputDevicesManager {
          */
         bool keys[SDLK_LAST]; 
 
+        /**
+         * State of mouse buttons.
+         */
         bool mouseButtons[3];
 
     protected:
     public:
+        /**
+         * Default constructor.
+         * @param canvasWidth width of the canvas.
+         * @param canvasHeight width of the height.
+         */
         InputDevicesManager(int canvasWidth, int canvasHeight);
+
         ~InputDevicesManager();
 
         /**
@@ -69,10 +78,24 @@ class InputDevicesManager {
             return Vector2d<int>(mx,my);
         }
 
+        /**
+         * Returns whether a key is pressed.
+         */
         bool keyPressed(int key);
 
+        /**
+         * Returns whether the left button of the mouse is pressed.
+         */
         bool leftButton();
+
+        /**
+         * Returns whether the middle button of the mouse is pressed.
+         */
         bool middleButton();
+
+        /**
+         * Returns whether the right button of the mouse is pressed.
+         */
         bool rightButton();
 };
 

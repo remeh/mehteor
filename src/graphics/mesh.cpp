@@ -48,7 +48,7 @@ void Mesh::bind(ShaderProgram& shaderProgram) {
     attributes.enable(shaderProgram);
 }
 
-void Mesh::render(ShaderProgram& shaderProgram) {
+void Mesh::render() {
     if (ibo) {
         // TODO offset
         glDrawElements(GL_TRIANGLES, ibo->dimension()*ibo->size(), GL_UNSIGNED_INT, 0);
