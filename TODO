@@ -1,5 +1,6 @@
-bytebuffer.cpp : more functions read/write
-vbo.cpp: why does the simple memcpy don't work on every computers ?
-threads
-target for unit tests
-
+- bytebuffer.cpp : more functions read/write
+- vbo.cpp: why does the simple memcpy don't work on every computers ?
+- threads
+- storing the texture in the bitmap (in a bytebuffer) doesn't correctly work
+- target for unit tests
+- target for windows32

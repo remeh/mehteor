@@ -26,6 +26,7 @@ class Texture {
     protected:
     public:
         Texture();
+        Texture(string filename);
         ~Texture();
 
         /**
@@ -43,6 +44,14 @@ class Texture {
 
         GLuint id() {
             return texId;
+        }
+
+        int width() {
+            return w;
+        }
+
+        int height() {
+            return h;
         }
 };
 

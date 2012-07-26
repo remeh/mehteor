@@ -3,6 +3,7 @@
 #include "core/rect.h"
 #include "core/vector2d.h"
 #include "core/matrix4x4.h"
+#include "core/quaternion.h"
 
 #include "graphics/bitmap.h"
 #include "graphics/vbo.h"
@@ -15,3 +16,8 @@
 #include "graphics/mesh.h"
 #include "graphics/camera.h"
 #include "graphics/orthographiccamera.h"
+
+#include "engine/resourcesmanager.h"
+#include "engine/inputdevicesmanager.h"
+#include "engine/sprite.h"
+#include "engine/spriterenderer.h"

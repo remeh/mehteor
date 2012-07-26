@@ -7,7 +7,6 @@ set(
 # core
         src/core/system.cpp
         src/core/bytebuffer.cpp
-        src/core/inputdevicesmanager.cpp
 # graphics
         src/graphics/canvas.cpp
         src/graphics/shader.cpp
@@ -21,6 +20,12 @@ set(
         src/graphics/mesh.cpp
         src/graphics/camera.cpp
         src/graphics/orthographiccamera.cpp
+# engine
+        src/engine/inputdevicesmanager.cpp
+        src/engine/resourcesmanager.cpp
+        src/engine/sprite.cpp
+        src/engine/spriterenderer.cpp
+
 # tests
         src/tests/testsmatrix4x4f.cpp
 # SOIL
@@ -34,6 +39,14 @@ set(
      src/main.cpp
 #       src/tests.cpp
 )
+
+#if(WIN32)
+#set(CMAKE_C_COMPILER i486-mingw32-gcc)
+#set(CMAKE_CXX_COMPILER i486-mingw32-g++)
+#set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+#set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+#set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+#endif(WIN32)
 
 # Search in the `cmake' directory for additional CMake modules.
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
@@ -66,5 +79,6 @@ link_libraries (
 )
 add_executable(
     main 
+    WIN32
     ${MEHTEOR_SOURCES}
 )

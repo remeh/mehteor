@@ -4,7 +4,7 @@
 #include <string>
 #include <SDL/SDL.h>
 #include "core/vector2d.h"
-#include "core/inputdevicesmanager.h"
+#include "engine/inputdevicesmanager.h"
 
 using namespace std;
 

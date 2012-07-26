@@ -13,7 +13,14 @@ Texture::Texture() :
     glGenTextures(1, &texId);
 }
 
+Texture::Texture(string filename) :
+    bitmap(nullptr) {
+    glGenTextures(1, &texId);
+    load(filename);
+}
+
 Texture::~Texture() {
+    glDeleteTextures(1, &texId);
     if (bitmap) {
         delete bitmap;
         bitmap = nullptr;

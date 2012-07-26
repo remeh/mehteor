@@ -1,5 +1,5 @@
 #include <SDL/SDL.h>
-#include "core/inputdevicesmanager.h"
+#include "engine/inputdevicesmanager.h"
 
 namespace meh {
 
