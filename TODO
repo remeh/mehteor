@@ -2,5 +2,7 @@
 - vbo.cpp: why does the simple memcpy don't work on every computers ?
 - threads
 - storing the texture in the bitmap (in a bytebuffer) doesn't correctly work
+- color (vertex, sprites)
 - target for unit tests
 - target for windows32
+- glew 1.8.0

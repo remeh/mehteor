@@ -16,18 +16,94 @@ class SpriteRenderer {
         Mesh* msh;
         ResourcesManager& rsourcesManager;
         Texture* lastUsedTexture;
+        
+        int sze;
+        GLfloat* vrtices;
+        GLuint* elmts;
+        int idx;
+        int idxElements;
+        int nElements;
 
+        ShaderProgram* shaderProgram;
+
+        Matrix4x4<float> mdelViewMatrix;
+
+        /**
+         * Used when we need to compute the texture coordinates
+         * between [0.0f;1.0f] using the coordinates in the
+         * texture coordinates
+         */
+        float invTexW;
+        /**
+         * Used when we need to compute the texture coordinates
+         * between [0.0f;1.0f] using the coordinates in the
+         * texture coordinates
+         */
+        float invTexH;
+        
         void render();
+
+        /**
+         * Switch the currently used texture.
+         * Can render the vertices which were already set and computes
+         * the new inverse texture coordinates. Doesn't do anything
+         * if we don't need to switch the texture.
+         * @param newTexture the new texture to switch to.
+         */
+        void switchTexture(Texture* newTexture);
 
     protected:
     public:
+
         SpriteRenderer(ResourcesManager& resourcesManager);
+        /**
+         * @param size number of Sprite this renderer should bufferize.
+         */
+        SpriteRenderer(ResourcesManager& resourcesManager, int size);
         ~SpriteRenderer();
 
+        void init();
+        void deinit();
+
         /**
-         * XXX for the moment, directly renders a sprite using the provided shader program.
+         * Slow function which creates a simple Mesh to directly render
+         * the Sprite.
+         * @param sprite the Sprite to render.
+         * @param shaderProgram the shader program to apply to render the Sprite.
          */
-        void draw(Sprite& sprite, ShaderProgram& shaderProgram);
+        void directDraw(Sprite& sprite, ShaderProgram& shaderProgram);
+
+        void draw(Sprite& sprite);
+        
+        /**
+         * TODO comment
+         * @param texture the texture to use for the drawing
+         * @param x the coordinate on the x-axis
+         * @param y the coordinate on the y-axis
+         * @param w the width
+         * @param h the height
+         * @param centerX the scaling and rotation center for the x-axis
+         * @param centerY the scaling and rotation center for the y-axis
+         * @param scaleX the scale on the x-axis
+         * @param scaleY the scale on the y-axis
+         * @param rotation the rotation to apply (with center centerX/centerY)
+         * @param texX the coordinate on the x-axis in the texture coordinates (not normalized)
+         * @param texY the coordinate on the y-axis in the texture coordinates (not normalized)
+         * @param texW the width on the x-axis in the texture coordinates (not normalized)
+         * @param texH the height on the y-axis in the texture coordinates (not normalized)
+         * @param flipX whether the texture should be flipped horizontally
+         * @param flipY whether the texture should be flipped vertically
+         */
+        void draw(Texture* texture, float x, float y, float w, float h, float centerX, float centerY,
+                float scaleX, float scaleY, float rotation, float texX, float texY, float texW, float texH,
+                bool flipX, bool flipY);
+
+        void begin(ShaderProgram* shaderProgram);
+        void end();
+
+        void setModelViewMatrix(Matrix4x4<float>& modelViewMatrix) {
+            mdelViewMatrix.set(modelViewMatrix);
+        }
 };
 
 } // namespace meh

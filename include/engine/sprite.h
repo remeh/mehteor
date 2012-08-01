@@ -8,8 +8,18 @@
 namespace meh {
 
 class Sprite {
+    public: // static
+        /**
+         * The size of one vertex of this Sprite.
+         */
+        static int VERTEX_SIZE;
+        /**
+         * The number of vertices for one sprite
+         */
+        static int SIZE;
+
     private:
-        Texture& tex;
+        Texture* tex;
 
         Rect<float> r;
 
@@ -32,18 +42,40 @@ class Sprite {
         /**
          * Constructs a sprite based on a texture, with a size equals on the texture size, position at 0,0.
          */
-        Sprite(Texture& texture);
+        Sprite(Texture* texture);
         ~Sprite();
 
         void draw(SpriteRenderer spriteRenderer);
 
-        Texture& texture() {
+        Texture* texture() {
             return tex;
         }
 
         Rect<float>& rect() {
             return r;
         }
+
+        float x() {
+            return r.x();
+        }
+
+        float y() {
+            return r.y();
+        }
+
+        float width() {
+            return r.width();
+        }
+
+        float height() {
+            return r.height();
+        }
+
+        Rect<float>& textureRegion() {
+            return texRegion;
+        }
+
+        void setPosition(float x, float y);
 };
 
 } // namespace meh

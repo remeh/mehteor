@@ -11,6 +11,8 @@ using namespace std;
 
 namespace meh {
 
+string ShaderProgram::modelViewProjectionAttribute = "meh_modelViewMatrix";
+
 ShaderProgram::ShaderProgram() {
     shaderProgramId = glCreateProgram();
 }

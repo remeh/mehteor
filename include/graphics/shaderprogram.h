@@ -15,6 +15,9 @@ using namespace std;
 namespace meh {
 
 class ShaderProgram {
+    public: // static
+        static string modelViewProjectionAttribute;
+
     private:
         GLuint shaderProgramId;
         list<Shader*> shders;

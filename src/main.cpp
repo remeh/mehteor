@@ -39,7 +39,6 @@ int main(int argc, char* argv[]) {
 
     OrthographicCamera camera(640,480);
 
-
     shaderProgram.enable();
 
     /*
@@ -57,8 +56,8 @@ int main(int argc, char* argv[]) {
 
     SpriteRenderer renderer(resourcesManager);
     
-    Sprite sprite(*(resourcesManager.getTexture("lama2")));
-    Sprite sprite2(*(resourcesManager.getTexture("lama1")));
+    Sprite sprite(resourcesManager.getTexture("lama2"));
+    Sprite sprite2(resourcesManager.getTexture("lama1"));
 
     InputDevicesManager& idm = canvas.inputDevicesManager();
 
@@ -82,14 +81,38 @@ int main(int argc, char* argv[]) {
         printf("right button\n");
     }
 
-    shaderProgram.setUniformMatrix4x4("meh_modelViewMatrix", camera.modelViewProjection());
+    renderer.setModelViewMatrix(camera.modelViewProjection());
+    /*
+    renderer.directDraw(sprite, shaderProgram);
+    */
+    renderer.begin(&shaderProgram);
+    renderer.draw(sprite2);
+    renderer.draw(sprite2);
+    renderer.draw(sprite2);
+    renderer.draw(sprite2);
+    renderer.draw(sprite2);
+    renderer.draw(sprite2);
+    renderer.draw(sprite2);
+    renderer.draw(sprite2);
+    sprite.setPosition(50.0f,50.0f);
+    renderer.draw(sprite);
+    sprite.setPosition(40.0f,40.0f);
+    renderer.draw(sprite);
+    sprite.setPosition(30.0f,30.0f);
+    renderer.draw(sprite);
+    sprite.setPosition(20.0f,20.0f);
+    renderer.draw(sprite);
+    sprite.setPosition(10.0f,10.0f);
+    renderer.draw(sprite);
+    sprite.setPosition(00.0f,00.0f);
+    renderer.draw(sprite);
+    renderer.end();
 
-    renderer.draw(sprite,shaderProgram);
-    canvas.flip();
-    printf("%s\n",gluErrorString(glGetError()));
-    System::sleep(1000);
+    renderer.begin(&shaderProgram);
+    sprite2.setPosition(200.0f,200.0f);
+    renderer.draw(sprite2);
+    renderer.end();
 
-    renderer.draw(sprite2,shaderProgram);
     canvas.flip();
     shaderProgram.disable();
     printf("%s\n",gluErrorString(glGetError()));
