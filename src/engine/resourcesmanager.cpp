@@ -36,6 +36,7 @@ Texture* ResourcesManager::getTexture(string uniqueId) {
     if (mapTextures.count(uniqueId) == 1) {
         return mapTextures[uniqueId];
     }
+    return nullptr;
 }
 
 bool ResourcesManager::deleteTexture(string uniqueId) {

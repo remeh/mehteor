@@ -94,6 +94,11 @@ void SpriteRenderer::switchTexture(Texture* newTexture) {
 void SpriteRenderer::draw(Texture* texture, float x, float y, float w, float h, float centerX, float centerY,
                         float scaleX, float scaleY, float rotation, float texX, float texY, float texW, float texH,
                         bool flipX, bool flipY) {
+    if (!isRendering) {
+        printf("ERROR: illegal state: call to draw() but the renderer isn't in rendering mode.\n");
+        return;
+    }
+
     switchTexture(texture);
 
     // TODO scale and rotation
@@ -147,8 +152,9 @@ void SpriteRenderer::draw(Texture* texture, float x, float y, float w, float h, 
 }
 
 void SpriteRenderer::draw(Sprite& sprite) {
-    draw(sprite.texture(), sprite.x(), sprite.y(), sprite.width(), sprite.height(), 0.0f, 0.0f,
-            1.0f, 1.0f, 0.0f, 0.0f, 0.0f, sprite.textureRegion().width(), sprite.textureRegion().height(), false, false); 
+    draw(sprite.texture(), sprite.x(), sprite.y(), sprite.width(), sprite.height(), sprite.rotationCenter().x(), sprite.rotationCenter().y(),
+            sprite.scaleX(), sprite.scaleY(), sprite.rotation(), sprite.textureRegion().x(), sprite.textureRegion().y(),
+            sprite.textureRegion().width(), sprite.textureRegion().height(), false, false); 
 }
 
 void SpriteRenderer::begin(ShaderProgram* shaderProgram) {
@@ -156,20 +162,41 @@ void SpriteRenderer::begin(ShaderProgram* shaderProgram) {
        printf("ERROR: SpriteRenderer::begin(ShaderProgram*) called with a shaderProgram as nullptr.\n"); 
        return;
     }
+    if (isRendering) {
+        printf("ERROR: illegal state: the renderer was already in the rendering state.\n");
+        return;
+    }
+
     shaderProgram->enable();    
+    // Set the camera position
     shaderProgram->setUniformMatrix4x4(ShaderProgram::modelViewProjectionAttribute, mdelViewMatrix);
     this->shaderProgram = shaderProgram;
+
+    // We enter in the rendering state
+    isRendering = true;
 }
 
 void SpriteRenderer::end() {
-    if (idx > 0) {
-        render();
+    if (isRendering) {
+        if (idx > 0) {
+            render();
+        }
+        shaderProgram->disable();
+        shaderProgram = nullptr;
+
+        // We're no longer rendering
+        isRendering = false;
+    } else {
+        printf("ERROR: illegal state: call to end() but the renderer isn't in rendering mode.\n");
     }
-    shaderProgram->disable();
-    shaderProgram = nullptr;
 }
 
 void SpriteRenderer::render() {
+    if (!isRendering) {
+        printf("ERROR: illegal state: call to render() but the renderer isn't in rendering mode.\n");
+        return;
+    }
+
     if (msh) {
         delete msh;
         msh = nullptr;

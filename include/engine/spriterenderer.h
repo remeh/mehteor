@@ -40,6 +40,11 @@ class SpriteRenderer {
          * texture coordinates
          */
         float invTexH;
+
+        /**
+         * True when the SpriteRenderer is rendering (between the call of begin() and end()).
+         */
+        bool isRendering;
         
         void render();
 
