@@ -18,13 +18,16 @@ set(
         src/graphics/vertexattributes.cpp
         src/graphics/vertexattribute.cpp
         src/graphics/mesh.cpp
-        src/graphics/camera.cpp
-        src/graphics/orthographiccamera.cpp
 # engine
         src/engine/inputdevicesmanager.cpp
         src/engine/resourcesmanager.cpp
         src/engine/sprite.cpp
         src/engine/spriterenderer.cpp
+        src/engine/spriteanimation.cpp
+        src/engine/camera/camera.cpp
+        src/engine/camera/orthographiccamera.cpp
+        src/engine/scene/simplescene2d.cpp
+        src/engine/scene/spriteactor.cpp
 
 # tests
         src/tests/testsmatrix4x4f.cpp
@@ -40,14 +43,6 @@ set(
 #       src/tests.cpp
 )
 
-#if(WIN32)
-#set(CMAKE_C_COMPILER i486-mingw32-gcc)
-#set(CMAKE_CXX_COMPILER i486-mingw32-g++)
-#set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-#set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-#set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-#endif(WIN32)
-
 # Search in the `cmake' directory for additional CMake modules.
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
@@ -57,28 +52,24 @@ include(FindSDL REQUIRED)
 include(FindOpenGL REQUIRED)
 #include(FindGLEW REQUIRED)
 
-#if (NOT GLFW_FOUND)
-#    message(FATAL_ERROR "glfw not found")
-#    else()
-#    include_directories(${GLFW_INCLUDE_DIRS})
-#endif()
 
 include_directories(${SDL_INCLUDE_DIR})
 
 # g++ flags
-set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11")
+set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -DGLEW_STATIC ")
 
 # sources
 include_directories(${Mehteor_SOURCE_DIR}/include)
 link_directories(${Mehteor_BINARY_DIR}/src)
 link_libraries (
     ${SDL_LIBRARY}
-    ${SDLIMAGE_LIBRARY} # if using SDL_image, obviously
+    ${SDLIMAGE_LIBRARY}
     SDLmain # Sadly not included in SDL_LIBRARY variable
-    ${OPENGL_LIBRARY} # if using SDL_image, obviously
+    ${OPENGL_LIBRARY} 
 )
+
 add_executable(
     main 
-    WIN32
     ${MEHTEOR_SOURCES}
 )
+

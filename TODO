@@ -4,4 +4,5 @@
 - storing the texture in the bitmap (in a bytebuffer) doesn't correctly work
 - color (vertex, sprites)
 - target for unit tests
-- target for windows32
+- sprite flipX/flipY
+- spriterenderer rendering if the buffer is full

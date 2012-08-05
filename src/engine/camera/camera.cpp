@@ -1,4 +1,4 @@
-#include "graphics/camera.h"
+#include "engine/camera/camera.h"
 
 namespace meh {
 

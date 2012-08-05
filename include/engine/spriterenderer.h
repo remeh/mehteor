@@ -5,16 +5,15 @@
 #include "graphics/mesh.h"
 #include "graphics/texture.h"
 #include "graphics/shaderprogram.h"
-#include "engine/resourcesmanager.h"
+#include "engine/renderer.h"
 
 namespace meh {
 
 class Sprite;
 
-class SpriteRenderer {
+class SpriteRenderer : public Renderer {
     private:
         Mesh* msh;
-        ResourcesManager& rsourcesManager;
         Texture* lastUsedTexture;
         
         int sze;
@@ -59,12 +58,11 @@ class SpriteRenderer {
 
     protected:
     public:
-
-        SpriteRenderer(ResourcesManager& resourcesManager);
+        SpriteRenderer();
         /**
          * @param size number of Sprite this renderer should bufferize.
          */
-        SpriteRenderer(ResourcesManager& resourcesManager, int size);
+        SpriteRenderer(int size);
         ~SpriteRenderer();
 
         void init();

@@ -1,22 +1,21 @@
 #include "engine/spriterenderer.h"
-#include "engine/resourcesmanager.h"
 #include "engine/sprite.h"
 
 namespace meh {
 
-SpriteRenderer::SpriteRenderer(ResourcesManager& resourcesManager) :
-    SpriteRenderer(resourcesManager, 1000) {
+SpriteRenderer::SpriteRenderer() :
+    SpriteRenderer(1000) {
 }
 
-SpriteRenderer::SpriteRenderer(ResourcesManager& resourcesManager, int size) :
+SpriteRenderer::SpriteRenderer(int size) :
     msh(nullptr), 
-    rsourcesManager(resourcesManager),
     lastUsedTexture(nullptr),
     sze(size),
     idx(0),
     idxElements(0),
     nElements(0),
-    shaderProgram(nullptr) {
+    shaderProgram(nullptr),
+    isRendering(false) {
     init();
 }
 
@@ -210,7 +209,7 @@ void SpriteRenderer::render() {
         msh->setVertices(idx/(2+2), 2+2, vrtices);
         msh->setElements(idxElements/3, 3, elmts);
 
-        printf("renders %i vertices in %i elements\n",idx/4,idxElements/3);
+        // printf("renders %i vertices in %i elements\n",idx/4,idxElements/3);
 
         lastUsedTexture->bind(0);
         msh->bind(*shaderProgram);

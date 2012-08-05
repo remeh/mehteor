@@ -1,4 +1,3 @@
-#include <cstdio>
 #include "graphics/ibo.h"
 
 namespace meh {
@@ -23,16 +22,13 @@ IBO::~IBO() {
 void IBO::bind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
     if (drty) {
-        printf("Uploaded elements data to the GPU.\n");
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*sze*dim, elems, dyn ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
         drty = false;
     }
-    printf("IBO binded : %i\n",iboId);
 }
 
 void IBO::unbind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
-    printf("IBO unbinded : %i\n",iboId);
 }
 
 void IBO::setElements(unsigned int size, unsigned int dimension, GLuint* elements) {
