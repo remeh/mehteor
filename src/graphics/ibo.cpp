@@ -1,3 +1,5 @@
+#include <cstdio>
+#include <cstring> // memcpy
 #include "graphics/ibo.h"
 
 namespace meh {
@@ -32,21 +34,23 @@ void IBO::unbind() {
 }
 
 void IBO::setElements(unsigned int size, unsigned int dimension, GLuint* elements) {
-    sze = size;
-    dim = dimension;
+    int totalSize = size*dimension;
+    // Reallocate the memory only when needed
+    if (!elems || sze != size || dim != dimension) {
+        sze = size;
+        dim = dimension;
 
-    // Delete old values if any
-    if (elems) {
-        delete[] elems;
-        elems = nullptr;
+        // Delete old values if any
+        if (elems) {
+            delete[] elems;
+            elems = nullptr;
+        }
+        // Store new values
+        elems = new GLuint[totalSize];
     }
-    // Store new values
-    int totalSize = sze*dim;
-    elems = new GLuint[totalSize];
-    // TODO use memcpy
-    for (int i =0; i < totalSize; i++) {
-        elems[i] = elements[i];
-    }
+
+    memcpy(elems,elements,totalSize);
+
     drty = true;
 }
 

@@ -16,12 +16,22 @@ class SpriteRenderer : public Renderer {
         Mesh* msh;
         Texture* lastUsedTexture;
         
-        int sze;
+        /**
+         * How many Sprite this Renderer could buffer.
+         */
+        unsigned int sze;
         GLfloat* vrtices;
         GLuint* elmts;
         int idx;
         int idxElements;
         int nElements;
+
+        /**
+         * To know how many sprites are currently in the buffer, because
+         * the buffer has a limited sized. Used to flush the buffer
+         * when needed.
+         */
+        unsigned int spriteBuffered;
 
         ShaderProgram* shaderProgram;
 
@@ -62,19 +72,15 @@ class SpriteRenderer : public Renderer {
         /**
          * @param size number of Sprite this renderer should bufferize.
          */
-        SpriteRenderer(int size);
+        SpriteRenderer(unsigned int size);
         ~SpriteRenderer();
 
         void init();
-        void deinit();
-
         /**
-         * Slow function which creates a simple Mesh to directly render
-         * the Sprite.
-         * @param sprite the Sprite to render.
-         * @param shaderProgram the shader program to apply to render the Sprite.
+         * TODO comment
+         * @param deleteMesh whether the internally used Mesh should be deleted.
          */
-        void directDraw(Sprite& sprite, ShaderProgram& shaderProgram);
+        void deinit(bool deleteMesh = true);
 
         void draw(Sprite& sprite);
         

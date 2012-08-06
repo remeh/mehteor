@@ -13,13 +13,18 @@ GLuint VBO::textureAttribute = 1;
 
 VBO::VBO(bool dynamic) :
     vrtices(nullptr), 
+    vboId(0),
     drty(true),
     dyn(dynamic) {
     glGenBuffers(1, &vboId);
+    printf("new VBO\n");
 }
 
 VBO::~VBO() {
-    glDeleteBuffers(1,&vboId);
+    if (vboId > 0) {
+        glDeleteBuffers(1,&vboId);
+        vboId = 0;
+    }
     if (vrtices) {
         delete[] vrtices;
         vrtices = nullptr;
@@ -27,27 +32,29 @@ VBO::~VBO() {
 }
 
 void VBO::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices) {
-    sze = size;
-    dim = dimension;
-
-    // Releases old version if any
-    if (vrtices) {
-        delete[] vrtices;
-        vrtices = nullptr;
-    }
-
     unsigned int totalSize = size*dimension;
-    vrtices = new GLfloat[totalSize];
-    // Copy the values
-    // memcpy(vrtices, vertices, totalSize); // XXX doesn't work on both my computers!
-    for (unsigned int i = 0; i < totalSize; i++) {
-        vrtices[i] = vertices[i];
+
+    // We reallocate the memory only if it's not the same size
+    if (!vrtices || size != sze || dimension != dim) {
+        sze = size;
+        dim = dimension;
+
+        // Releases old version if any
+        if (vrtices) {
+            delete[] vrtices;
+            vrtices = nullptr;
+        }
+
+        vrtices = new GLfloat[totalSize];
     }
+
+    // Copy the values
+    memcpy(vrtices, vertices, totalSize);
 
     drty = true;
 }
 
-void VBO::bind(ShaderProgram& shaderProgram) {
+void VBO::bind() {
     glBindBuffer(GL_ARRAY_BUFFER, vboId);
     if (drty) {
         glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*sze*dim, vrtices, dyn ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);

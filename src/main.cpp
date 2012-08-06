@@ -1,8 +1,6 @@
 #include "GL/glew.h"
 #include "mehteor.h"
 
-#include "core/quaternion.h"
-
 using namespace meh;
 
 int main(int argc, char* argv[]) {
@@ -43,29 +41,36 @@ int main(int argc, char* argv[]) {
     radialBlur.addShader(&fragmentRadialBlur);
     radialBlur.link();
 
-    /*
-    int loc = glGetAttribLocation(shaderProgram.id(),"meh_modelViewMatrix");
-    printf("loc: %i\n", loc);
-    glEnableVertexAttribArray(loc);
-    */
-
     ResourcesManager resourcesManager;
     resourcesManager.loadTexture("lama1","res/lama1.png");
     resourcesManager.loadTexture("lama2","res/lama2.png");
-    resourcesManager.loadTexture("test","res/test.png");
-    resourcesManager.getTexture("lama2")->bind(0);
     
     Sprite sprite(resourcesManager.getTexture("lama2"));
     Sprite sprite2(resourcesManager.getTexture("lama1"));
 
     SimpleScene2D scene2D(640,480);
+
+    sprite.setSize(32,32);
+    sprite.textureRegion().set(0,0,32,32);
+
+    sprite2.setSize(32,32);
+    sprite2.textureRegion().set(0,0,32,32);
     
-    scene2D.addActor(new SpriteActor(sprite2));
-    scene2D.addActor(new SpriteActor(sprite));
+    for (int i = 0; i < 10000; i++) {
+        SpriteActor* s = new SpriteActor(sprite);
+        if (s) {
+            scene2D.addActor(s);
+        }
+    }
+    for (int i = 0; i < 10000; i++) {
+        SpriteActor* s = new SpriteActor(sprite2);
+        if (s) {
+            scene2D.addActor(s);
+        }
+    }
 
     InputDevicesManager& idm = canvas.inputDevicesManager();
 
-    canvas.clear(0.0f,0.0f,0.0f,1.0f);
     idm.update();
     printf("%i %i\n",idm.mouseX(),idm.mouseY());
 
@@ -83,8 +88,12 @@ int main(int argc, char* argv[]) {
         printf("right button\n");
     }
 
+    long t = System::currentTime()+1000;
+    float nbFrame = 0.0f;
+
+    scene2D.update();
     while (1) {
-        scene2D.update();
+        canvas.clear(0.0f,0.0f,0.0f,1.0f);
         scene2D.render();
         canvas.flip();
         idm.update();
@@ -99,7 +108,12 @@ int main(int argc, char* argv[]) {
         } else if (idm.keyPressed(SDLK_UP)) {
             sprite.setPosition(sprite.x(), sprite.y()+5.0f);
         }
-        System::sleep(17);
+        nbFrame = nbFrame + 1.0f;
+        if (t < System::currentTime()) {
+            printf("%.2f fps\n",nbFrame);
+            nbFrame = 0.0f;
+            t = System::currentTime()+1000;
+        }
     }
 
     System::deinit();

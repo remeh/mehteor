@@ -15,14 +15,26 @@ Mesh::~Mesh() {
 }
 
 void Mesh::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices) {
-    deleteVBO();
-    vbo = new VBO(false); // TODO assume static for the moment
+    if (vbo) {
+        if (vbo->size() != size || vbo->dimension() != dimension) {
+            deleteVBO();
+            vbo = new VBO(false); // TODO assume static for the moment
+        }
+    } else {
+        vbo = new VBO(false);
+    }
     vbo->setVertices(size, dimension, vertices);
 }
 
 void Mesh::setElements(unsigned int size, unsigned int dimension, GLuint* elements) {
-    deleteIBO();
-    ibo = new IBO(false); // TODO assume static for the moment
+    if (ibo) {
+        if (ibo->size() != size || ibo->dimension() != dimension) {
+            deleteIBO();
+            ibo = new IBO(false); // TODO assume static for the moment
+        }
+    } else {
+        ibo = new IBO(false);
+    }
     ibo->setElements(size,dimension,elements);
 }
 
@@ -41,7 +53,7 @@ void Mesh::deleteIBO() {
 }
 
 void Mesh::bind(ShaderProgram& shaderProgram) {
-    vbo->bind(shaderProgram);
+    vbo->bind();
     if (ibo) {
         ibo->bind();
     }

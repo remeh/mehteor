@@ -19,12 +19,12 @@ class IBO {
         /**
          * Number of elements.
          */
-        int sze;
+        unsigned int sze;
 
         /**
          * Dimension of elements.
          */
-        int dim;
+        unsigned int dim;
 
         /**
          * When this IBO is dynamic, we should use GL_DYNAMIC_DRAW instead of GL_STATIC_DRAW
@@ -57,7 +57,7 @@ class IBO {
          * Returns the number of elements.
          * @return the number of elements.
          */
-        const int size() {
+        const unsigned int size() {
             return sze;
         }
 
@@ -65,7 +65,7 @@ class IBO {
          * Returns the dimension of elements.
          * @return the dimension of elements.
          */
-        const int dimension() {
+        const unsigned int dimension() {
             return dim;
         }
 };

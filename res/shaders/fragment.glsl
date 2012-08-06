@@ -3,11 +3,10 @@
 in vec2 Texcoord;
 
 uniform sampler2D meh_texture;
-uniform sampler2D tex;
 
 out vec4 outColor;
 
-const float blurSize = 10.0/512.0;
+// const float blurSize = 10.0/512.0;
 
 void main()
 {

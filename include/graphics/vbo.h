@@ -22,8 +22,6 @@ class VBO {
         static GLuint positionAttribute;
         static GLuint textureAttribute;
 
-        void bind();
-
         /**
          * Whether the data on the GPU isn't correct, this VBO is dirty and
          * the next bind will make a call to glBufferData to send the vertices
@@ -52,7 +50,7 @@ class VBO {
         /**
          * Binds the VBO to the current target buffer.
          */
-        void bind(ShaderProgram& shaderProgram);
+        void bind();
 
         /**
          * Unbinds the VBO.
@@ -68,11 +66,11 @@ class VBO {
          */
         void setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices);
 
-        const int size() {
+        const unsigned int size() {
             return sze;
         }
 
-        const int dimension() {
+        const unsigned int dimension() {
             return dim;
         }
 };

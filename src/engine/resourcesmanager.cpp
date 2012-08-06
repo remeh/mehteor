@@ -7,7 +7,9 @@ ResourcesManager::ResourcesManager() {
 }
 
 ResourcesManager::~ResourcesManager() {
-
+    for (auto it = mapTextures.begin(); it != mapTextures.end(); it++) {
+        delete it->second;
+    }
 }
 
 Texture* ResourcesManager::loadTexture(string uniqueId, string filepath) {
