@@ -55,15 +55,21 @@ include(FindOpenGL REQUIRED)
 
 include_directories(${SDL_INCLUDE_DIR})
 
+if (WIN32 OR MINGW)
+    set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -DGLEW_STATIC -DWIN32 -D_WIN32")
+    set(CMAKE_C_FLAGS "-g -Wall -DGLEW_STATIC -DWIN32 -D_WIN32")
+else()
+    set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -DGLEW_STATIC")
+    set(CMAKE_C_FLAGS "-g -Wall -DGLEW_STATIC")
+endif()
+
 # g++ flags
-set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -DGLEW_STATIC ")
 
 # sources
 include_directories(${Mehteor_SOURCE_DIR}/include)
 link_directories(${Mehteor_BINARY_DIR}/src)
 link_libraries (
     ${SDL_LIBRARY}
-    ${SDLIMAGE_LIBRARY}
     SDLmain # Sadly not included in SDL_LIBRARY variable
     ${OPENGL_LIBRARY} 
 )

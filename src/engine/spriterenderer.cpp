@@ -53,6 +53,10 @@ void SpriteRenderer::init() {
 
 void SpriteRenderer::deinit(bool deleteMemory) {
     if (deleteMemory) {
+        if (msh) {
+            delete msh;
+            msh = nullptr;
+        }
         if (vrtices) {
             delete[] vrtices;
             vrtices = nullptr;
@@ -60,10 +64,6 @@ void SpriteRenderer::deinit(bool deleteMemory) {
         if (elmts) {
             delete[] elmts;
             elmts = nullptr;
-        }
-        if (msh) {
-            delete msh;
-            msh = nullptr;
         }
     }
 }
@@ -187,8 +187,8 @@ void SpriteRenderer::render() {
     }
     
     if (idx > 0) {
-        msh->setVertices(idx/(2+2), 2+2, vrtices);
-        msh->setElements(spriteBuffered*6, 3, elmts);
+        msh->setVertices(spriteBuffered*4, 2+2, vrtices);
+        msh->setElements(spriteBuffered*2, 3, elmts);
 
         // printf("renders %i vertices in %i elements\n",idx/4,idxElements/3);
 

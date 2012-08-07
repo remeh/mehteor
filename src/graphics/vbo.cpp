@@ -17,7 +17,6 @@ VBO::VBO(bool dynamic) :
     drty(true),
     dyn(dynamic) {
     glGenBuffers(1, &vboId);
-    printf("new VBO\n");
 }
 
 VBO::~VBO() {

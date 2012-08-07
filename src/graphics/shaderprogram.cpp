@@ -23,9 +23,7 @@ void ShaderProgram::addShader(Shader* shader) {
 }
 
 void ShaderProgram::link() {
-    // XXX Ok as we only have one output right now
-    // but should be more flexible
-    glBindFragDataLocation(shaderProgramId, 0, "outColor");
+    //glBindFragDataLocation(shaderProgramId, 0, "outColor");
     glLinkProgram(shaderProgramId);    
     // Check whether the link succeed
     GLint compileStatus;

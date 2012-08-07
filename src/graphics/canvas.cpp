@@ -15,6 +15,8 @@ Canvas::Canvas(int w, int h) :
     sdlSurface(nullptr),
     inputManager(w,h) {
     if (System::graphicsEnabled()) {
+        SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
+        SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
         sdlSurface = SDL_SetVideoMode(w,h,0,SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
         
         // Init OpenGL extensions and check versions
@@ -23,6 +25,8 @@ Canvas::Canvas(int w, int h) :
             if (glewInit() != GLEW_OK) {
                 printf("Unable to initialize GLEW...\n");
                 Canvas::glewIsInit = true;
+            } else {
+                printf("GLEW initializated.\n");
             }
             const unsigned char* version = glGetString(GL_VERSION);
             printf("GL version : %s\n",version);
