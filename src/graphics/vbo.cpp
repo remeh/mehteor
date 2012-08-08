@@ -48,7 +48,7 @@ void VBO::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertic
     }
 
     // Copy the values
-    memcpy(vrtices, vertices, totalSize);
+    memcpy(vrtices, vertices, totalSize*sizeof(GLfloat));
 
     drty = true;
 }

@@ -23,8 +23,6 @@ class SpriteRenderer : public Renderer {
         GLfloat* vrtices;
         GLuint* elmts;
         int idx;
-        int idxElements;
-        int nElements;
 
         /**
          * To know how many sprites are currently in the buffer, because

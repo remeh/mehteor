@@ -41,7 +41,7 @@ int ByteBuffer::write(unsigned char* data, int length) {
         return -1;
     }
     // Copy the data
-    // memcpy(dta+crsor,data,length); XXX
+    memcpy(dta+crsor,data,length*sizeof(unsigned char));
     for (int i = 0; i < length; i++) {
         dta[crsor+i] = data[i];
     }
@@ -71,7 +71,7 @@ void ByteBuffer::resize(int newLength, bool saveData) {
             l = newLength;
         }
         // Copy the data
-        memcpy(dta,tmp,l);
+        memcpy(dta,tmp,l*sizeof(unsigned char));
         // Releases the old buffer
         delete[] tmp;
     }

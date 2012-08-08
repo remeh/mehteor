@@ -6,7 +6,7 @@ namespace meh {
 /**
  * The number of vertices for one sprite
  */
-int Sprite::VERTEX_SIZE = 2 + 2; // 2 (coord) + 2 (texcoord)
+int Sprite::VERTEX_SIZE = 3 + 2; // 3 (coord) + 2 (texcoord)
 int Sprite::SIZE = 4 * VERTEX_SIZE;
 
 Sprite::Sprite(Texture* texture) : 

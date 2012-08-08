@@ -49,7 +49,7 @@ void IBO::setElements(unsigned int size, unsigned int dimension, GLuint* element
         elems = new GLuint[totalSize];
     }
 
-    memcpy(elems,elements,totalSize);
+    memcpy(elems,elements,totalSize*sizeof(GLuint));
 
     drty = true;
 }

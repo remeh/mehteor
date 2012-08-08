@@ -47,19 +47,17 @@ int main(int argc, char* argv[]) {
     resourcesManager.loadTexture("lama1","res/lama1.png");
     resourcesManager.loadTexture("lama2","res/lama2.png");
     
-    Sprite sprite(resourcesManager.getTexture("lama1"));
-    Sprite sprite2(resourcesManager.getTexture("lama2"));
+    Sprite sprite(resourcesManager.getTexture("lama2"));
+    Sprite sprite2(resourcesManager.getTexture("lama1"));
 
     SimpleScene2D scene2D(640,480);
 
     sprite.setSize(32,32);
     sprite.textureRegion().set(0,0,32,32);
 
-    sprite2.setSize(256,256);
-    sprite2.textureRegion().set(0,0,256,256);
-
-    for (int i = 0; i < 100; i++) {
-        SpriteActor* s = new SpriteActor(sprite2);
+    scene2D.addActor(new SpriteActor(sprite2));
+    for (int i = 0; i < 10000; i++) {
+        SpriteActor* s = new SpriteActor(sprite);
         if (s) {
             scene2D.addActor(s);
         }
@@ -120,9 +118,11 @@ int main(int argc, char* argv[]) {
             sprintf(title,"%.2f fps",nbFrame);
             canvas.setTitle(title);
 
+            printf("%s\n",gluErrorString(glGetError()));
             nbFrame = 0.0f;
             t = System::currentTime()+1000;
         }
+
     }
 
     //System::deinit();

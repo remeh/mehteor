@@ -12,8 +12,6 @@ SpriteRenderer::SpriteRenderer(unsigned int size) :
     lastUsedTexture(nullptr),
     sze(size),
     idx(0),
-    idxElements(0),
-    nElements(0),
     spriteBuffered(0),
     shaderProgram(nullptr),
     isRendering(false) {
@@ -33,8 +31,8 @@ SpriteRenderer::SpriteRenderer(unsigned int size) :
     }
 
     VertexAttributes vertexAttributes;
-    vertexAttributes.addAttribute(VertexAttribute(2,0,VertexAttributes::positionAttribute));
-    vertexAttributes.addAttribute(VertexAttribute(2,2,VertexAttributes::textureCoordinatesAttribute));
+    vertexAttributes.addAttribute(VertexAttribute(3,0,VertexAttributes::positionAttribute));
+    vertexAttributes.addAttribute(VertexAttribute(2,3,VertexAttributes::textureCoordinatesAttribute));
     msh = new Mesh(vertexAttributes);
 
     init();
@@ -46,8 +44,6 @@ SpriteRenderer::~SpriteRenderer() {
 
 void SpriteRenderer::init() {
     idx = 0;
-    idxElements = 0;
-    nElements = 0;
     spriteBuffered = 0;
 }
 
@@ -116,21 +112,25 @@ void SpriteRenderer::draw(Texture* texture, float x, float y, float w, float h, 
 
     vrtices[idx++] = x;
     vrtices[idx++] = y;
+    vrtices[idx++] = 0.0f;
     vrtices[idx++] = u;
     vrtices[idx++] = v;
 
     vrtices[idx++] = x+w;
     vrtices[idx++] = y;
+    vrtices[idx++] = 0.0f;
     vrtices[idx++] = uu;
     vrtices[idx++] = v;
 
     vrtices[idx++] = x+w;
     vrtices[idx++] = y+h;
+    vrtices[idx++] = 0.0f;
     vrtices[idx++] = uu;
     vrtices[idx++] = vv;
 
     vrtices[idx++] = x;
     vrtices[idx++] = y+h;
+    vrtices[idx++] = 0.0f;
     vrtices[idx++] = u;
     vrtices[idx++] = vv;
 
@@ -187,12 +187,13 @@ void SpriteRenderer::render() {
     }
     
     if (idx > 0) {
-        msh->setVertices(spriteBuffered*4, 2+2, vrtices);
+        lastUsedTexture->bind(0);
+
+        msh->setVertices(spriteBuffered*4, Sprite::VERTEX_SIZE, vrtices);
         msh->setElements(spriteBuffered*2, 3, elmts);
 
-        // printf("renders %i vertices in %i elements\n",idx/4,idxElements/3);
+        // printf("renders %i sprites, %i vertices in %i elements\n",spriteBuffered, spriteBuffered*4,spriteBuffered*2);
 
-        lastUsedTexture->bind(0);
         msh->bind(*shaderProgram);
         msh->render();
         msh->unbind();
