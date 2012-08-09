@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "engine/spriterenderer.h"
 #include "engine/sprite.h"
 

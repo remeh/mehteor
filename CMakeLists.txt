@@ -7,6 +7,7 @@ set(
 # core
         src/core/system.cpp
         src/core/bytebuffer.cpp
+
 # graphics
         src/graphics/canvas.cpp
         src/graphics/shader.cpp
@@ -18,6 +19,7 @@ set(
         src/graphics/vertexattributes.cpp
         src/graphics/vertexattribute.cpp
         src/graphics/mesh.cpp
+
 # engine
         src/engine/inputdevicesmanager.cpp
         src/engine/resourcesmanager.cpp
@@ -31,13 +33,16 @@ set(
 
 # tests
         src/tests/testsmatrix4x4f.cpp
+
 # SOIL
         src/soil/image_DXT.c
         src/soil/image_helper.c
         src/soil/SOIL.c
         src/soil/stb_image_aug.c
+
 # GLEW
         src/glew.c
+
 # Main
      src/main.cpp
 #       src/tests.cpp
@@ -50,17 +55,19 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/CMakeTests)
 include(FindSDL REQUIRED)
 include(FindOpenGL REQUIRED)
-#include(FindGLEW REQUIRED)
-
+include(FindOpenAL REQUIRED)
+include(FindOggVorbis REQUIRED)
 
 include_directories(${SDL_INCLUDE_DIR})
 
 if (WIN32 OR MINGW)
-    set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -DGLEW_STATIC -DWIN32 -D_WIN32")
-    set(CMAKE_C_FLAGS "-g -Wall -DGLEW_STATIC -DWIN32 -D_WIN32")
+    set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -DGLEW_STATIC -DOPENAL_STATIC -DWIN32 -D_WIN32")
+    set(CMAKE_C_FLAGS "-g -Wall -DGLEW_STATIC -DOPENAL_STATIC -DHAVE_STDINT_H -DHAVE_STAT -DHAVE_USLEEP -DHAVE_UNISTD_H -DWIN32 -D_WIN32 ")
 else()
-    set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -DGLEW_STATIC")
-    set(CMAKE_C_FLAGS "-g -Wall -DGLEW_STATIC")
+    # Linux
+    # Note: HAVE_STAT, HAVE_USLEEP, HAVE_STDINT_H and HAVE_UNISTD_H are for alut
+    set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -DGLEW_STATIC -DOPENAL_STATIC")
+    set(CMAKE_C_FLAGS "-g -Wall -DGLEW_STATIC -DOPENAL_STATIC -DHAVE_STDINT_H -DHAVE_STAT -DHAVE_USLEEP -DHAVE_UNISTD_H")
 endif()
 
 # g++ flags
@@ -72,6 +79,8 @@ link_libraries (
     ${SDL_LIBRARY}
     SDLmain # Sadly not included in SDL_LIBRARY variable
     ${OPENGL_LIBRARY} 
+    ${OPENAL_LIBRARY} 
+    ${VORBISFILE_LIBRARY} 
 )
 
 add_executable(

@@ -1,4 +1,11 @@
+#include <AL/al.h>
+#include <AL/alc.h>
+#ifndef fseeko64
+#define fseeko64 fseek
+#endif
+#include <vorbis/vorbisfile.h>
 #include "GL/glew.h"
+
 #include "mehteor.h"
 
 using namespace meh;
@@ -56,7 +63,7 @@ int main(int argc, char* argv[]) {
     sprite.textureRegion().set(0,0,32,32);
 
     scene2D.addActor(new SpriteActor(sprite2));
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 1; i++) {
         SpriteActor* s = new SpriteActor(sprite);
         if (s) {
             scene2D.addActor(s);
@@ -124,7 +131,7 @@ int main(int argc, char* argv[]) {
         }
 
     }
-
+    
     //System::deinit();
     return 0;
 }
