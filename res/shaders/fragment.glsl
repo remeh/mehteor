@@ -1,6 +1,6 @@
-#version 130
+#version 120
 
-in vec2 Texcoord;
+varying vec2 Texcoord;
 
 uniform sampler2D meh_texture;
 

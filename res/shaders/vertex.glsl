@@ -1,9 +1,9 @@
-#version 130
+#version 120
 
 attribute vec2 meh_texcoord;
 attribute vec3 meh_position;
 
-out vec2 Texcoord;
+varying vec2 Texcoord;
 
 uniform mat4 meh_modelViewMatrix;
 
