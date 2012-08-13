@@ -1,9 +1,5 @@
 #include <AL/al.h>
 #include <AL/alc.h>
-#ifndef fseeko64
-#define fseeko64 fseek
-#endif
-#include <vorbis/vorbisfile.h>
 #include "GL/glew.h"
 
 #include "mehteor.h"
@@ -104,6 +100,11 @@ int main(int argc, char* argv[]) {
     printf("scene 2D updated\n");
     char title[10];
 
+    Sound snd("res/music.ogg");
+    Sound snd2("res/boump.ogg");
+    AudioSystem system;
+    system.play(&snd);
+
     while (1) {
         canvas.clear(0.0f,0.0f,0.0f,1.0f);
         scene2D.render();
@@ -119,6 +120,8 @@ int main(int argc, char* argv[]) {
             sprite.setPosition(sprite.x(), sprite.y()-5.0f);
         } else if (idm.keyPressed(SDLK_UP)) {
             sprite.setPosition(sprite.x(), sprite.y()+5.0f);
+        } else if (idm.keyPressed(SDLK_SPACE)) t
+            system.play(&snd2);
         }
         nbFrame = nbFrame + 1.0f;
         if (t < System::currentTime()) {

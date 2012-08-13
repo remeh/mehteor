@@ -20,6 +20,11 @@ set(
         src/graphics/vertexattribute.cpp
         src/graphics/mesh.cpp
 
+# audio
+        src/audio/audiosource.cpp
+        src/audio/audiosystem.cpp
+        src/audio/sound.cpp
+
 # engine
         src/engine/inputdevicesmanager.cpp
         src/engine/resourcesmanager.cpp

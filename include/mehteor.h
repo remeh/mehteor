@@ -26,3 +26,7 @@
 #include "engine/scene/simplescene2d.h"
 #include "engine/scene/actor.h"
 #include "engine/scene/spriteactor.h"
+
+#include "audio/audiosource.h"
+#include "audio/audiosystem.h"
+#include "audio/sound.h"
