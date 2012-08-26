@@ -1,4 +1,5 @@
 #include <cstdio> // printf
+#include <SDL/SDL_thread.h>
 #include <AL/al.h>
 #include <AL/alc.h>
 #include "audio/audiosystem.h"
@@ -30,7 +31,12 @@ AudioSystem::AudioSystem(unsigned int nbSources) :
     }
 
     for (unsigned int i = 0; i < nbSources; i++) {
-        srces.push_back(new AudioSource());
+        AudioSource* src = new AudioSource();
+        if (src->sourceId() != 0) {
+            srces.push_back(new AudioSource());
+        } else {
+            delete src;
+        }
     }
 
     // Listener position to default 0,0,0
@@ -55,22 +61,39 @@ AudioSystem::~AudioSystem() {
     }
 }
 
-void AudioSystem::play(Sound* sound) {
+void AudioSystem::play(Sound* sound, bool loop) {
+    // The background thread isn't started,
+    // starts it
+    if (!tcking) {
+        SDL_CreateThread(&AudioSystem::tick, &srces);
+        tcking = true;
+    }
+
     bool found = false;
     for (auto it = srces.begin(); it != srces.end(); it++) {
         AudioSource* source = *it;
-        printf("source %p %i\n", source, source->playing());
         if (!source->playing()) {
-            source->play(sound);
+            source->play(sound,loop);
             found = true;
             break;
         }
     }
-
-    printf("\n");
     if (!found) {
         printf("ERR: unable to play the provided sound : no sources available.\n");
     }
+}
+
+/*static*/ int AudioSystem::tick(void* srces) {
+    list<AudioSource*>& sources = *(static_cast<list<AudioSource*>*>(srces)); 
+    while (1) {
+        for (AudioSource* source : sources) {
+            source->tick();
+        }
+        // Don't refresh too much
+        // XXX as of today (2012-08-22), 250ms is an arbitrary value
+        System::sleep(250);
+    }
+    return 0;
 }
 
 } // namespace meh

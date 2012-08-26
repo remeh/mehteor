@@ -8,6 +8,7 @@ namespace meh {
 
 AudioSource::AudioSource() :
     plying(false),
+    lping(false),
     snd(nullptr),
     endTime(0) {
     alGenSources(1, &srcId); 
@@ -20,46 +21,52 @@ AudioSource::AudioSource() :
 }
 
 AudioSource::~AudioSource() {
-    if (srcId > 0) {
-        alDeleteSources(1, &srcId);
-    }
     if (buffId > 0) {
         alDeleteBuffers(1, &buffId);
     }
+    if (srcId > 0) {
+        alDeleteSources(1, &srcId);
+    }
 }
 
-void AudioSource::play(Sound* sound) {
+/*static*/ int AudioSource::staticPlay(void* param) {
+    int srcId = *(static_cast<int*>(param));
+    // play
+    alSourcePlay(srcId);
+    int state = 1;
+    do {
+        alGetSourcei(srcId,AL_SOURCE_STATE,&state);
+        // XXX as of today (2012-08-22), 10ms is an arbitrary value
+        System::sleep(10);
+    } while (state != AL_STOPPED);
+    return 0;
+}
+
+void AudioSource::play(Sound* sound, bool loop) {
     if (sound == nullptr) {
         printf("WARN: tried to play a nullptr sound.\n");
         return;
     }
-
+    snd = sound;
     plying = true;
+    lping = loop;
     // put the sound data into the buffer
     alBufferData(buffId, sound->format(), &(sound->data()[0]), static_cast<ALsizei>(sound->data().size()), sound->frequency());
     // attach the buffer to the source
     alSourcei(srcId, AL_BUFFER, buffId);
     // compute in how many milli-seconds this Sound will be fully played.
-    endTime = System::currentTime() + sound->duration() + 30;
+    endTime = System::currentTime() + sound->duration() + 15;
     // launch the thread actually reading the sound
-    /*SDL_Thread* thread =*/ SDL_CreateThread(&AudioSource::staticPlay, &srcId);
-    // SDL_WaitThread(thread, nullptr);
+    SDL_CreateThread(&AudioSource::staticPlay, &srcId);
 }
 
-int AudioSource::staticPlay(void* param) {
-    int srcId = *(static_cast<int*>(param));
-    printf("srcId : %i\n",srcId);
-    // play
-    alSourcePlay(srcId);
-    if (alGetError() != AL_FALSE) {
-        printf("err..\n");
+void AudioSource::tick() {
+    if (System::currentTime() > endTime) {
+        plying = false;
     }
-    int state = 1;
-    do {
-        alGetSourcei(srcId,AL_SOURCE_STATE,&state);
-    } while (state != AL_STOPPED);
-    printf("?\n");
-    return 0;
+    if (lping && !plying) {
+       play(snd,true); 
+    }
 }
 
 }

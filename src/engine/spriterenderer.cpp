@@ -140,9 +140,11 @@ void SpriteRenderer::draw(Texture* texture, float x, float y, float w, float h, 
 }
 
 void SpriteRenderer::draw(Sprite& sprite) {
-    draw(sprite.texture(), sprite.x(), sprite.y(), sprite.width(), sprite.height(), sprite.rotationCenter().x(), sprite.rotationCenter().y(),
-            sprite.scaleX(), sprite.scaleY(), sprite.rotation(), sprite.textureRegion().x(), sprite.textureRegion().y(),
-            sprite.textureRegion().width(), sprite.textureRegion().height(), false, false); 
+    if (sprite.visible()) {
+        draw(sprite.texture(), sprite.x(), sprite.y(), sprite.width(), sprite.height(), sprite.rotationCenter().x(), sprite.rotationCenter().y(),
+                sprite.scaleX(), sprite.scaleY(), sprite.rotation(), sprite.textureRegion().x(), sprite.textureRegion().y(),
+                sprite.textureRegion().width(), sprite.textureRegion().height(), false, false); 
+    }
 }
 
 void SpriteRenderer::begin(ShaderProgram* shaderProgram) {

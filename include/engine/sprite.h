@@ -54,6 +54,11 @@ class Sprite {
          */
         Rect<float> texRegion;
 
+        /**
+         * Is this sprite visible ?
+         */
+        bool vsible;
+
     protected:
     public:
         /**
@@ -184,6 +189,27 @@ class Sprite {
          * @param height size on the y-axis.
          */
         void setSize(float width, float height);
+
+        /**
+         * Sets this Sprite visible.
+         */
+        void show() {
+            vsible = true;
+        }
+
+        /**
+         * Hides this Sprite.
+         */
+        void hide() {
+            vsible = false;
+        }
+
+        /**
+         * Returns whether this Sprite is visible.
+         */
+        bool visible() {
+            return vsible;
+        }
 };
 
 } // namespace meh

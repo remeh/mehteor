@@ -20,8 +20,8 @@ namespace meh {
 Sound::Sound(string filename) :
     frmat(AL_FORMAT_MONO16),
     freq(-1) {
-    // OK, epic shortcut, but as of today, assumes it's an ogg file
     dta.clear();
+    // OK, epic shortcut, but as of today, assumes it's an ogg file
     loadOgg(filename); 
 }
 
@@ -71,8 +71,8 @@ void Sound::loadOgg(string filename) {
     // Release the resource
     ov_clear(&oggFile);
     // No-need to call fclose on 'file', already managed by Vorbis.
-
-    printf("%i %i\n",frmat, freq);
+    vInfo = nullptr;
+    file = nullptr;
 }
 
 } // namespace meh

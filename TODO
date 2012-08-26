@@ -6,3 +6,4 @@
 - target for unit tests
 - sprite flipX/flipY
 - spriterenderer rendering if the buffer is full
+- the mouse click could be ignored

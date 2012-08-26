@@ -33,7 +33,8 @@ Sprite::Sprite(Texture* texture, float x, float y, float width, float height, Re
     tex(texture),
     scleX(1.0f),
     scleY(1.0f),
-    rot(0.0f) {
+    rot(0.0f),
+    vsible(true) {
     if (texture == nullptr) {
         printf("ERROR: creating a Sprite with a nullptr as texture parameter.\n");
     } else {

@@ -1,7 +1,3 @@
-#include <AL/al.h>
-#include <AL/alc.h>
-#include "GL/glew.h"
-
 #include "mehteor.h"
 
 using namespace meh;
@@ -103,7 +99,7 @@ int main(int argc, char* argv[]) {
     Sound snd("res/music.ogg");
     Sound snd2("res/boump.ogg");
     AudioSystem system;
-    system.play(&snd);
+    system.play(&snd,true);
 
     while (1) {
         canvas.clear(0.0f,0.0f,0.0f,1.0f);
@@ -120,8 +116,8 @@ int main(int argc, char* argv[]) {
             sprite.setPosition(sprite.x(), sprite.y()-5.0f);
         } else if (idm.keyPressed(SDLK_UP)) {
             sprite.setPosition(sprite.x(), sprite.y()+5.0f);
-        } else if (idm.keyPressed(SDLK_SPACE)) t
-            system.play(&snd2);
+        } else if (idm.keyPressed(SDLK_SPACE)) {
+            system.play(&snd2,false);
         }
         nbFrame = nbFrame + 1.0f;
         if (t < System::currentTime()) {
@@ -132,6 +128,7 @@ int main(int argc, char* argv[]) {
             nbFrame = 0.0f;
             t = System::currentTime()+1000;
         }
+        System::sleep(16);
 
     }
     

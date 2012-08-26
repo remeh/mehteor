@@ -72,6 +72,17 @@ class Rect {
                 return true;
             }
         }
+
+        bool touches(Vector2d<T>& v) {
+            if (position().x() > v.x() ||
+                size().x()+position().x() < v.x() ||
+                position().y() > v.y() ||
+                size().y()+position().y() < v.y()) {
+                return false;
+            } else {
+                return true;
+            }
+        }
 };
 
 }

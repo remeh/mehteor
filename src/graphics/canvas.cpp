@@ -19,6 +19,9 @@ Canvas::Canvas(int w, int h) :
         SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
         sdlSurface = SDL_SetVideoMode(w,h,0,SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
         
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_BLEND);
+        
         // Init OpenGL extensions and check versions
         glewExperimental = GL_TRUE;
         if (!Canvas::glewIsInit) {
