@@ -139,7 +139,7 @@ class Vector2d {
          * @return the result of the dot product
          */
         T dot(Vector2d<T>& other) {
-            return x*other.x() + y*other.y();
+            return _x*other.x() + _y*other.y();
         }
 };
 

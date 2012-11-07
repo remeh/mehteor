@@ -1,8 +1,6 @@
 #ifndef MEH_SYSTEM_H
 #define MEH_SYSTEM_H
 
-#include <cstdint>
-
 namespace meh {
 
 class System {
@@ -51,7 +49,7 @@ class System {
         /**
          * Returns since how many milli-seconds the app has been launched.
          */
-        static uint32_t currentTime();
+        static unsigned int currentTime();
 
         /**
          * Waits for the specified number milli-seconds. This tells the

@@ -1,6 +1,5 @@
 #include <cstdio>
 #include <cstdlib>
-#include <cstdint>
 #include <ctime>
 #include <SDL/SDL.h>
 #include "GL/glew.h"

@@ -206,7 +206,7 @@ class Vector3d {
          * @return the result of the dot product
          */
         T dot(Vector3d<T>& other) {
-            return x*other.x() + y*other.y() + z*other.z();
+            return _x*other.x() + _y*other.y() + _z*other.z();
         }
 
         /**

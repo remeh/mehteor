@@ -57,7 +57,7 @@ void ShaderProgram::enableVertexAttribute(string name) {
 void ShaderProgram::setVertexAttribute(string name, int dimension, int offset, int dimVertex, int type, bool normalize) {
     GLint idx = glGetAttribLocation(shaderProgramId, name.c_str());
     if (idx != -1) {
-        glVertexAttribPointer(idx,dimension,type,normalize,dimVertex*sizeof(GLfloat),(GLvoid*)(offset*sizeof(GLfloat)));
+        glVertexAttribPointer(idx, dimension, type, normalize, dimVertex*sizeof(GLfloat), (GLvoid*)(offset*sizeof(GLfloat)));
     }
 }
 

@@ -82,7 +82,7 @@ include_directories(${Mehteor_SOURCE_DIR}/include)
 link_directories(${Mehteor_BINARY_DIR}/src)
 link_libraries (
     ${SDL_LIBRARY}
-    SDLmain # Sadly not included in SDL_LIBRARY variable
+# SDLmain # Sadly not included in SDL_LIBRARY variable
     ${OPENGL_LIBRARY} 
     ${OPENAL_LIBRARY} 
     ${VORBISFILE_LIBRARY} 

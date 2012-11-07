@@ -3,8 +3,13 @@
 
 #include <vector>
 #include <string>
-#include <AL/al.h>
-#include <AL/alc.h>
+#ifdef __APPLE__
+    #include <OpenAL/al.h>
+    #include <OpenAL/alc.h>
+#else
+    #include <AL/al.h>
+    #include <AL/alc.h>
+#endif
 
 using namespace std;
 

@@ -1,7 +1,12 @@
 #include <cstdio> // printf
 #include <SDL/SDL_thread.h>
-#include <AL/al.h>
-#include <AL/alc.h>
+#ifdef __APPLE__
+    #include <OpenAL/al.h>
+    #include <OpenAL/alc.h>
+#else
+    #include <AL/al.h>
+    #include <AL/alc.h>
+#endif
 #include "audio/audiosystem.h"
 #include "audio/sound.h"
 

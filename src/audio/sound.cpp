@@ -1,7 +1,12 @@
 #include <cstdio>
 #include <string>
-#include <AL/al.h>
-#include <AL/alc.h>
+#ifdef __APPLE__
+    #include <OpenAL/al.h>
+    #include <OpenAL/alc.h>
+#else
+    #include <AL/al.h>
+    #include <AL/alc.h>
+#endif
 #ifdef WIN32 // mingw missed a definition 
 #define fseeko64 fseek
 #endif
