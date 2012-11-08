@@ -10,7 +10,8 @@ int main(int argc, char* argv[]) {
      *
      */
     ByteBuffer buffer(5);
-    buffer.write("abc",3);
+    char abc[4] = "abc";
+    buffer.write(abc,3);
     buffer.reset();
     buffer.resize(3,true);
     printf("%c\n",buffer.readByte());
@@ -28,19 +29,17 @@ int main(int argc, char* argv[]) {
 
     Shader vertex("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
     Shader fragment("res/shaders/fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER);
-    Shader vertexRadialBlur("res/shaders/radialblur_vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
-    Shader fragmentRadialBlur("res/shaders/radialblur_fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER);
-
     ShaderProgram shaderProgram;
     shaderProgram.addShader(&vertex);
     shaderProgram.addShader(&fragment);
     shaderProgram.link();
-    /*
+
+    Shader vertexRadialBlur("res/shaders/radialblur_vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
+    Shader fragmentRadialBlur("res/shaders/radialblur_fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER);
     ShaderProgram radialBlur;
     radialBlur.addShader(&vertexRadialBlur);
     radialBlur.addShader(&fragmentRadialBlur);
     radialBlur.link();
-    */
 
     ResourcesManager resourcesManager;
     resourcesManager.loadTexture("lama1","res/lama1.png");
@@ -55,7 +54,7 @@ int main(int argc, char* argv[]) {
     sprite.textureRegion().set(0,0,32,32);
 
     scene2D.addActor(new SpriteActor(sprite2));
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 150; i++) {
         SpriteActor* s = new SpriteActor(sprite);
         if (s) {
             scene2D.addActor(s);
@@ -132,6 +131,6 @@ int main(int argc, char* argv[]) {
 
     }
     
-    //System::deinit();
+    System::deinit();
     return 0;
 }

@@ -31,6 +31,7 @@ class ShaderProgram {
     protected:
     public:
         ShaderProgram();
+        ~ShaderProgram();
 
         /**
          * Adds a Shader to this ShaderProgram.

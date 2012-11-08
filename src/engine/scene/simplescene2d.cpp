@@ -21,7 +21,7 @@ SimpleScene2D::SimpleScene2D(float width, float height) :
     shaderProgram.addShader(&fragmentShader);
     shaderProgram.link();
 
-    // Sets 0,0 on the left bottom on the screen.
+    // Using a ortho camera, we set 0,0 on the left bottom on the screen.
     cam->setPosition(320.0f,240.0f,0.0f);
     // Updates the model view projection
     cam->update();

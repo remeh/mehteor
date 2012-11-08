@@ -27,7 +27,9 @@ void System::init(bool initGraphics) {
 }
 
 void System::deinit() {
+    printf("meh: exiting.\n");
     SDL_Quit();
+    printf("Goodbye!\n");
 }
 
 bool System::isInitializated() {
@@ -53,6 +55,5 @@ uint32_t System::currentTime() {
 void System::sleep(unsigned int ms) {
     SDL_Delay(ms);
 }
-
 
 }

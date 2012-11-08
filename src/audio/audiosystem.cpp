@@ -54,15 +54,18 @@ AudioSystem::AudioSystem(unsigned int nbSources) :
 }
 
 AudioSystem::~AudioSystem() {
+    printf("Cleaning audio system.\n");
     for (auto it = srces.begin(); it != srces.end(); it++) {
         delete *it;
     }
     srces.clear();
-    if (dvice) {
-        alcCloseDevice(dvice);
-    }
+    // destroys the context.
     if (cntext) {
         alcDestroyContext(cntext);
+    }
+    // closes the device.
+    if (dvice) {
+        alcCloseDevice(dvice);
     }
 }
 

@@ -17,6 +17,10 @@ ShaderProgram::ShaderProgram() {
     shaderProgramId = glCreateProgram();
 }
 
+ShaderProgram::~ShaderProgram() {
+    glDeleteProgram(shaderProgramId);
+}
+
 void ShaderProgram::addShader(Shader* shader) {
     shders.push_back(shader);
     glAttachShader(shaderProgramId, shader->id());

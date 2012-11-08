@@ -34,7 +34,10 @@ Canvas::Canvas(int w, int h) :
             const unsigned char* version = glGetString(GL_VERSION);
             printf("GL version : %s\n",version);
             if (version[0] != '3' && version[0] != '4') {
-                printf("ERROR: OpenGL version < 3.\nMehteor will probably not work correctly.\n");
+                printf("ERROR: OpenGL version < 3.\nMehteor could not work correctly.\n");
+            } else if (version[0] == '1')
+            {
+                printf("ERROR: OpenGL 1.x detected,\nMehteor will probably not work correctly.\n");
             }
             version = glGetString(GL_SHADING_LANGUAGE_VERSION);
             printf("GLSL version : %s\n",version);
