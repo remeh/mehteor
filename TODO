@@ -4,6 +4,5 @@
 - storing the texture in the bitmap (in a bytebuffer) doesn't correctly work
 - color (vertex, sprites)
 - target for unit tests
-- sprite flipX/flipY
-- spriterenderer rendering if the buffer is full
-- the mouse click could be ignored
+- sprite flipX/flipY, rotation and scale
+- the mouse click is sometimes be ignored

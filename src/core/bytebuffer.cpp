@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <cstring>
 
 #include "core/bytebuffer.h"
@@ -37,14 +38,11 @@ void ByteBuffer::reset() {
 }
 
 int ByteBuffer::write(unsigned char* data, int length) {
-    if (length+crsor >= len) {
+    if (length+crsor > len) {
         return -1;
     }
     // Copy the data
     memcpy(dta+crsor,data,length*sizeof(unsigned char));
-    for (int i = 0; i < length; i++) {
-        dta[crsor+i] = data[i];
-    }
     crsor += length;
     return 0;
 }

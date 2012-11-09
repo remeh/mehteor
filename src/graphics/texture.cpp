@@ -55,12 +55,18 @@ bool Texture::load(string filename) {
     }
     w = width;
     h = height;
+
+    /*
+     * Loads it in a Bitmap
+     */
     int totalSize = width*height*channels;
     bitmap = new Bitmap(width,height,channels);
+    bitmap->buffer().reset();
     bitmap->buffer().write(img, totalSize); 
+
     // Upload the OpenGL texture loaded by SOIL
     glBindTexture(GL_TEXTURE_2D, texId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, img); 
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
