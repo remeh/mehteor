@@ -24,6 +24,7 @@
 #include "engine/camera/camera.h"
 #include "engine/scene/scene.h"
 #include "engine/scene/simplescene2d.h"
+#include "engine/scene/scenenode.h"
 #include "engine/scene/actor.h"
 #include "engine/scene/spriteactor.h"
 

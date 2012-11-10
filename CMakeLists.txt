@@ -34,6 +34,7 @@ set(
         src/engine/camera/camera.cpp
         src/engine/camera/orthographiccamera.cpp
         src/engine/scene/simplescene2d.cpp
+        src/engine/scene/scenenode.cpp
         src/engine/scene/spriteactor.cpp
 
 # tests

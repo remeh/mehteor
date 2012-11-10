@@ -4,6 +4,7 @@
 #include <deque>
 
 #include "engine/scene/scene.h"
+#include "engine/scene/scenenode.h"
 #include "engine/scene/actor.h"
 #include "graphics/shader.h"
 #include "graphics/shaderprogram.h"
@@ -39,9 +40,9 @@ class SimpleScene2D : public Scene {
 
         Shader vertexShader;
         Shader fragmentShader;
-        ShaderProgram shaderProgram;
+        ShaderProgram defaultShaderProgram;
 
-        deque<Actor*> actors;
+        deque<SceneNode*> nodes;
 
     protected:
     public:
@@ -50,28 +51,17 @@ class SimpleScene2D : public Scene {
 
         void update();
         void render();
+
         Camera* camera();
-
-        /**
-         * Adds an Actor in this Scene.
-         * The memory is managed by the Scene.
-         *
-         * @param actor the Actor to add to the Scene.
-         */
-        void addActor(Actor* actor);
-
-        /**
-         * Removes an Actor from this Scene.
-         * The memory of the returned pointer must be handled by the caller.
-         *
-         * @param actor the Actor to remove.
-         * @return a pointer to the removed Actor.
-         */
-        Actor* removeActor(Actor* actor);
 
         Renderer& renderer() {
             return spriteRenderer;
         }
+
+        // XXX
+        void addActor(Actor* actor);
+
+        void addNode(SceneNode* node);
 };
 
 } // namespace meh
