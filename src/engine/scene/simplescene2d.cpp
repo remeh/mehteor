@@ -17,6 +17,7 @@ SimpleScene2D::SimpleScene2D(float width, float height) :
     vertexShader("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER),
     fragmentShader("res/shaders/fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER) {
 
+    // TODO this default node should be accessible
     SceneNode* node = new SceneNode(&vertexShader, &fragmentShader);
     nodes.push_back(node);
 
@@ -49,12 +50,12 @@ void SimpleScene2D::render() {
     }
 }
 
-void SimpleScene2D::addActor(Actor* actor) {
-    (*(nodes.begin()))->addActor(actor);
-}
-
 void SimpleScene2D::addNode(SceneNode* node) {
-    nodes.push_back(node);
+    if (node != nullptr) {
+        nodes.push_back(node);
+    } else {
+        printf("WARNING: tried to insert a null node in a scene2d.\n");
+    }
 }
 
 Camera* SimpleScene2D::camera() {

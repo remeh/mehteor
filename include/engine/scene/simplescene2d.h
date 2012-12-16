@@ -58,7 +58,15 @@ class SimpleScene2D : public Scene {
             return spriteRenderer;
         }
 
-        // XXX
+        Shader& getDefaultVertexShader() {
+            return vertexShader;
+        }
+
+        Shader& getDefaultFragmentShader() {
+            return fragmentShader;
+        }
+
+        // XXX adds an actor to the default node.
         void addActor(Actor* actor);
 
         void addNode(SceneNode* node);

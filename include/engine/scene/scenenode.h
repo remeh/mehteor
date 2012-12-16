@@ -28,6 +28,7 @@ class SceneNode
 
         void deleteShaders();
 
+
     protected:
     public:
         SceneNode(Shader* vertexShader, Shader* fragmentShader);
@@ -51,6 +52,11 @@ class SceneNode
          * @return a pointer to the removed Actor.
          */
         Actor* removeActor(Actor* actor);
+
+        /**
+         * Delete very Actors of this SceneNode.
+         */
+        void deleteActors();
 
         void setShaders(Shader* vertexShader, Shader* fragmentShader);
 

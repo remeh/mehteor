@@ -14,9 +14,7 @@ SceneNode::SceneNode(Shader* vertexShader, Shader* fragmentShader) :
 SceneNode::~SceneNode() {
     deleteShaders();
 
-    for (auto actor = actors.begin(); actor != actors.end(); actor++) {
-        delete *actor;
-    }
+    deleteActors();
 }
 
 void SceneNode::addActor(Actor* actor) {
@@ -26,7 +24,12 @@ void SceneNode::addActor(Actor* actor) {
 }
 
 Actor* SceneNode::removeActor(Actor* actor) {
-    // TODO
+    for (auto a = actors.begin(); a != actors.end(); a++) {
+        if (*a == actor) {
+            actors.erase(a);
+            return actor;
+        }
+    }
     return nullptr;
 }
 
@@ -42,6 +45,13 @@ void SceneNode::deleteShaders() {
     if (shderProgram) {
         delete shderProgram;
     }
+}
+
+void SceneNode::deleteActors() {
+    for (auto actor = actors.begin(); actor != actors.end(); actor++) {
+        delete *actor;
+    }
+    actors.clear();
 }
 
 void SceneNode::render(SpriteRenderer* spriteRenderer) {
