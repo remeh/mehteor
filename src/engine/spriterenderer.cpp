@@ -94,10 +94,11 @@ void SpriteRenderer::draw(Texture* texture, float x, float y, float w, float h, 
     // TODO scale and rotation
 
     // Computes from texture coordinates to normalized values (between [0.0f;1.0f])
+    // Y-inversed (texture are y-inversed in memory) 
     float u = texX*invTexW;
-    float v = texY*invTexH;
+    float v = (texY+texH)*invTexH;
     float uu = (texX+texW)*invTexW;
-    float vv = (texY+texH)*invTexH;
+    float vv = texY*invTexH;
 
     // flipped on x-axis
     if (flipX) {
@@ -106,7 +107,8 @@ void SpriteRenderer::draw(Texture* texture, float x, float y, float w, float h, 
         uu = tmp;
     }
     // flipped on y-axis
-    if (flipY) {
+    if (flipY)
+    {
         float tmp = v;
         v = vv;
         vv = tmp;

@@ -50,18 +50,20 @@ int main(int argc, char* argv[]) {
 
     SimpleScene2D scene2D(640,480);
 
-    SceneNode* node = new SceneNode(&vertexRadialBlur, &fragmentRadialBlur);
+    SceneNode* node = new SceneNode(&vertex, &fragment);
     scene2D.addNode(node);
 
     sprite.setSize(256,256);
     sprite.textureRegion().set(0,0,256,256);
 
+    /*
     for (int i = 0; i < 1; i++) {
         SpriteActor* s = new SpriteActor(sprite2);
         if (s) {
             scene2D.addActor(s);
         }
     }
+    */
     node->addActor(new SpriteActor(sprite));
     /*
     for (int i = 0; i < 141; i++) {

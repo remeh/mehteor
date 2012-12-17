@@ -66,6 +66,16 @@ class ByteBuffer {
         void reset();
 
         /**
+         * Directly sets the data with the provided content.
+         * Warning: can resize the buffer if necessary.
+         * Warning: the array of uchar MUST NOT BE DELETED as it is managed by the ByteBuffer.
+         * Warning: the array of uchar must have been created with malloc and not new[]
+         * @param data the data
+         * @param length size of the data
+         */
+        void setData(unsigned char* data, int length);
+
+        /**
          * Alias for readUChar().
          */
         unsigned char readByte() {

@@ -41,8 +41,9 @@ bool Texture::load(string filename) {
     int height;
     int channels;
 
-    // Loads the image 
+    // Loads the image, force to 4 channels
     unsigned char* img = SOIL_load_image(filename.c_str(), &width, &height, &channels, SOIL_LOAD_RGBA);
+    channels = 4; // we've forced to 4
 
     if (!img) {
         return false;
@@ -62,19 +63,16 @@ bool Texture::load(string filename) {
     int totalSize = width*height*channels;
     bitmap = new Bitmap(width,height,channels);
     bitmap->buffer().reset();
-    bitmap->buffer().write(img, totalSize); 
+    bitmap->buffer().write(img, totalSize);
 
     // Upload the OpenGL texture loaded by SOIL
     glBindTexture(GL_TEXTURE_2D, texId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, bitmap->buffer().data());
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-
-    // Was copied into the bitmap buffer.
-    SOIL_free_image_data(img);
 
     return true;
 }

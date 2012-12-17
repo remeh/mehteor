@@ -28,7 +28,7 @@ class Bitmap {
          * @param height the height of this image
          * @param channels how many bytes are used for a pixel
          */
-        Bitmap(unsigned int width, unsigned int height, unsigned channels = 1);
+        Bitmap(unsigned int width, unsigned int height, unsigned channels = 3);
 
         /**
          * Default constructor
@@ -63,6 +63,17 @@ class Bitmap {
 
         ByteBuffer& buffer() {
             return bytes;
+        }
+
+        /**
+         * Sets the image with the provided data.
+         * Warning: the array of uchar MUST NOT BE DELETED.
+         * Warning: the array of uchar must have been created with malloc and not new[]
+         * @param image the image
+         * @param length total size of the image
+         */
+        void setImage(unsigned char* image, int length) {
+            bytes.setData(image, length);
         }
 };
 
