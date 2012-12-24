@@ -43,18 +43,21 @@ int main(int argc, char* argv[]) {
 
     ResourcesManager resourcesManager;
     resourcesManager.loadTexture("lama1","res/lama1.png");
-    resourcesManager.loadTexture("lama2","res/lama2.png");
+    resourcesManager.loadTexture("spritesheet","res/ch.png");
     
-    Sprite sprite(resourcesManager.getTexture("lama2"));
     Sprite sprite2(resourcesManager.getTexture("lama1"));
+
+    Rect<float> texCoords[] = { Rect<float>(32,0,32,32), Rect<float>(0,0,32,32), Rect<float>(32,0,32,32), Rect<float>(64,0,32,32)};
+    unsigned int durations[] = { 100, 100, 100, 100 };
+    Sprite sprite(resourcesManager.getTexture("spritesheet"));
+    sprite.addAnimation("down", 4, durations, texCoords);
+    sprite.setSize(128,128);
+    sprite.setAnimation("down");
 
     SimpleScene2D scene2D(640,480);
 
-    SceneNode* node = new SceneNode(&vertex, &fragment);
+    SceneNode* node = new SceneNode(&vertex,&fragment);
     scene2D.addNode(node);
-
-    sprite.setSize(256,256);
-    sprite.textureRegion().set(0,0,256,256);
 
     /*
     for (int i = 0; i < 1; i++) {
@@ -107,9 +110,13 @@ int main(int argc, char* argv[]) {
 
     while (1) {
         canvas.clear(0.0f,0.0f,0.0f,1.0f);
+        scene2D.update();
         scene2D.render();
         canvas.flip();
         idm.update();
+        if (idm.leftButton()) {
+            printf("left button\n");
+        }
         if (idm.keyPressed(SDLK_ESCAPE)) {
             break;
         } else if (idm.keyPressed(SDLK_LEFT)) {
@@ -133,7 +140,6 @@ int main(int argc, char* argv[]) {
             t = System::currentTime()+1000;
         }
         System::sleep(16);
-
     }
     
     System::deinit();

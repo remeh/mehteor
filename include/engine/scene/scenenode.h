@@ -28,7 +28,6 @@ class SceneNode
 
         void deleteShaders();
 
-
     protected:
     public:
         SceneNode(Shader* vertexShader, Shader* fragmentShader);
@@ -52,6 +51,11 @@ class SceneNode
          * @return a pointer to the removed Actor.
          */
         Actor* removeActor(Actor* actor);
+
+        /**
+         * Called by the SimpleScene2D to refresh the content of the nodes.
+         */
+        void update();
 
         /**
          * Delete very Actors of this SceneNode.

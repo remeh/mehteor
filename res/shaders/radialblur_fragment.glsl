@@ -7,7 +7,7 @@ uniform sampler2D meh_texture;
 
 // some const, tweak for best look
 const float sampleDist = 1.0;
-const float sampleStrength = 2.2; 
+const float sampleStrength = 1.4; 
  
 void main(void)
 {

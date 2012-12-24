@@ -4,4 +4,4 @@
 - color (vertex, sprites)
 - target for unit tests
 - sprite flipX/flipY, rotation and scale
-- the mouse click is sometimes be ignored
+- the mouse click is sometimes ignored

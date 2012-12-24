@@ -41,10 +41,18 @@ SimpleScene2D::~SimpleScene2D() {
 void SimpleScene2D::update() {
     // As long as we don't change the viewport or the zoom factor,
     // we don't need to update the camera
+    // but we must update every nodes
+    for (auto it = nodes.begin(); it != nodes.end(); it++) {
+        (*it)->update();
+    }
 }
 
 void SimpleScene2D::render() {
     // renders each node of the scene
+    if (nodes.size() == 0) {
+        printf("WARNING: no node to render in this Scene2d[%p]", this);
+        return;
+    }
     for (auto it = nodes.begin(); it != nodes.end(); it++) {
         (*it)->render(&spriteRenderer);
     }
@@ -54,7 +62,7 @@ void SimpleScene2D::addNode(SceneNode* node) {
     if (node != nullptr) {
         nodes.push_back(node);
     } else {
-        printf("WARNING: tried to insert a null node in a scene2d.\n");
+        printf("WARNING: tried to insert a null node in this Scene2d[%p].\n", this);
     }
 }
 

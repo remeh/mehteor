@@ -29,6 +29,7 @@ class SpriteAnimation {
          * @param texCoords the texture coordinates of each frame of this animation
          */
         SpriteAnimation(string name, unsigned int nbFrames, const unsigned int* durations, const Rect<float>* texCoords);
+
         ~SpriteAnimation();
 
         /**
@@ -36,13 +37,13 @@ class SpriteAnimation {
          *
          * \return true whether the frame has changed
          */
-        bool tick();
+        bool update();
 
         /**
          * Returns the must-be currently
          * displayed frame texture coordinates.
          */
-        Rect<float>& getCurrentTexCoords() {
+        Rect<float>& textureRegion() {
             return texCoords[currFrame];
         }
 
@@ -52,6 +53,31 @@ class SpriteAnimation {
         string name() {
             return n;
         }
+
+        /**
+         * Returns the count of frames of this animation.
+         * @return the count of frames of this animation.
+         */
+        unsigned int nbFrames() {
+            return nFrames;
+        }
+
+        /**
+         * Returns an array of the frame durations.
+         * @return an array of the frame durations. 
+         */
+        unsigned int* frameDurations() {
+            return durations;
+        }
+
+        /**
+         * Returns an array of the texture coordinates.
+         * @return an array of the texture coordinates. 
+         */
+        Rect<float>* textureCoordinates() {
+            return texCoords;
+        }
+
 
         /**
          * Returns the number of the current frame.
@@ -66,6 +92,13 @@ class SpriteAnimation {
          * @param currentFrame the number of the frame
          */
         void setCurrentFrame(unsigned int currentFrame);
+
+        /**
+         * Sets the current frame to the first one.
+         */
+        void reset() {
+            setCurrentFrame(0);
+        }
 };
 
 } // namespace meh

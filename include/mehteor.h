@@ -18,6 +18,7 @@
 #include "engine/resourcesmanager.h"
 #include "engine/inputdevicesmanager.h"
 #include "engine/sprite.h"
+#include "engine/spriteanimation.h"
 #include "engine/renderer.h"
 #include "engine/spriterenderer.h"
 #include "engine/camera/orthographiccamera.h"

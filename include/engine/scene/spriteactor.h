@@ -15,6 +15,7 @@ class SpriteActor : public Actor {
         ~SpriteActor();
 
         void draw(Renderer* renderer);
+        void update();
 };
 
 } // namespace meh

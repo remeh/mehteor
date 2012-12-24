@@ -54,6 +54,12 @@ void SceneNode::deleteActors() {
     actors.clear();
 }
 
+void SceneNode::update() {
+    for (auto actor = actors.begin(); actor != actors.end(); actor++) {
+        (*actor)->update();
+    }
+}
+
 void SceneNode::render(SpriteRenderer* spriteRenderer) {
     if (!spriteRenderer) {
         printf("ERR: call to a SceneNode::render with a null renderer.\n");

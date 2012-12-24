@@ -1,9 +1,15 @@
 #ifndef MEH_SPRITE_H
 #define MEH_SPRITE_H
 
+#include <map>
+#include <string>
+
 #include "core/rect.h"
 #include "graphics/texture.h"
 #include "engine/spriterenderer.h"
+#include "engine/spriteanimation.h"
+
+using namespace std;
 
 namespace meh {
 
@@ -17,6 +23,10 @@ class Sprite {
          * The number of vertices for one sprite
          */
         static int SIZE;
+        /**
+         * The name of the default animation.
+         */
+        static string DEFAULT_ANIMATION;
 
     private:
         /**
@@ -48,6 +58,8 @@ class Sprite {
          */
         Vector2d<float> rotCenter;
 
+        map<string, SpriteAnimation*> anims;
+
         /**
          * Region to use in the Texture to represent this Sprite.
          * The region is in the texture coordinates (not normalized).
@@ -58,6 +70,11 @@ class Sprite {
          * Is this sprite visible ?
          */
         bool vsible;
+
+        /**
+         * Pointer on the current animation. Do not delete memory of this pointer.
+         */
+        SpriteAnimation* currAnimation;
 
     protected:
     public:
@@ -95,6 +112,8 @@ class Sprite {
 
         ~Sprite();
 
+        void addAnimation(string name, int nbFrames, const unsigned int* durations, const Rect<float>* texCoords);
+
         Texture* texture() {
             return tex;
         }
@@ -130,9 +149,20 @@ class Sprite {
          *
          * @return the region of the texture used to render the Sprite. 
          */
-        Rect<float>& textureRegion() {
-            return texRegion;
-        }
+        Rect<float>& textureRegion();
+
+        /**
+         * Returns a reference to the current SpriteAnimation.
+         * @return a reference to the current SpriteAnimation. 
+         */
+        SpriteAnimation& currentAnimation();
+
+        /**
+         * Sets the current animation of this sprite.
+         * @param name the name of the animation to set.
+         * @return true if the animation exists and everything went fine.
+         */
+        bool setAnimation(string name);
 
         /**
          * Returns the scale on this Sprite on the x-axis. Default to 1.0f.
@@ -210,6 +240,11 @@ class Sprite {
         bool visible() {
             return vsible;
         }
+
+        /**
+         * Update the sprites (for animations).
+         */
+        void update();
 };
 
 } // namespace meh

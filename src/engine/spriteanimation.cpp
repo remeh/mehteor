@@ -28,7 +28,7 @@ SpriteAnimation::~SpriteAnimation() {
         delete[] durations;
 }
 
-bool SpriteAnimation::tick() {
+bool SpriteAnimation::update() {
     double currTime = System::currentTime();
     if (currTime > nextFrame) {
         currFrame++;
