@@ -28,6 +28,8 @@
 #include "engine/scene/scenenode.h"
 #include "engine/scene/actor.h"
 #include "engine/scene/spriteactor.h"
+#include "engine/font/bmfontreader.h"
+#include "engine/font/bmglyphinfo.h"
 
 #include "audio/audiosource.h"
 #include "audio/audiosystem.h"

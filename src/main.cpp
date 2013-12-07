@@ -68,11 +68,12 @@ int main(int argc, char* argv[]) {
     }
     */
     node->addActor(new SpriteActor(sprite));
+
     /*
     for (int i = 0; i < 141; i++) {
-        SpriteActor* s = new SpriteActor(sprite2);
+        SpriteActor* s = new SpriteActor(sprite);
         if (s) {
-            scene2D.addActor(s);
+            node->addActor(s);
         }
     }
     */
@@ -108,6 +109,9 @@ int main(int argc, char* argv[]) {
     AudioSystem system;
     system.play(&snd,true);
 
+    BMFontReader fontReader("res/courrier.fnt");
+    fontReader.read();
+
     while (1) {
         canvas.clear(0.0f,0.0f,0.0f,1.0f);
         scene2D.update();
@@ -141,7 +145,7 @@ int main(int argc, char* argv[]) {
         }
         System::sleep(16);
     }
-    
+
     System::deinit();
     return 0;
 }

@@ -36,6 +36,8 @@ set(
         src/engine/scene/simplescene2d.cpp
         src/engine/scene/scenenode.cpp
         src/engine/scene/spriteactor.cpp
+        src/engine/font/bmfontreader.cpp
+        src/engine/font/bmglyphinfo.cpp
 
 # tests
         src/tests/testsmatrix4x4f.cpp

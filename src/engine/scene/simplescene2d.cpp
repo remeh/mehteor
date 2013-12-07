@@ -22,7 +22,7 @@ SimpleScene2D::SimpleScene2D(float width, float height) :
     nodes.push_back(node);
 
     // Using a ortho camera, we set 0,0 on the left bottom on the screen.
-    cam->setPosition(320.0f,240.0f,0.0f);
+    cam->setPosition(320.0f,240.0f,0.0f); // XXX hard-coded 320x240 translation ?!
     // Updates the model view projection
     cam->update();
     spriteRenderer.setModelViewMatrix(cam->modelViewProjection());
