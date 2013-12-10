@@ -1,7 +1,14 @@
+TODO
+
+- font rendering
 - bytebuffer.cpp : more functions read/write
 - threads
-- storing the texture in the bitmap (in a bytebuffer) doesn't correctly work
 - color (vertex, sprites)
 - target for unit tests
 - sprite flipX/flipY, rotation and scale
-- the mouse click is sometimes ignored
+- the mouse click is sometimes ignored (IMO the input system must be redone)
+- stop with these attributes name, better directory structure.
+
+DONE
+
+- storing the texture in the bitmap (in a bytebuffer) doesn't correctly work

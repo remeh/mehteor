@@ -44,6 +44,7 @@ int main(int argc, char* argv[]) {
     ResourcesManager resourcesManager;
     resourcesManager.loadTexture("lama1","res/lama1.png");
     resourcesManager.loadTexture("spritesheet","res/ch.png");
+    resourcesManager.loadTexture("courrier","res/courrier_0.png");
     
     Sprite sprite2(resourcesManager.getTexture("lama1"));
 
@@ -68,6 +69,11 @@ int main(int argc, char* argv[]) {
     }
     */
     node->addActor(new SpriteActor(sprite));
+
+    BMFontReader fontReader("res/courrier.fnt");
+    FontActorCreator fontActorCreator(resourcesManager,fontReader.read());
+    FontActor* fontActor = fontActorCreator.createFontActor("courrier", "This IS A TEXT TEST ! Hehehe", 1, 2);
+    node->addActor(fontActor);
 
     /*
     for (int i = 0; i < 141; i++) {
@@ -108,9 +114,6 @@ int main(int argc, char* argv[]) {
     Sound snd2("res/boump.ogg");
     AudioSystem system;
     system.play(&snd,true);
-
-    BMFontReader fontReader("res/courrier.fnt");
-    fontReader.read();
 
     while (1) {
         canvas.clear(0.0f,0.0f,0.0f,1.0f);

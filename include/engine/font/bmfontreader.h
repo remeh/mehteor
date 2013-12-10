@@ -36,9 +36,10 @@ class BMFontReader {
 
         /**
          * Reads the file description to return a font renderer.
+         * WARNING: this pointer must be managed by the receiver
          * TODO font renderer
          */
-        void read();
+        map<int, BMGlyphInfo>* read();
 
         /**
          * Reads the header of the BMFont descriptor.

@@ -16,7 +16,7 @@ BMFontReader::BMFontReader(string filepath) :
 BMFontReader::~BMFontReader() {
 }
 
-void BMFontReader::read() {
+map<int, BMGlyphInfo>* BMFontReader::read() {
     ifstream input(flepath.data());
 
     printf("hi!\n");
@@ -29,16 +29,15 @@ void BMFontReader::read() {
 
     // release the file resource
     input.close();
+
+    return infos;
 }
 
 void BMFontReader::readHeader(ifstream& input) {
     string line;
     for (int i = 0; i < 4; i++) {
         getline(input, line);
-        
-        // TODO errors check
-        printf("HEADER\n");
-        printf("%s\n", line.data());
+        // TODO errors check and other use of the headers
     }
 }
 
