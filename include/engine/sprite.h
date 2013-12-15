@@ -204,6 +204,15 @@ class Sprite {
         void setPosition(float x, float y);
 
         /**
+         * Sets the rotation angle.
+         * @param rot       the rotation
+         */
+        void setRotation(int rot)
+        {
+            this->rot = rot;
+        }
+        
+        /**
          * Sets around which point the rotation and the scaling is computed.
          * @param x center on the x-axis
          * @param y center on the y-axis

@@ -20,7 +20,7 @@ FontActorCreator::~FontActorCreator() {
     }
 }
 
-FontActor* FontActorCreator::createFontActor(string textureName, string text, int x, int y) {
+FontActor* FontActorCreator::createFontActor(string textureName, string text, float x, float y, float scale) {
     Texture* tex = resources.getTexture(textureName);
 
     vector<Sprite*>* sprites = new vector<Sprite*>();
@@ -34,12 +34,12 @@ FontActor* FontActorCreator::createFontActor(string textureName, string text, in
         
         // FIXME ugly fix to fix the space problem
         if (c == ' ') {
-            width = 8;
+            width = 8*scale;
         } else {
-            width = info.width();
+            width = info.width()*scale;
         }
 
-        sprites->push_back(new Sprite(tex, xpos, y, width, info.height(), Rect<float>(info.x(),info.y(),info.width(),info.height())));
+        sprites->push_back(new Sprite(tex, xpos, y, width, info.height()*scale, Rect<float>(info.x(),info.y(),info.width(),info.height())));
 
         xpos += width;
     }

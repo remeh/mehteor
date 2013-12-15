@@ -16,6 +16,11 @@ class SpriteActor : public Actor {
 
         void draw(Renderer* renderer);
         void update();
+
+        Sprite& getSprite()
+        {
+            return s;
+        }
 };
 
 } // namespace meh

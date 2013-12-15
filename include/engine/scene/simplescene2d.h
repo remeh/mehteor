@@ -66,9 +66,13 @@ class SimpleScene2D : public Scene {
             return fragmentShader;
         }
 
-        // XXX adds an actor to the default node.
-        void addActor(Actor* actor);
-
+        /**
+         * Adds a node to this scene2D.
+         *
+         * Takes the responsability to delete the node !
+         *
+         * @param *node      the node to add.
+         */
         void addNode(SceneNode* node);
 };
 

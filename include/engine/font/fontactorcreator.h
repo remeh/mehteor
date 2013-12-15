@@ -28,7 +28,7 @@ class FontActorCreator {
         FontActorCreator(ResourcesManager& resourcesManager, map<int, BMGlyphInfo>* glyphInfos); // TODO GlyphInfo more abstract, not specific to BMFont
         ~FontActorCreator();
 
-        FontActor* createFontActor(string textureName, string text, int x, int y);
+        FontActor* createFontActor(string textureName, string text, float x, float y, float scale);
 };
 
 } // namespace meh

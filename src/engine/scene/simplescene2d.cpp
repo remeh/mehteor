@@ -17,10 +17,6 @@ SimpleScene2D::SimpleScene2D(float width, float height) :
     vertexShader("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER),
     fragmentShader("res/shaders/fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER) {
 
-    // TODO this default node should be accessible
-    SceneNode* node = new SceneNode(&vertexShader, &fragmentShader);
-    nodes.push_back(node);
-
     // Using a ortho camera, we set 0,0 on the left bottom on the screen.
     cam->setPosition(320.0f,240.0f,0.0f); // XXX hard-coded 320x240 translation ?!
     // Updates the model view projection
@@ -53,7 +49,8 @@ void SimpleScene2D::render() {
         printf("WARNING: no node to render in this Scene2d[%p]", this);
         return;
     }
-    for (auto it = nodes.begin(); it != nodes.end(); it++) {
+    for (auto it = nodes.begin(); it != nodes.end(); it++)
+    {
         (*it)->render(&spriteRenderer);
     }
 }
@@ -65,6 +62,7 @@ void SimpleScene2D::addNode(SceneNode* node) {
         printf("WARNING: tried to insert a null node in this Scene2d[%p].\n", this);
     }
 }
+
 
 Camera* SimpleScene2D::camera() {
     return cam;

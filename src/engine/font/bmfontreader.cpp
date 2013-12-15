@@ -19,8 +19,6 @@ BMFontReader::~BMFontReader() {
 map<int, BMGlyphInfo>* BMFontReader::read() {
     ifstream input(flepath.data());
 
-    printf("hi!\n");
-
     // first read the header of 4 lines
     readHeader(input);
 
