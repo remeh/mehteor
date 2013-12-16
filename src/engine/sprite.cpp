@@ -8,7 +8,7 @@ namespace meh {
 /**
  * The number of vertices for one sprite
  */
-int Sprite::VERTEX_SIZE = 3 + 2; // 3 (coord) + 2 (texcoord)
+int Sprite::VERTEX_SIZE = 3 + 2 + 4; // 3 (coord) + 2 (texcoord) + 4 (tint color)
 int Sprite::SIZE = 4 * VERTEX_SIZE;
 string Sprite::DEFAULT_ANIMATION = "default"; 
 
@@ -37,6 +37,7 @@ Sprite::Sprite(Texture* texture, float x, float y, float width, float height, Re
     scleX(1.0f),
     scleY(1.0f),
     rot(0.0f),
+    tint(Vector4d<float>(1.0f,1.0f,1.0f,1.0f)),
     vsible(true),
     currAnimation(nullptr) {
     if (texture == nullptr) {
@@ -88,7 +89,7 @@ SpriteAnimation& Sprite::currentAnimation() {
     return *currAnimation;
 }
 
-Rect<float>& Sprite::textureRegion() {
+Rect<float>& Sprite::getTextureRegion() {
     return currentAnimation().textureRegion();
 }
 

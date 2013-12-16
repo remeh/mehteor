@@ -10,6 +10,7 @@ namespace meh {
 
 string VertexAttributes::positionAttribute = "meh_position";
 string VertexAttributes::textureCoordinatesAttribute = "meh_texcoord";
+string VertexAttributes::tintColorAttribute = "meh_tintcolor";
 
 VertexAttributes::VertexAttributes() :
     totalDim(0) {

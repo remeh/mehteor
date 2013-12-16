@@ -14,6 +14,7 @@ class VertexAttributes {
     public: // static
         static string positionAttribute;
         static string textureCoordinatesAttribute;
+        static string tintColorAttribute;
 
     private:
         vector<VertexAttribute> attributes;

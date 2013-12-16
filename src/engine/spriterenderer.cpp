@@ -35,6 +35,8 @@ SpriteRenderer::SpriteRenderer(unsigned int size) :
     VertexAttributes vertexAttributes;
     vertexAttributes.addAttribute(VertexAttribute(3,0,VertexAttributes::positionAttribute));
     vertexAttributes.addAttribute(VertexAttribute(2,3,VertexAttributes::textureCoordinatesAttribute));
+    vertexAttributes.addAttribute(VertexAttribute(4,5,VertexAttributes::tintColorAttribute));
+
     msh = new Mesh(vertexAttributes);
 
     init();
@@ -79,7 +81,7 @@ void SpriteRenderer::switchTexture(Texture* newTexture) {
 
 void SpriteRenderer::draw(Texture* texture, float x, float y, float w, float h, float centerX, float centerY,
                         float scaleX, float scaleY, float rotation, float texX, float texY, float texW, float texH,
-                        bool flipX, bool flipY) {
+                        float r, float g, float b, float a, bool flipX, bool flipY) {
     if (!isRendering) {
         printf("ERROR: illegal state: call to draw() but the renderer isn't in rendering mode.\n");
         return;
@@ -114,38 +116,66 @@ void SpriteRenderer::draw(Texture* texture, float x, float y, float w, float h, 
         vv = tmp;
     }
 
+    // vertex
     vrtices[idx++] = x;
     vrtices[idx++] = y;
     vrtices[idx++] = 0.0f;
+    // texcoord
     vrtices[idx++] = u;
     vrtices[idx++] = v;
+    // tint 
+    vrtices[idx++] = r;
+    vrtices[idx++] = g;
+    vrtices[idx++] = b;
+    vrtices[idx++] = a;
 
+    // vertex
     vrtices[idx++] = x+w;
     vrtices[idx++] = y;
     vrtices[idx++] = 0.0f;
+    // texcoord
     vrtices[idx++] = uu;
     vrtices[idx++] = v;
+    // opacity
+    vrtices[idx++] = r;
+    vrtices[idx++] = g;
+    vrtices[idx++] = b;
+    vrtices[idx++] = a;
 
+    // vertex
     vrtices[idx++] = x+w;
     vrtices[idx++] = y+h;
     vrtices[idx++] = 0.0f;
+    // texcoord
     vrtices[idx++] = uu;
     vrtices[idx++] = vv;
+    // opacity
+    vrtices[idx++] = r;
+    vrtices[idx++] = g;
+    vrtices[idx++] = b;
+    vrtices[idx++] = a;
 
+    // vertex
     vrtices[idx++] = x;
     vrtices[idx++] = y+h;
     vrtices[idx++] = 0.0f;
+    // texcoord
     vrtices[idx++] = u;
     vrtices[idx++] = vv;
+    // opacity
+    vrtices[idx++] = r;
+    vrtices[idx++] = g;
+    vrtices[idx++] = b;
+    vrtices[idx++] = a;
 
     spriteBuffered++;
 }
 
 void SpriteRenderer::draw(Sprite& sprite) {
     if (sprite.visible()) {
-        draw(sprite.texture(), sprite.x(), sprite.y(), sprite.width(), sprite.height(), sprite.rotationCenter().x(), sprite.rotationCenter().y(),
-                sprite.scaleX(), sprite.scaleY(), sprite.rotation(), sprite.textureRegion().x(), sprite.textureRegion().y(),
-                sprite.textureRegion().width(), sprite.textureRegion().height(), false, false); 
+        draw(sprite.texture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight(), sprite.getRotationCenter().x(), sprite.getRotationCenter().y(),
+                sprite.getScaleX(), sprite.getScaleY(), sprite.getRotation(), sprite.getTextureRegion().x(), sprite.getTextureRegion().y(),
+                sprite.getTextureRegion().width(), sprite.getTextureRegion().height(), sprite.getTint().x(), sprite.getTint().y(), sprite.getTint().z(), sprite.getTint().i(), false, false); 
     }
 }
 
@@ -162,6 +192,8 @@ void SpriteRenderer::begin(ShaderProgram* shaderProgram) {
     shaderProgram->enable();    
     // Set the camera position
     shaderProgram->setUniformMatrix4x4(ShaderProgram::modelViewProjectionAttribute, mdelViewMatrix);
+
+    shaderProgram->setUniformf("meh_tintcolor", 1.0f, 0.5f, 0.5f, 0.5f);
     this->shaderProgram = shaderProgram;
 
     // We enter in the rendering state

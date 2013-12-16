@@ -1,6 +1,6 @@
 TODO
 
-- font rendering
+- helper in sprites to increase/decrease opacity, to read a tint from vector4d, ...
 - bytebuffer.cpp : more functions read/write
 - threads
 - color (vertex, sprites)

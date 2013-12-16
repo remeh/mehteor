@@ -98,12 +98,16 @@ class SpriteRenderer : public Renderer {
          * @param texY the coordinate on the y-axis in the texture coordinates (not normalized)
          * @param texW the width on the x-axis in the texture coordinates (not normalized)
          * @param texH the height on the y-axis in the texture coordinates (not normalized)
+         * @param r         r tint
+         * @param g         g tint
+         * @param b         b tint
+         * @param a         a tint
          * @param flipX whether the texture should be flipped horizontally
          * @param flipY whether the texture should be flipped vertically
          */
         void draw(Texture* texture, float x, float y, float w, float h, float centerX, float centerY,
                 float scaleX, float scaleY, float rotation, float texX, float texY, float texW, float texH,
-                bool flipX, bool flipY);
+                float r, float g, float b, float a, bool flipX, bool flipY);
 
         void begin(ShaderProgram* shaderProgram);
         void end();

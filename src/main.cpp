@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
 
     BMFontReader fontReader("res/courrier.fnt");
     FontActorCreator fontActorCreator(resourcesManager,fontReader.read());
-    FontActor* fontActor = fontActorCreator.createFontActor("courrier", "This IS A TEXT TEST ! Hehehe", 1, 2);
+    FontActor* fontActor = fontActorCreator.createFontActor("courrier", "This IS A TEXT TEST ! Hehehe", 1, 2, 1.0);
     node->addActor(fontActor);
 
     /*
@@ -127,15 +127,19 @@ int main(int argc, char* argv[]) {
         if (idm.keyPressed(SDLK_ESCAPE)) {
             break;
         } else if (idm.keyPressed(SDLK_LEFT)) {
-            sprite.setPosition(sprite.x()-5.0f, sprite.y());
+            sprite.setPosition(sprite.getX()-5.0f, sprite.getY());
         } else if (idm.keyPressed(SDLK_RIGHT)) {
-            sprite.setPosition(sprite.x()+5.0f, sprite.y());
+            sprite.setPosition(sprite.getX()+5.0f, sprite.getY());
         } else if (idm.keyPressed(SDLK_DOWN)) {
-            sprite.setPosition(sprite.x(), sprite.y()-5.0f);
+            sprite.setPosition(sprite.getX(), sprite.getY()-5.0f);
         } else if (idm.keyPressed(SDLK_UP)) {
-            sprite.setPosition(sprite.x(), sprite.y()+5.0f);
+            sprite.setPosition(sprite.getX(), sprite.getY()+5.0f);
         } else if (idm.keyPressed(SDLK_SPACE)) {
             system.play(&snd2,false);
+        } else if (idm.keyPressed(SDLK_o)) {
+            sprite.setTint(sprite.getTint().x(), sprite.getTint().y(), sprite.getTint().z(), sprite.getTint().i() <= 0.9f ? sprite.getTint().i()+0.1f : 1.0f);
+        } else if (idm.keyPressed(SDLK_l)) {
+            sprite.setTint(sprite.getTint().x(), sprite.getTint().y(), sprite.getTint().z(), sprite.getTint().i() > 0.0f ? sprite.getTint().i()-0.1f : 0.0f);
         }
         nbFrame = nbFrame + 1.0f;
         if (t < System::currentTime()) {

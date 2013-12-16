@@ -19,9 +19,6 @@ class VBO {
          */
         GLuint vboId;
 
-        static GLuint positionAttribute;
-        static GLuint textureAttribute;
-
         /**
          * Whether the data on the GPU isn't correct, this VBO is dirty and
          * the next bind will make a call to glBufferData to send the vertices

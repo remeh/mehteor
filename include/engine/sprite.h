@@ -5,6 +5,7 @@
 #include <string>
 
 #include "core/rect.h"
+#include "core/vector4d.h"
 #include "graphics/texture.h"
 #include "engine/spriterenderer.h"
 #include "engine/spriteanimation.h"
@@ -54,6 +55,11 @@ class Sprite {
         float rot;
 
         /**
+         * Tint color.
+         */
+        Vector4d<float> tint;
+
+        /**
          * Center on X for rotation and scaling
          */
         Vector2d<float> rotCenter;
@@ -83,6 +89,7 @@ class Sprite {
          * @param texture the texture to use to render this Sprite
          */
         Sprite(Texture* texture);
+
         /**
          * Constructs a Sprite based on a texture, with a size equals to the texture size, texture coordinates equals to the full texture and position at [x,y].
          * @param texture the texture to use to render this Sprite
@@ -90,6 +97,7 @@ class Sprite {
          * @param y position in screen coordinates on the y-axis.
          */
         Sprite(Texture* texture, float x, float y);
+
         /**
          * Constructs a Sprite based on a texture, with a size equals to the width and height provided, texture coordinates equals to the full texture and position at [x,y].
          * @param texture the texture to use to render this Sprite
@@ -99,6 +107,7 @@ class Sprite {
          * @param height height on this sprite in screen coordinates.
          */
         Sprite(Texture* texture, float x, float y, float width, float height);
+
         /**
          * Constructs a Sprite based on a texture, with a size equals to the width and height provided, texture coordinates equals to the textureRegion provided and position at [x,y].
          * @param texture the texture to use to render this Sprite
@@ -123,23 +132,23 @@ class Sprite {
          *
          * @return the rectangle of this Sprites in the screen coordinates (position and size). 
          */
-        Rect<float>& rect() {
+        Rect<float>& getRect() {
             return r;
         }
 
-        float x() {
+        float getX() {
             return r.x();
         }
 
-        float y() {
+        float getY() {
             return r.y();
         }
 
-        float width() {
+        float getWidth() {
             return r.width();
         }
 
-        float height() {
+        float getHeight() {
             return r.height();
         }
 
@@ -149,7 +158,7 @@ class Sprite {
          *
          * @return the region of the texture used to render the Sprite. 
          */
-        Rect<float>& textureRegion();
+        Rect<float>& getTextureRegion();
 
         /**
          * Returns a reference to the current SpriteAnimation.
@@ -168,7 +177,8 @@ class Sprite {
          * Returns the scale on this Sprite on the x-axis. Default to 1.0f.
          * @return the scale on this Sprite on the x-axis. Default to 1.0f. 
          */
-        float scaleX() {
+        float getScaleX()
+        {
             return scleX;
         }
 
@@ -176,7 +186,8 @@ class Sprite {
          * Returns the scale on this Sprite on the y-axis. Default to 1.0f.
          * @return the scale on this Sprite on the y-axis. Default to 1.0f. 
          */
-        float scaleY() {
+        float getScaleY()
+        {
             return scleY;
         }
 
@@ -184,15 +195,21 @@ class Sprite {
          * Returns the rotation applied to this Sprite. Default at 0.0f. (used the rotation center as center)
          * @return the rotation applied to this Sprite. Default at 0.0f. (used the rotation center as center) 
          */
-        float rotation() {
+        float getRotation()
+        {
             return rot;
+        }
+
+        Vector4d<float> getTint()
+        {
+            return tint;
         }
 
         /**
          * Returns the center of the Sprite used for rotation and scaling.
          * @return the center of the Sprite used for rotation and scaling. 
          */
-        Vector2d<float> rotationCenter() {
+        Vector2d<float> getRotationCenter() {
             return rotCenter;
         }
 
@@ -210,6 +227,11 @@ class Sprite {
         void setRotation(int rot)
         {
             this->rot = rot;
+        }
+
+        void setTint(float r, float g, float b, float a)
+        {
+            tint.setXYZI(r,g,b,a);
         }
         
         /**

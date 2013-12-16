@@ -8,9 +8,6 @@ using namespace std;
 
 namespace meh {
 
-GLuint VBO::positionAttribute = 0;
-GLuint VBO::textureAttribute = 1;
-
 VBO::VBO(bool dynamic) :
     vrtices(nullptr), 
     vboId(0),
@@ -66,4 +63,3 @@ void VBO::unbind() {
 }
 
 }
-
