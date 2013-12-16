@@ -6,7 +6,6 @@
 #include "core/vector4d.h"
 #include "core/matrix4x4.h"
 #include "core/quaternion.h"
-#include "core/color.h"
 
 #include "graphics/bitmap.h"
 #include "graphics/vbo.h"
