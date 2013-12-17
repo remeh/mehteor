@@ -230,6 +230,36 @@ class Sprite {
         }
 
         /**
+         * Sets the opacity of the sprite.
+         * Values must be between 0.0f (invisible) to 1.0f (opaque).
+         *
+         * @param   opacity         the opacity to set.
+         */
+        void setOpacity(float opacity)
+        {
+            if (opacity > 1.0f)
+            {
+                opacity = 1.0f;
+            }
+            else if (opacity < 0.0f)
+            {
+                opacity = 0.0f;
+            }
+
+            this->tint.setXYZI(tint.x(), tint.y(), tint.z(), opacity);
+        }
+
+        /**
+         * Returns the opacity of the sprite.
+         *
+         * @return the opacity of the sprite (value in [0.0f;1.0f]
+         */
+        float getOpacity()
+        {
+            return this->tint.i();
+        }
+
+        /**
          * Sets the tint coloration of the sprite.
          * You can use this method to change the opacity of the sprite.
          * @param tint      the tint to apply.
