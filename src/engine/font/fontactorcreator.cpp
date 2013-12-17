@@ -20,8 +20,23 @@ FontActorCreator::~FontActorCreator() {
     }
 }
 
-FontActor* FontActorCreator::createFontActor(string textureName, string text, float x, float y, float scale) {
-    Texture* tex = resources.getTexture(textureName);
+FontActor* FontActorCreator::createFontActor(string textureName, string text, float x, float y)
+{
+    return createFontActor(textureName, text, x, y, 1.0f, Vector4d<float>(1.0f,1.0f,1.0f,1.0f));
+}
+
+FontActor* FontActorCreator::createFontActor(string textureName, string text, float x, float y, Vector4d<float> tint)
+{
+    return createFontActor(textureName, text, x, y, 1.0f, tint);
+}
+
+FontActor* FontActorCreator::createFontActor(string textureName, string text, float x, float y, float scale)
+{
+    return createFontActor(textureName, text, x, y, scale, Vector4d<float>(1.0f,1.0f,1.0f,1.0f));
+}
+
+FontActor* FontActorCreator::createFontActor(string textureName, string text, float x, float y, float scale, Vector4d<float> tint) {
+Texture* tex = resources.getTexture(textureName);
 
     vector<Sprite*>* sprites = new vector<Sprite*>();
 
@@ -39,7 +54,9 @@ FontActor* FontActorCreator::createFontActor(string textureName, string text, fl
             width = info.width()*scale;
         }
 
-        sprites->push_back(new Sprite(tex, xpos, y, width, info.height()*scale, Rect<float>(info.x(),info.y(),info.width(),info.height())));
+        Sprite* sprite = new Sprite(tex, xpos, y, width, info.height()*scale, Rect<float>(info.x(),info.y(),info.width(),info.height()));
+        sprite->setTint(tint);
+        sprites->push_back(sprite);
 
         xpos += width;
     }

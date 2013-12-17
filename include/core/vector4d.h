@@ -83,6 +83,15 @@ class Vector4d {
             return *this;
         }
 
+        Vector4d<T>& set(Vector4d<T> tint)
+        {
+            _x = tint.x();
+            _y = tint.y();
+            _z = tint.z();
+            _i = tint.i();
+            return *this;
+        }
+
         // XXX to remove
         void print() {
             printf("[%f,%f,%f,%f]\n",x(),y(),z(),i());

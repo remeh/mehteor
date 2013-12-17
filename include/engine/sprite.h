@@ -229,9 +229,27 @@ class Sprite {
             this->rot = rot;
         }
 
+        /**
+         * Sets the tint coloration of the sprite.
+         * You can use this method to change the opacity of the sprite.
+         * @param tint      the tint to apply.
+         */
+        void setTint(Vector4d<float> tint)
+        {
+            this->tint.set(tint);
+        }
+
+        /**
+         * Sets the tint coloration of the sprite.
+         * You can use this method to change the opacity of the sprite.
+         * @param r         red tint.
+         * @param g         green tint.
+         * @param b         blue tint.
+         * @param a         opacity of the sprite.
+         */
         void setTint(float r, float g, float b, float a)
         {
-            tint.setXYZI(r,g,b,a);
+            this->tint.setXYZI(r,g,b,a);
         }
         
         /**

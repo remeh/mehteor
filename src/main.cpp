@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
 
     BMFontReader fontReader("res/courrier.fnt");
     FontActorCreator fontActorCreator(resourcesManager,fontReader.read());
-    FontActor* fontActor = fontActorCreator.createFontActor("courrier", "This IS A TEXT TEST ! Hehehe", 1, 2, 1.0);
+    FontActor* fontActor = fontActorCreator.createFontActor("courrier", "This IS A TEXT TEST ! Hehehe", 1, 2, 2.0f, Vector4d<float>(0.2f,0.5f,1.0f,0.2f));
     node->addActor(fontActor);
 
     /*
