@@ -29,10 +29,10 @@ class FontActorCreator {
         FontActorCreator(ResourcesManager& resourcesManager, map<int, BMGlyphInfo>* glyphInfos); // TODO GlyphInfo more abstract, not specific to BMFont
         ~FontActorCreator();
 
-        FontActor* createFontActor(string textureName, string text, float x, float y);
-        FontActor* createFontActor(string textureName, string text, float x, float y, Vector4d<float> tint);
-        FontActor* createFontActor(string textureName, string text, float x, float y, float scale);
-        FontActor* createFontActor(string textureName, string text, float x, float y, float scale, Vector4d<float> tint);
+        shared_ptr<FontActor> createFontActor(string textureName, string text, float x, float y);
+        shared_ptr<FontActor> createFontActor(string textureName, string text, float x, float y, Vector4d<float> tint);
+        shared_ptr<FontActor> createFontActor(string textureName, string text, float x, float y, float scale);
+        shared_ptr<FontActor> createFontActor(string textureName, string text, float x, float y, float scale, Vector4d<float> tint);
 };
 
 } // namespace meh

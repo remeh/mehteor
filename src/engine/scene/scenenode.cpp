@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "engine/scene/scenenode.h"
 
 namespace meh {
@@ -5,27 +7,34 @@ namespace meh {
 SceneNode::SceneNode(Shader* vertexShader, Shader* fragmentShader) :
     vertexShader(nullptr),
     fragmentShader(nullptr),
-    shderProgram(nullptr) {
+    shderProgram(nullptr)
+{
     setShaders(vertexShader, fragmentShader);
     defaultShaders = true;
     actors.clear();
 }
 
-SceneNode::~SceneNode() {
+SceneNode::~SceneNode()
+{
     deleteShaders();
 
     deleteActors();
 }
 
-void SceneNode::addActor(Actor* actor) {
-    if (actor != nullptr) {
+void SceneNode::addActor(shared_ptr<Actor> actor)
+{
+    if (actor != nullptr)
+    {
         actors.push_back(actor);
     }
 }
 
-Actor* SceneNode::removeActor(Actor* actor) {
-    for (auto a = actors.begin(); a != actors.end(); a++) {
-        if (*a == actor) {
+shared_ptr<Actor> SceneNode::removeActor(shared_ptr<Actor> actor)
+{
+    for (auto a = actors.begin(); a != actors.end(); a++)
+    {
+        if (*a == actor)
+        {
             actors.erase(a);
             return actor;
         }
@@ -33,49 +42,60 @@ Actor* SceneNode::removeActor(Actor* actor) {
     return nullptr;
 }
 
-void SceneNode::deleteShaders() {
-    if (!defaultShaders) {
-        if (vertexShader) {
+void SceneNode::deleteShaders()
+{
+    if (!defaultShaders)
+    {
+        if (vertexShader)
+        {
             delete vertexShader;
         }
-        if (fragmentShader) {
+        if (fragmentShader)
+        {
             delete fragmentShader;
         }
     }
-    if (shderProgram) {
+    if (shderProgram)
+    {
         delete shderProgram;
     }
 }
 
-void SceneNode::deleteActors() {
-    for (auto actor = actors.begin(); actor != actors.end(); actor++) {
-        delete *actor;
-    }
+void SceneNode::deleteActors()
+{
     actors.clear();
 }
 
-void SceneNode::update() {
-    for (auto actor = actors.begin(); actor != actors.end(); actor++) {
+void SceneNode::update()
+{
+    for (auto actor = actors.begin(); actor != actors.end(); actor++)
+    {
         (*actor)->update();
     }
 }
 
-void SceneNode::render(SpriteRenderer* spriteRenderer) {
-    if (!spriteRenderer) {
+void SceneNode::render(SpriteRenderer* spriteRenderer)
+{
+    if (!spriteRenderer)
+    {
         printf("ERR: call to a SceneNode::render with a null renderer.\n");
         return;
     }
-    if (shderProgram) {
+
+    if (shderProgram)
+    {
         spriteRenderer->begin(shderProgram);
-        for (auto it = actors.begin(); it != actors.end(); it++) {
-            Actor* actor = *it;
+        for (auto it = actors.begin(); it != actors.end(); it++)
+        {
+            Actor* actor = it->get();
             actor->draw(spriteRenderer);
         }
         spriteRenderer->end();
     }
 }
 
-void SceneNode::setShaders(Shader* vertexShader, Shader* fragmentShader) {
+void SceneNode::setShaders(Shader* vertexShader, Shader* fragmentShader)
+{
     deleteShaders();
 
     this->vertexShader = vertexShader;

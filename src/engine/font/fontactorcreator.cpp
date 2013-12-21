@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "engine/font/fontactorcreator.h"
 #include "engine/sprite.h"
@@ -20,22 +21,22 @@ FontActorCreator::~FontActorCreator() {
     }
 }
 
-FontActor* FontActorCreator::createFontActor(string textureName, string text, float x, float y)
+shared_ptr<FontActor> FontActorCreator::createFontActor(string textureName, string text, float x, float y)
 {
     return createFontActor(textureName, text, x, y, 1.0f, Vector4d<float>(1.0f,1.0f,1.0f,1.0f));
 }
 
-FontActor* FontActorCreator::createFontActor(string textureName, string text, float x, float y, Vector4d<float> tint)
+shared_ptr<FontActor> FontActorCreator::createFontActor(string textureName, string text, float x, float y, Vector4d<float> tint)
 {
     return createFontActor(textureName, text, x, y, 1.0f, tint);
 }
 
-FontActor* FontActorCreator::createFontActor(string textureName, string text, float x, float y, float scale)
+shared_ptr<FontActor> FontActorCreator::createFontActor(string textureName, string text, float x, float y, float scale)
 {
     return createFontActor(textureName, text, x, y, scale, Vector4d<float>(1.0f,1.0f,1.0f,1.0f));
 }
 
-FontActor* FontActorCreator::createFontActor(string textureName, string text, float x, float y, float scale, Vector4d<float> tint) {
+shared_ptr<FontActor> FontActorCreator::createFontActor(string textureName, string text, float x, float y, float scale, Vector4d<float> tint) {
 Texture* tex = resources.getTexture(textureName);
 
     vector<Sprite*>* sprites = new vector<Sprite*>();
@@ -61,7 +62,7 @@ Texture* tex = resources.getTexture(textureName);
         xpos += width;
     }
 
-    return new FontActor(sprites);    
+    return shared_ptr<FontActor>(new FontActor(sprites));
 }
 
 } // namespace meh

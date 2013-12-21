@@ -2,6 +2,7 @@
 #define MEH_SCENENODE_H
 
 #include <deque>
+#include <memory>
 
 #include "engine/scene/scene.h"
 #include "engine/scene/actor.h"
@@ -18,7 +19,7 @@ namespace meh
 class SceneNode
 {
     private:
-        deque<Actor*> actors;
+        deque< shared_ptr<Actor> > actors;
 
         Shader* vertexShader;
         Shader* fragmentShader;
@@ -41,7 +42,7 @@ class SceneNode
          *
          * @param actor the Actor to add to the Scene.
          */
-        void addActor(Actor* actor);
+        void addActor(shared_ptr<Actor> actor);
 
         /**
          * Removes an Actor from this SceneNode.
@@ -50,7 +51,7 @@ class SceneNode
          * @param actor the Actor to remove.
          * @return a pointer to the removed Actor.
          */
-        Actor* removeActor(Actor* actor);
+        shared_ptr<Actor> removeActor(shared_ptr<Actor> actor);
 
         /**
          * Called by the SimpleScene2D to refresh the content of the nodes.

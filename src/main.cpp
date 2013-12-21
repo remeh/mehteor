@@ -68,11 +68,11 @@ int main(int argc, char* argv[]) {
         }
     }
     */
-    node->addActor(new SpriteActor(sprite));
+    node->addActor(shared_ptr<SpriteActor>(new SpriteActor(sprite)));
 
     BMFontReader fontReader("res/courrier.fnt");
     FontActorCreator fontActorCreator(resourcesManager,fontReader.read());
-    FontActor* fontActor = fontActorCreator.createFontActor("courrier", "This IS A TEXT TEST ! Hehehe", 1, 2, 2.0f, Vector4d<float>(0.2f,0.5f,1.0f,0.2f));
+    shared_ptr<FontActor> fontActor = fontActorCreator.createFontActor("courrier", "This IS A TEXT TEST ! Hehehe", 1, 2, 2.0f, Vector4d<float>(0.2f,0.5f,1.0f,0.2f));
     node->addActor(fontActor);
 
     /*
