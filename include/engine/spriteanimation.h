@@ -43,14 +43,16 @@ class SpriteAnimation {
          * Returns the must-be currently
          * displayed frame texture coordinates.
          */
-        Rect<float>& textureRegion() {
+        Rect<float>& getTextureRegion()
+        {
             return texCoords[currFrame];
         }
 
         /**
          * Returns the name of this animation.
          */
-        string name() {
+        string getName()
+        {
             return n;
         }
 
@@ -58,7 +60,8 @@ class SpriteAnimation {
          * Returns the count of frames of this animation.
          * @return the count of frames of this animation.
          */
-        unsigned int nbFrames() {
+        unsigned int getNumberFrames()
+        {
             return nFrames;
         }
 
@@ -66,7 +69,8 @@ class SpriteAnimation {
          * Returns an array of the frame durations.
          * @return an array of the frame durations. 
          */
-        unsigned int* frameDurations() {
+        unsigned int* getFrameDurations()
+        {
             return durations;
         }
 
@@ -74,7 +78,8 @@ class SpriteAnimation {
          * Returns an array of the texture coordinates.
          * @return an array of the texture coordinates. 
          */
-        Rect<float>* textureCoordinates() {
+        Rect<float>* getTextureCoordinates()
+        {
             return texCoords;
         }
 
@@ -82,7 +87,8 @@ class SpriteAnimation {
         /**
          * Returns the number of the current frame.
          */
-        unsigned int currentFrame() {
+        unsigned int getCurrentFrame()
+        {
             return currFrame;
         }
 
@@ -96,7 +102,8 @@ class SpriteAnimation {
         /**
          * Sets the current frame to the first one.
          */
-        void reset() {
+        void reset()
+        {
             setCurrentFrame(0);
         }
 };

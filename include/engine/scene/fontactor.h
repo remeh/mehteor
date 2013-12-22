@@ -12,11 +12,11 @@ namespace meh {
 
 class FontActor : public Actor {
     private:
-        vector<Sprite*>* sprtes;
+        vector< shared_ptr<Sprite> >* sprtes;
 
     protected:
     public:
-        FontActor(vector<Sprite*>* sprites);
+        FontActor(vector< shared_ptr<Sprite> >* sprites);
         ~FontActor();
 
         void draw(Renderer* renderer);

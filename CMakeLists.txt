@@ -50,6 +50,11 @@ set(
         src/soil/SOIL.c
         src/soil/stb_image_aug.c
 
+# json-cpp
+        src/lib_json/json_reader.cpp
+        src/lib_json/json_value.cpp
+        src/lib_json/json_writer.cpp
+
 # GLEW
         src/glew.c
 

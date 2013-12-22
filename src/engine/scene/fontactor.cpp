@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include <vector>
 
 #include "engine/scene/fontactor.h"
@@ -8,22 +9,22 @@ using namespace std;
 
 namespace meh {
 
-FontActor::FontActor(vector<Sprite*>* sprites) :
-    sprtes(sprites) {
+FontActor::FontActor(vector< shared_ptr<Sprite> >* sprites) :
+    sprtes(sprites) 
+{
 
 }
 
-FontActor::~FontActor() {
-    for (auto s = sprtes->begin(); s != sprtes->end(); s++)
+FontActor::~FontActor()
+{
+    if (sprtes)
     {
-        delete (*s);
-    }
-    if (sprtes) {
         delete sprtes;
     }
 }
 
-void FontActor::draw(Renderer* renderer) {
+void FontActor::draw(Renderer* renderer)
+{
     // renders every glyph.
     for (auto s = sprtes->begin(); s != sprtes->end(); s++)
     {
@@ -31,7 +32,8 @@ void FontActor::draw(Renderer* renderer) {
     }
 }
 
-void FontActor::update() {
+void FontActor::update()
+{
     // nothing to update with fonts sprite.
 }
 

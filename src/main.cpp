@@ -1,4 +1,7 @@
-#include "mehteor.h"
+#include "json/json.h"
+#include <fstream>
+#include <iostream>
+#include <mehteor.h>
 
 using namespace meh;
 
@@ -26,6 +29,21 @@ int main(int argc, char* argv[]) {
     if (!canvas.getSurface()) {
         return -1;
     }
+
+    /*
+     * Json Reader.
+     */
+    Json::Value root;   // will contains the root value after parsing.
+    Json::Reader reader;
+    ifstream input("res/config.json");
+    bool parsingSuccessful = reader.parse( input, root );
+    if ( !parsingSuccessful )
+    {
+        // report to the user the failure and their locations in the document.
+        std::cout  << "Failed to parse configuration\n" << reader.getFormattedErrorMessages();
+    }
+
+    std::cout << root.get("verson", "1.2");
 
     Shader vertex("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
     Shader fragment("res/shaders/fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER);
@@ -87,7 +105,7 @@ int main(int argc, char* argv[]) {
     InputDevicesManager& idm = canvas.getInputDevicesManager();
 
     idm.update();
-    printf("%i %i\n",idm.mouseX(),idm.mouseY());
+    printf("%i %i\n",idm.getMouseX(),idm.getMouseY());
 
     if (idm.keyPressed(SDLK_SPACE)) {
         printf("SPACE!\n");

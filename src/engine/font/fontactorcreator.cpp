@@ -11,12 +11,14 @@ using namespace std;
 namespace meh {
 
 FontActorCreator::FontActorCreator(ResourcesManager& resourcesManager, map<int, BMGlyphInfo>* glyphInfos)
-    : glphInfos(glyphInfos),resources(resourcesManager) {
-
+    : glphInfos(glyphInfos),resources(resourcesManager) 
+{
 }
 
-FontActorCreator::~FontActorCreator() {
-    if (glphInfos) {
+FontActorCreator::~FontActorCreator() 
+{
+    if (glphInfos) 
+    {
         delete glphInfos;
     }
 }
@@ -36,26 +38,32 @@ shared_ptr<FontActor> FontActorCreator::createFontActor(string textureName, stri
     return createFontActor(textureName, text, x, y, scale, Vector4d<float>(1.0f,1.0f,1.0f,1.0f));
 }
 
-shared_ptr<FontActor> FontActorCreator::createFontActor(string textureName, string text, float x, float y, float scale, Vector4d<float> tint) {
-Texture* tex = resources.getTexture(textureName);
+shared_ptr<FontActor> FontActorCreator::createFontActor(string textureName, string text, float x, float y, float scale, Vector4d<float> tint) 
+{
+    Texture* tex = resources.getTexture(textureName);
 
-    vector<Sprite*>* sprites = new vector<Sprite*>();
+    vector< shared_ptr<Sprite> >* sprites = new vector< shared_ptr<Sprite> >();
 
     int xpos = x;
     int width = 0;
 
-    for (unsigned int i = 0; i < text.length(); i++) {
+    for (unsigned int i = 0; i < text.length(); i++) 
+    {
         char c = text.at(i);
         BMGlyphInfo& info = glphInfos->at(c);
-        
+
         // FIXME ugly fix to fix the space problem
-        if (c == ' ') {
+        if (c == ' ')
+        {
             width = 8*scale;
-        } else {
+        }
+        else
+        {
             width = info.width()*scale;
         }
-
-        Sprite* sprite = new Sprite(tex, xpos, y, width, info.height()*scale, Rect<float>(info.x(),info.y(),info.width(),info.height()));
+        
+        
+        shared_ptr<Sprite> sprite = shared_ptr<Sprite>(new Sprite(tex, xpos, y, width, info.height()*scale, Rect<float>(info.x(),info.y(),info.width(),info.height())));
         sprite->setTint(tint);
         sprites->push_back(sprite);
 

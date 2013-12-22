@@ -105,7 +105,7 @@ SpriteAnimation& Sprite::currentAnimation()
 
 Rect<float>& Sprite::getTextureRegion() 
 {
-    return currentAnimation().textureRegion();
+    return currentAnimation().getTextureRegion();
 }
 
 void Sprite::update() 

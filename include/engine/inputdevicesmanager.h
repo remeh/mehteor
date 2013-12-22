@@ -59,7 +59,7 @@ class InputDevicesManager {
          * Returns the mouse position, x-axis.
          * @return the mouse position, x-axis.
          */
-        int mouseX() {
+        int getMouseX() {
             return mx;
         }
 
@@ -67,14 +67,14 @@ class InputDevicesManager {
          * Returns the mouse position, y-axis.
          * @return the mouse position, y-axis. 
          */
-        int mouseY() {
+        int getMouseY() {
             return my;
         }
 
         /**
          * Returns the mouse position.
          */
-        Vector2d<int> mouseXY() {
+        Vector2d<int> getMouseXY() {
             return Vector2d<int>(mx,my);
         }
 
