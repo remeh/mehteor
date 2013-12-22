@@ -2,6 +2,7 @@
 #define MEH_SIMPLESCENE2D_H
 
 #include <deque>
+#include <memory>
 
 #include "engine/scene/scene.h"
 #include "engine/scene/scenenode.h"
@@ -22,27 +23,18 @@ class SimpleScene2D : public Scene {
         /**
          * Camera used to represent the scene.
          */
-        OrthographicCamera* cam;
+        unique_ptr<OrthographicCamera> cam;
 
         /**
          * The renderer used to render Sprites.
          */
         SpriteRenderer spriteRenderer;
 
-        /**
-         * scene width
-         */
-        float w;
-        /**
-         * scene height
-         */
-        float h;
-
         Shader vertexShader;
         Shader fragmentShader;
         ShaderProgram defaultShaderProgram;
 
-        deque<SceneNode*> nodes;
+        deque< shared_ptr<SceneNode> > nodes;
 
     protected:
     public:
@@ -52,28 +44,29 @@ class SimpleScene2D : public Scene {
         void update();
         void render();
 
-        Camera* camera();
+        const Camera* getCamera();
 
-        Renderer& renderer() {
+        Renderer& renderer()
+        {
             return spriteRenderer;
         }
 
-        Shader& getDefaultVertexShader() {
+        Shader& getDefaultVertexShader()
+        {
             return vertexShader;
         }
 
-        Shader& getDefaultFragmentShader() {
+        Shader& getDefaultFragmentShader()
+        {
             return fragmentShader;
         }
 
         /**
          * Adds a node to this scene2D.
          *
-         * Takes the responsability to delete the node !
-         *
-         * @param *node      the node to add.
+         * @param node      the node to add.
          */
-        void addNode(SceneNode* node);
+        void addNode(shared_ptr<SceneNode> node);
 };
 
 } // namespace meh

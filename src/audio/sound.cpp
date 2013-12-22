@@ -20,7 +20,8 @@
 
 using namespace std;
 
-namespace meh {
+namespace meh
+{
 
 Sound::Sound(string filename) :
     frmat(AL_FORMAT_MONO16),
@@ -30,11 +31,13 @@ Sound::Sound(string filename) :
     loadOgg(filename); 
 }
 
-Sound::~Sound() {
+Sound::~Sound()
+{
     dta.clear();
 }
 
-void Sound::loadOgg(string filename) {
+void Sound::loadOgg(string filename)
+{
     long reading = 1;
     int bitStream;
     char buff[BUFFER_SIZE];
@@ -44,7 +47,8 @@ void Sound::loadOgg(string filename) {
 
     file = fopen(filename.c_str(), "rb");
     
-    if (!file) {
+    if (!file)
+    {
         printf("ERR: unable to open the sound %s\n",filename.c_str());
         dta.clear();
         return;
@@ -58,7 +62,8 @@ void Sound::loadOgg(string filename) {
 
     // Format
     frmat = AL_FORMAT_MONO16;
-    if (vInfo->channels != 1) {
+    if (vInfo->channels != 1)
+    {
         frmat = AL_FORMAT_STEREO16;
     }
 
@@ -68,7 +73,8 @@ void Sound::loadOgg(string filename) {
     dration = static_cast<unsigned int>(ov_time_total(&oggFile, -1)*1000);
 
     // Data
-    do {
+    do 
+    {
         reading = ov_read(&oggFile, buff, BUFFER_SIZE, 0, 2, 1, &bitStream);
         dta.insert(dta.end(), buff, buff+reading);
     } while (reading > 0);

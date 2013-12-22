@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
 
     SimpleScene2D scene2D(640,480);
 
-    SceneNode* node = new SceneNode(&vertex,&fragment);
+    shared_ptr<SceneNode> node = shared_ptr<SceneNode>(new SceneNode(&vertex,&fragment));
     scene2D.addNode(node);
 
     /*

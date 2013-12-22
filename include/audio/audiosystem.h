@@ -8,11 +8,13 @@
 
 using namespace std;
 
-namespace meh {
+namespace meh
+{
 
 #define DEFAULT_SOURCES_COUNT 16
 
-class AudioSystem {
+class AudioSystem
+{
     private:
         ALCdevice* dvice;
         ALCcontext* cntext;

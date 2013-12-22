@@ -6,7 +6,8 @@
 namespace meh {
 
 SpriteRenderer::SpriteRenderer() :
-    SpriteRenderer(1000) {
+    SpriteRenderer(1000) 
+    {
 }
 
 SpriteRenderer::SpriteRenderer(unsigned int size) :
@@ -16,13 +17,15 @@ SpriteRenderer::SpriteRenderer(unsigned int size) :
     idx(0),
     spriteBuffered(0),
     shaderProgram(nullptr),
-    isRendering(false) {
+    isRendering(false)
+{
 
     vrtices = new GLfloat[sze*Sprite::SIZE];
     elmts = new GLuint[sze*6]; // two triangles = 6 elements
 
     unsigned int j = 0;
-    for (unsigned int i = 0; i < sze*6; i+=6) {
+    for (unsigned int i = 0; i < sze*6; i+=6) 
+    {
         elmts[i] = j;
         elmts[i+1] = j+1;
         elmts[i+2] = j+2;
@@ -42,52 +45,65 @@ SpriteRenderer::SpriteRenderer(unsigned int size) :
     init();
 }
 
-SpriteRenderer::~SpriteRenderer() {
+SpriteRenderer::~SpriteRenderer() 
+{
     deinit(true);
 }
 
-void SpriteRenderer::init() {
+void SpriteRenderer::init() 
+{
     idx = 0;
     spriteBuffered = 0;
 }
 
-void SpriteRenderer::deinit(bool deleteMemory) {
-    if (deleteMemory) {
-        if (msh) {
+void SpriteRenderer::deinit(bool deleteMemory) 
+{
+    if (deleteMemory) 
+    {
+        if (msh) 
+        {
             delete msh;
             msh = nullptr;
         }
-        if (vrtices) {
+        if (vrtices) 
+        {
             delete[] vrtices;
             vrtices = nullptr;
         }
-        if (elmts) {
+        if (elmts) 
+        {
             delete[] elmts;
             elmts = nullptr;
         }
     }
 }
 
-void SpriteRenderer::switchTexture(Texture* newTexture) {
-    if (newTexture != lastUsedTexture) {
-        if (lastUsedTexture != nullptr) {
+void SpriteRenderer::switchTexture(Texture* newTexture) 
+{
+    if (newTexture != lastUsedTexture) 
+    {
+        if (lastUsedTexture != nullptr) 
+        {
             render();
         }
-        invTexW = 1.0f/newTexture->width();
-        invTexH = 1.0f/newTexture->height();
+        invTexW = 1.0f/newTexture->getWidth();
+        invTexH = 1.0f/newTexture->getHeight();
     }
     lastUsedTexture = newTexture;
 }
 
 void SpriteRenderer::draw(Texture* texture, float x, float y, float w, float h, float centerX, float centerY,
                         float scaleX, float scaleY, float rotation, float texX, float texY, float texW, float texH,
-                        float r, float g, float b, float a, bool flipX, bool flipY) {
-    if (!isRendering) {
+                        float r, float g, float b, float a, bool flipX, bool flipY) 
+{
+    if (!isRendering) 
+    {
         printf("ERROR: illegal state: call to draw() but the renderer isn't in rendering mode.\n");
         return;
     }
 
-    if (spriteBuffered >= sze) {
+    if (spriteBuffered >= sze) 
+    {
         render();
     }
 
@@ -103,7 +119,8 @@ void SpriteRenderer::draw(Texture* texture, float x, float y, float w, float h, 
     float vv = texY*invTexH;
 
     // flipped on x-axis
-    if (flipX) {
+    if (flipX) 
+    {
         float tmp = u;
         u = uu;
         uu = tmp;
@@ -171,20 +188,25 @@ void SpriteRenderer::draw(Texture* texture, float x, float y, float w, float h, 
     spriteBuffered++;
 }
 
-void SpriteRenderer::draw(Sprite& sprite) {
-    if (sprite.visible()) {
+void SpriteRenderer::draw(Sprite& sprite) 
+{
+    if (sprite.visible()) 
+    {
         draw(sprite.texture(), sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight(), sprite.getRotationCenter().x(), sprite.getRotationCenter().y(),
                 sprite.getScaleX(), sprite.getScaleY(), sprite.getRotation(), sprite.getTextureRegion().x(), sprite.getTextureRegion().y(),
                 sprite.getTextureRegion().width(), sprite.getTextureRegion().height(), sprite.getTint().x(), sprite.getTint().y(), sprite.getTint().z(), sprite.getTint().i(), false, false); 
     }
 }
 
-void SpriteRenderer::begin(ShaderProgram* shaderProgram) {
-    if (!shaderProgram) {
+void SpriteRenderer::begin(ShaderProgram* shaderProgram) 
+{
+    if (!shaderProgram) 
+    {
        printf("ERROR: SpriteRenderer::begin(ShaderProgram*) called with a shaderProgram as nullptr.\n"); 
        return;
     }
-    if (isRendering) {
+    if (isRendering) 
+    {
         printf("ERROR: illegal state: the renderer was already in the rendering state.\n");
         return;
     }
@@ -200,9 +222,12 @@ void SpriteRenderer::begin(ShaderProgram* shaderProgram) {
     isRendering = true;
 }
 
-void SpriteRenderer::end() {
-    if (isRendering) {
-        if (idx > 0) {
+void SpriteRenderer::end() 
+{
+    if (isRendering) 
+    {
+        if (idx > 0) 
+        {
             render();
         }
         shaderProgram->disable();
@@ -213,18 +238,23 @@ void SpriteRenderer::end() {
 
         deinit(false);
         init();
-    } else {
+    }
+    else
+    {
         printf("ERROR: illegal state: call to end() but the renderer isn't in rendering mode.\n");
     }
 }
 
-void SpriteRenderer::render() {
-    if (!isRendering) {
+void SpriteRenderer::render() 
+{
+    if (!isRendering) 
+    {
         printf("ERROR: illegal state: call to render() but the renderer isn't in rendering mode.\n");
         return;
     }
     
-    if (idx > 0) {
+    if (idx > 0) 
+    {
         lastUsedTexture->bind(0);
 
         msh->setVertices(spriteBuffered*4, Sprite::VERTEX_SIZE, vrtices);

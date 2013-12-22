@@ -67,11 +67,13 @@ class Camera {
 
         virtual void update() = 0;
 
-        Matrix4x4<float>& modelViewProjection() {
+        Matrix4x4<float>& modelViewProjection()
+        {
             return resultMatrix;
         }
 
-        Matrix4x4<float>& invertModelViewProjection() {
+        Matrix4x4<float>& invertModelViewProjection() 
+        {
             return invResultMatrix;
         }
 
@@ -79,11 +81,13 @@ class Camera {
 
         void translate(Vector3d<float> translation);
 
-        float near() {
+        float near()
+        {
             return nr;
         }
 
-        float far() {
+        float far()
+        {
             return fr;
         }
 };

@@ -15,21 +15,23 @@ string Sprite::DEFAULT_ANIMATION = "default";
 Sprite::Sprite(Texture* texture) : 
     Sprite(texture,
             0.0f, 0.0f,
-            texture ? texture->width() : 0.0f, texture ? texture->height() : 0.0f) {
+            texture ? texture->getWidth() : 0.0f, texture ? texture->getHeight() : 0.0f)
+{
 }
 
 Sprite::Sprite(Texture* texture, float x, float y) :
     Sprite(texture,
             x, y,
-            texture ? texture->width() : 0.0f, texture ? texture->height() : 0.0f) {
+            texture ? texture->getWidth() : 0.0f, texture ? texture->getHeight() : 0.0f)
+{
 }
 
 Sprite::Sprite(Texture* texture, float x, float y, float width, float height) :
     Sprite(texture,
             x,y,
             width,height,
-            Rect<float>(0.0f, 0.0f, texture ? texture->width() : 0.0f, texture ? texture->height() : 0.0f)) {
-
+            Rect<float>(0.0f, 0.0f, texture ? texture->getWidth() : 0.0f, texture ? texture->getHeight() : 0.0f)) 
+{
 }
 
 Sprite::Sprite(Texture* texture, float x, float y, float width, float height, Rect<float> textureRegion) :
@@ -39,10 +41,14 @@ Sprite::Sprite(Texture* texture, float x, float y, float width, float height, Re
     rot(0.0f),
     tint(Vector4d<float>(1.0f,1.0f,1.0f,1.0f)),
     vsible(true),
-    currAnimation(nullptr) {
-    if (texture == nullptr) {
+    currAnimation(nullptr)
+{
+    if (texture == nullptr) 
+    {
         printf("ERROR: creating a Sprite with a nullptr as texture parameter.\n");
-    } else {
+    }
+    else
+    {
         r.setPosition(x, y);
         r.setSize(width, height);
         unsigned int duration[] = { 10000 };
@@ -57,43 +63,53 @@ Sprite::Sprite(Texture* texture, float x, float y, float width, float height, Re
     }
 }
 
-Sprite::~Sprite() {
-    for (auto it = anims.begin(); it != anims.end(); it++) {
+Sprite::~Sprite() 
+{
+    for (auto it = anims.begin(); it != anims.end(); it++) 
+    {
         delete (it->second);
     }
     anims.clear();
 }
 
-void Sprite::setPosition(float x, float y) {
+void Sprite::setPosition(float x, float y) 
+{
     this->r.setPosition(x,y);
 }
 
-void Sprite::setSize(float width, float height) {
+void Sprite::setSize(float width, float height)
+{
     this->r.setSize(width,height);
 }
 
-void Sprite::addAnimation(string name, int nbFrames, const unsigned int* durations, const Rect<float>* texCoords) {
+void Sprite::addAnimation(string name, int nbFrames, const unsigned int* durations, const Rect<float>* texCoords) 
+{
    SpriteAnimation* animation = new SpriteAnimation(name, nbFrames, durations, texCoords);
    anims[name] = animation;
 }
 
-bool Sprite::setAnimation(string name) {
-    if (anims.count(name) == 1) {
+bool Sprite::setAnimation(string name) 
+{
+    if (anims.count(name) == 1)
+    {
         currAnimation = anims[name];
         currAnimation->reset();
     }
     return false;
 }
 
-SpriteAnimation& Sprite::currentAnimation() {
+SpriteAnimation& Sprite::currentAnimation() 
+{
     return *currAnimation;
 }
 
-Rect<float>& Sprite::getTextureRegion() {
+Rect<float>& Sprite::getTextureRegion() 
+{
     return currentAnimation().textureRegion();
 }
 
-void Sprite::update() {
+void Sprite::update() 
+{
     // updates the animation
     currentAnimation().update();
 }

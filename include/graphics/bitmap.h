@@ -10,9 +10,11 @@
 
 using namespace std;
 
-namespace meh {
+namespace meh
+{
 
-class Bitmap {
+class Bitmap 
+{
     private:
         unsigned int width;
         unsigned int height;
@@ -41,7 +43,8 @@ class Bitmap {
          * Returns the width of this Bitmap.
          * @return the width of this Bitmap.
          */
-        unsigned int w() { 
+        unsigned int getW()
+        { 
             return width;
         }
 
@@ -49,7 +52,8 @@ class Bitmap {
          * Returns the height of this Bitmap.
          * @return the height of this Bitmap.
          */
-        unsigned int h() {
+        unsigned int getH()
+        {
             return height;
         }
 
@@ -57,11 +61,13 @@ class Bitmap {
          * Returns how many bytes are used for a pixel.
          * @return how many bytes are used for a pixel. 
          */
-        unsigned int channels() {
+        unsigned int getChannels()
+        {
             return chan;
         }
 
-        ByteBuffer& buffer() {
+        ByteBuffer& getBuffer()
+        {
             return bytes;
         }
 
@@ -72,12 +78,13 @@ class Bitmap {
          * @param image the image
          * @param length total size of the image
          */
-        void setImage(unsigned char* image, int length) {
+        void setImage(unsigned char* image, int length)
+        {
             bytes.setData(image, length);
         }
 };
 
-}
+} // namespace meh
 
 #endif // MEH_BITMAP_H
 

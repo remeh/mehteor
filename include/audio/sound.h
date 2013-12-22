@@ -13,9 +13,11 @@
 
 using namespace std;
 
-namespace meh {
+namespace meh
+{
 
-class Sound  {
+class Sound 
+{
     private:
         vector<char> dta;
         ALenum frmat;
@@ -32,15 +34,18 @@ class Sound  {
         Sound(string filename);
         ~Sound();
 
-        vector<char>& data() {
+        vector<char>& getData()
+        {
             return dta;
         }
 
-        ALenum format() {
+        ALenum getFormat()
+        {
             return frmat;
         }
 
-        ALsizei frequency() {
+        ALsizei getFrequency()
+        {
             return freq;
         }
 
@@ -48,7 +53,8 @@ class Sound  {
          * Returns the duration of this Sound (in ms).
          * @return the duration of this Sound (in ms).
          */
-        unsigned int duration() {
+        unsigned int getDuration()
+        {
             return dration;
         }
 };

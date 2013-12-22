@@ -3,7 +3,10 @@
 
 #include "engine/camera/camera.h"
 
-namespace meh {
+using namespace std;
+
+namespace meh
+{
 
 /**
  * Basic definition of a Scene.
@@ -17,7 +20,7 @@ class Scene {
 
         virtual void update() = 0;
         virtual void render() = 0;
-        virtual Camera* camera() = 0;
+        virtual const Camera* getCamera() = 0;
 };
 
 } // namespace meh
