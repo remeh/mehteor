@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
      * Canvas
      */
     Canvas canvas(640,480);
-    if (!canvas.surface()) {
+    if (!canvas.getSurface()) {
         return -1;
     }
 
@@ -84,7 +84,7 @@ int main(int argc, char* argv[]) {
     }
     */
 
-    InputDevicesManager& idm = canvas.inputDevicesManager();
+    InputDevicesManager& idm = canvas.getInputDevicesManager();
 
     idm.update();
     printf("%i %i\n",idm.mouseX(),idm.mouseY());

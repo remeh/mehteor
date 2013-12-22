@@ -57,7 +57,8 @@ class IBO {
          * Returns the number of elements.
          * @return the number of elements.
          */
-        const unsigned int size() {
+        const unsigned int getSize()
+        {
             return sze;
         }
 
@@ -65,7 +66,8 @@ class IBO {
          * Returns the dimension of elements.
          * @return the dimension of elements.
          */
-        const unsigned int dimension() {
+        const unsigned int getDimension() 
+        {
             return dim;
         }
 };

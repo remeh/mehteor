@@ -63,15 +63,17 @@ class VBO {
          */
         void setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices);
 
-        const unsigned int size() {
+        const unsigned int getSize()
+        {
             return sze;
         }
 
-        const unsigned int dimension() {
+        const unsigned int getDimension()
+        {
             return dim;
         }
 };
 
-}
+} // namespace meh
 
 #endif // MEH_VBO_H

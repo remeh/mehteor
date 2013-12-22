@@ -8,12 +8,13 @@
 
 using namespace std;
 
-namespace meh {
+namespace meh 
+{
 
-class Canvas {
+class Canvas 
+{
     private:
         SDL_Surface* sdlSurface;
-        SDL_Event* windowEvent;
 
         // Init GLEW once
         static bool glewIsInit;
@@ -43,14 +44,16 @@ class Canvas {
          * Returns the pointer to the SDL_Surface.
          * @return the pointer to the SDL_Surface.
          */
-        SDL_Surface* surface() {
+        SDL_Surface* getSurface() 
+        {
             return sdlSurface;
         }
 
         /**
          * Returns the width of this canvas
          */
-        int width() const {
+        int getWidth() const
+        {
             if (sdlSurface)
                 return sdlSurface->w; 
             return -1;
@@ -59,7 +62,8 @@ class Canvas {
         /**
          * Returns the height of this canvas.
          */
-        int height() const {
+        int getHeight() const 
+        {
             if (sdlSurface)
                 return sdlSurface->h; 
             return -1;
@@ -81,7 +85,8 @@ class Canvas {
          */
         void flip();
 
-        InputDevicesManager& inputDevicesManager() {
+        InputDevicesManager& getInputDevicesManager()
+        {
             return inputManager;
         }
 };

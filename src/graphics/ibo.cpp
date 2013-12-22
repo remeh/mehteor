@@ -9,39 +9,47 @@ IBO::IBO(bool dynamic) :
     elems(nullptr),
     sze(0),
     dim(0),
-    dyn(dynamic) {
+    dyn(dynamic)
+{
     glGenBuffers(1,&iboId);
 }
 
-IBO::~IBO() {
+IBO::~IBO() 
+{
     glDeleteBuffers(1,&iboId);
-    if (elems) {
+    if (elems)
+    {
         delete[] elems;
         elems = nullptr;
     }
 }
 
-void IBO::bind() {
+void IBO::bind()
+{
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
-    if (drty) {
+    if (drty)
+    {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*sze*dim, elems, dyn ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
         drty = false;
     }
 }
 
-void IBO::unbind() {
+void IBO::unbind()
+{
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 }
 
 void IBO::setElements(unsigned int size, unsigned int dimension, GLuint* elements) {
     int totalSize = size*dimension;
     // Reallocate the memory only when needed
-    if (!elems || sze != size || dim != dimension) {
+    if (!elems || sze != size || dim != dimension)
+    {
         sze = size;
         dim = dimension;
 
         // Delete old values if any
-        if (elems) {
+        if (elems)
+        {
             delete[] elems;
             elems = nullptr;
         }
@@ -54,4 +62,4 @@ void IBO::setElements(unsigned int size, unsigned int dimension, GLuint* element
     drty = true;
 }
 
-}
+} // namespace meh
