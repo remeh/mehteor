@@ -24,7 +24,7 @@ bool JsonReader::read(string filename)
      * open the file
      */
     
-    ifstream input("res/config.json");
+    ifstream input(filename);
 
     /*
      * parse it

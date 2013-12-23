@@ -8,6 +8,7 @@ set(
         src/core/system.cpp
         src/core/bytebuffer.cpp
         src/core/jsonreader.cpp
+        src/core/jsonwriter.cpp
 
 # graphics
         src/graphics/canvas.cpp

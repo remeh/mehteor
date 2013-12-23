@@ -34,7 +34,12 @@ int main(int argc, char* argv[]) {
      */
     JsonReader reader;
     reader.read("res/config.json");
+    Json::Value value = reader.getRoot();
     std::cout << reader.getRoot().get("verson", "1.2") << std::endl;
+
+    JsonWriter writer;
+    writer.write("res/1.json", reader.getRoot(), true);
+    writer.write("res/2.json", reader.getRoot(), false);
 
     Shader vertex("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
     Shader fragment("res/shaders/fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER);
@@ -69,14 +74,14 @@ int main(int argc, char* argv[]) {
     shared_ptr<SceneNode> node = shared_ptr<SceneNode>(new SceneNode(&vertex,&fragment));
     scene2D.addNode(node);
 
-    /*
-    for (int i = 0; i < 1; i++) {
-        SpriteActor* s = new SpriteActor(sprite2);
-        if (s) {
-            scene2D.addActor(s);
+    for (int i = 0; i < 1; i++)
+    {
+        shared_ptr<SpriteActor> s = shared_ptr<SpriteActor>(new SpriteActor(sprite2));
+        if (s)
+        {
+            node->addActor(s);
         }
     }
-    */
     node->addActor(shared_ptr<SpriteActor>(new SpriteActor(sprite)));
 
     BMFontReader fontReader("res/courrier.fnt");
@@ -85,9 +90,11 @@ int main(int argc, char* argv[]) {
     node->addActor(fontActor);
 
     /*
-    for (int i = 0; i < 141; i++) {
-        SpriteActor* s = new SpriteActor(sprite);
-        if (s) {
+    for (int i = 0; i < 5000; i++)
+    {
+        shared_ptr<SpriteActor> s = shared_ptr<SpriteActor>(new SpriteActor(sprite));
+        if (s)
+        {
             node->addActor(s);
         }
     }
