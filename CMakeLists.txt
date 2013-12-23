@@ -7,6 +7,7 @@ set(
 # core
         src/core/system.cpp
         src/core/bytebuffer.cpp
+        src/core/jsonreader.cpp
 
 # graphics
         src/graphics/canvas.cpp

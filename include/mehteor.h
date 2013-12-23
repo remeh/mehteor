@@ -1,5 +1,6 @@
 #include "core/system.h"
 #include "core/bytebuffer.h"
+#include "core/jsonreader.h"
 #include "core/rect.h"
 #include "core/vector2d.h"
 #include "core/vector3d.h"

@@ -1,4 +1,3 @@
-#include "json/json.h"
 #include <fstream>
 #include <iostream>
 #include <mehteor.h>
@@ -33,17 +32,9 @@ int main(int argc, char* argv[]) {
     /*
      * Json Reader.
      */
-    Json::Value root;   // will contains the root value after parsing.
-    Json::Reader reader;
-    ifstream input("res/config.json");
-    bool parsingSuccessful = reader.parse( input, root );
-    if ( !parsingSuccessful )
-    {
-        // report to the user the failure and their locations in the document.
-        std::cout  << "Failed to parse configuration\n" << reader.getFormattedErrorMessages();
-    }
-
-    std::cout << root.get("verson", "1.2");
+    JsonReader reader;
+    reader.read("res/config.json");
+    std::cout << reader.getRoot().get("verson", "1.2") << std::endl;
 
     Shader vertex("res/shaders/vertex.glsl",Shader::ShaderType::VERTEX_SHADER);
     Shader fragment("res/shaders/fragment.glsl",Shader::ShaderType::FRAGMENT_SHADER);
