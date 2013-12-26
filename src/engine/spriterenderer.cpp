@@ -215,7 +215,6 @@ void SpriteRenderer::begin(ShaderProgram* shaderProgram)
     // Set the camera position
     shaderProgram->setUniformMatrix4x4(ShaderProgram::modelViewProjectionAttribute, mdelViewMatrix);
 
-    shaderProgram->setUniformf("meh_tintcolor", 1.0f, 0.5f, 0.5f, 0.5f);
     this->shaderProgram = shaderProgram;
 
     // We enter in the rendering state
