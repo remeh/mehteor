@@ -1,8 +1,9 @@
 TODO
 
+- mutexes, semaphores, thread helpers
 - helper in sprites to increase/decrease opacity, to read a tint from vector4d, ...
+- create font atlas with SDL_ttf 2.0
 - bytebuffer.cpp : more functions read/write
-- threads
 - improve 2d rendering performances
 - maybe less inline methods ?
 - color (vertex, sprites)
@@ -14,3 +15,4 @@ TODO
 DONE
 
 - storing the texture in the bitmap (in a bytebuffer) doesn't correctly work
+- thread

@@ -4,6 +4,14 @@
 
 using namespace meh;
 
+int testFunc(void* args)
+{
+    printf("Thread start.\n");
+    System::sleep(1000);
+    printf("Thread end.\n");
+    return 1;
+}
+
 int main(int argc, char* argv[]) {
     System::init();
     
@@ -28,6 +36,8 @@ int main(int argc, char* argv[]) {
     if (!canvas.getSurface()) {
         return -1;
     }
+
+    Thread thread("test thread", &testFunc, (void*)NULL);
 
     /*
      * Json Reader.
