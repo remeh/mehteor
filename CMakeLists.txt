@@ -9,6 +9,7 @@ set(
         src/core/bytebuffer.cpp
         src/core/jsonreader.cpp
         src/core/jsonwriter.cpp
+        src/core/thread.cpp
 
 # graphics
         src/graphics/canvas.cpp
@@ -57,9 +58,6 @@ set(
         src/lib_json/json_value.cpp
         src/lib_json/json_writer.cpp
 
-# TinyThreadpp
-        src/tinythread.cpp
-
 # GLEW
         src/glew.c
 
@@ -86,8 +84,8 @@ if (WIN32 OR MINGW)
 else()
     # Linux
     # Note: HAVE_STAT, HAVE_USLEEP, HAVE_STDINT_H and HAVE_UNISTD_H are for alut
-    set(CMAKE_CXX_FLAGS "-g -Wall -Wdeprecated-declarations -std=c++11 -DGLEW_STATIC -DOPENAL_STATIC")
-    set(CMAKE_C_FLAGS "-g -Wall -Wdeprecated-declarations -DGLEW_STATIC -DOPENAL_STATIC -DHAVE_STDINT_H -DHAVE_STAT -DHAVE_USLEEP -DHAVE_UNISTD_H")
+    set(CMAKE_CXX_FLAGS "-g -Wall -Wdeprecated-declarations -pedantic -std=c++11 -DGLEW_STATIC -DOPENAL_STATIC")
+    set(CMAKE_C_FLAGS "-g -Wall -Wdeprecated-declarations -pedantic -DGLEW_STATIC -DOPENAL_STATIC -DHAVE_STDINT_H -DHAVE_STAT -DHAVE_USLEEP -DHAVE_UNISTD_H")
 endif()
 
 # g++ flags

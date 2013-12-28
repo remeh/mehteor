@@ -18,8 +18,6 @@ JsonReader::~JsonReader()
 
 bool JsonReader::read(string filename)
 {
-    this->filename = filename;
-
     /*
      * open the file
      */

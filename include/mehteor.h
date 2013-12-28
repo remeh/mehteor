@@ -8,6 +8,7 @@
 #include "core/quaternion.h"
 #include "core/jsonreader.h"
 #include "core/jsonwriter.h"
+#include "core/thread.h"
 
 #include "graphics/bitmap.h"
 #include "graphics/vbo.h"

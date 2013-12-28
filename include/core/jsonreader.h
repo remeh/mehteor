@@ -10,11 +10,14 @@ using namespace std;
 namespace meh
 {
 
+/**
+ * Simple class upon JsonCpp to read JSON formated files.
+ * 
+ * @author Rémy 'remeh' MATHIEU
+ */
 class JsonReader
 {
     private:
-        string filename;
-
         /**
          * The root value.
          */

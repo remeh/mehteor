@@ -46,7 +46,7 @@ void SimpleScene2D::render()
     // renders each node of the scene
     if (nodes.size() == 0)
     {
-        printf("WARNING: no node to render in this Scene2d[%p]", this);
+        printf("WARNING: no node to render in this Scene2d[%p]", (void*)this);
         return;
     }
 
@@ -64,7 +64,7 @@ void SimpleScene2D::addNode(shared_ptr<SceneNode> node)
     }
     else
     {
-        printf("WARNING: tried to insert a null node in this Scene2d[%p].\n", this);
+        printf("WARNING: tried to insert a null node in this Scene2d[%p].\n", (void*)this);
     }
 }
 
