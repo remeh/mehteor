@@ -5,12 +5,14 @@
 
 using namespace std;
 
-namespace meh {
+namespace meh
+{
 
 VertexAttribute::VertexAttribute(int dimension, int offset, string name) :
     nme(name),
     dim(dimension),
-    off(offset) {
+    off(offset)
+{
 }
 
 } // namespace meh

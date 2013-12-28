@@ -37,7 +37,8 @@ class VertexAttributes {
          * The total dimension of these vertices (every components of every attributes added).
          * @return the total dimension of these vertices.
          */
-        int totalDimension() {
+        int getTotalDimension()
+        {
             return totalDim;
         }
 };

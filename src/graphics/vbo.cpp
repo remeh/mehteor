@@ -12,22 +12,27 @@ VBO::VBO(bool dynamic) :
     vrtices(nullptr), 
     vboId(0),
     drty(true),
-    dyn(dynamic) {
+    dyn(dynamic)
+{
     glGenBuffers(1, &vboId);
 }
 
-VBO::~VBO() {
-    if (vboId > 0) {
+VBO::~VBO()
+{
+    if (vboId > 0) 
+    {
         glDeleteBuffers(1,&vboId);
         vboId = 0;
     }
-    if (vrtices) {
+    if (vrtices) 
+    {
         delete[] vrtices;
         vrtices = nullptr;
     }
 }
 
-void VBO::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices) {
+void VBO::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices) 
+{
     unsigned int totalSize = size*dimension;
 
     // We reallocate the memory only if it's not the same size
@@ -36,7 +41,8 @@ void VBO::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertic
         dim = dimension;
 
         // Releases old version if any
-        if (vrtices) {
+        if (vrtices) 
+        {
             delete[] vrtices;
             vrtices = nullptr;
         }
@@ -50,15 +56,18 @@ void VBO::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertic
     drty = true;
 }
 
-void VBO::bind() {
+void VBO::bind() 
+{
     glBindBuffer(GL_ARRAY_BUFFER, vboId);
-    if (drty) {
+    if (drty) 
+    {
         glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*sze*dim, vrtices, dyn ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
         drty = false;
     }
 }
 
-void VBO::unbind() {
+void VBO::unbind() 
+{
     glBindBuffer(GL_ARRAY_BUFFER,vboId);
 }
 

@@ -6,27 +6,35 @@ namespace meh {
 Mesh::Mesh(VertexAttributes attributes) :
     attributes(attributes),
     vbo(nullptr),
-    ibo(nullptr) {
+    ibo(nullptr)
+{
 }
 
-Mesh::~Mesh() {
+Mesh::~Mesh() 
+{
     deleteVBO();
     deleteIBO();
 }
 
-void Mesh::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices) {
-    if (vbo) {
-        if (vbo->getSize() != size || vbo->getDimension() != dimension) {
+void Mesh::setVertices(unsigned int size, unsigned int dimension, GLfloat* vertices) 
+{
+    if (vbo) 
+    {
+        if (vbo->getSize() != size || vbo->getDimension() != dimension) 
+        {
             deleteVBO();
             vbo = new VBO(false); // TODO assume static for the moment
         }
-    } else {
+    }
+    else 
+    {
         vbo = new VBO(false);
     }
     vbo->setVertices(size, dimension, vertices);
 }
 
-void Mesh::setElements(unsigned int size, unsigned int dimension, GLuint* elements) {
+void Mesh::setElements(unsigned int size, unsigned int dimension, GLuint* elements) 
+{
     if (ibo) 
     {
         if (ibo->getSize() != size || ibo->getDimension() != dimension)

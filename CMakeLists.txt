@@ -57,6 +57,9 @@ set(
         src/lib_json/json_value.cpp
         src/lib_json/json_writer.cpp
 
+# TinyThreadpp
+        src/tinythread.cpp
+
 # GLEW
         src/glew.c
 

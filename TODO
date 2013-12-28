@@ -3,6 +3,8 @@ TODO
 - helper in sprites to increase/decrease opacity, to read a tint from vector4d, ...
 - bytebuffer.cpp : more functions read/write
 - threads
+- improve 2d rendering performances
+- maybe less inline methods ?
 - color (vertex, sprites)
 - target for unit tests
 - sprite flipX/flipY, rotation and scale
