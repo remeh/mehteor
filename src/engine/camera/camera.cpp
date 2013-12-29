@@ -1,6 +1,7 @@
 #include "engine/camera/camera.h"
 
-namespace meh {
+namespace meh
+{
 
 Camera::Camera() :
     pos(0.0f,0.0f,0.0f),
@@ -9,25 +10,29 @@ Camera::Camera() :
     viewportW(0.0f),
     viewportH(0.0f),
     nr(1.0f),
-    fr(100.0f) {
+    fr(100.0f)
+{
 }
 
-Camera::~Camera() {
-
+Camera::~Camera()
+{
 }
 
-void Camera::lookAt(float x, float y, float z) {
+void Camera::lookAt(float x, float y, float z)
+{
     dir.setXYZ(x,y,z);
     dir = (dir - pos);
     dir.normalize();
 }
 
-void Camera::setPosition(float x, float y, float z) {
+void Camera::setPosition(float x, float y, float z)
+{
     pos.setXYZ(x,y,z);
 }
 
-void Camera::translate(Vector3d<float> translation) {
+void Camera::translate(Vector3d<float> translation)
+{
     pos = pos + translation;
 }
 
-}
+} // namespace meh

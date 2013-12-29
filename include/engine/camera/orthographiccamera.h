@@ -3,9 +3,11 @@
 
 #include "engine/camera/camera.h"
 
-namespace meh {
+namespace meh
+{
 
-class OrthographicCamera : public Camera {
+class OrthographicCamera : public Camera
+    {
     private:
         float zoom;
 

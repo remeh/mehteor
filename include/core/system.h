@@ -37,12 +37,12 @@ class System {
         static bool graphicsEnabled();
 
         /**
-         * Returns a random number between min (inlcuded) and max (excluded).
+         * Returns a random number between min (included) and max (excluded).
          */
         static int rnd(int min, int max);
         
         /**
-         * Returns a random number between 0 (inlcuded) and max (excluded).
+         * Returns a random number between 0 (included) and max (excluded).
          */
         static int rnd(int max);
 

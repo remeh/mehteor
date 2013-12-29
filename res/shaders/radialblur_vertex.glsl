@@ -1,11 +1,13 @@
-#version 130
+#version 120
 
-in vec2 meh_texcoord;
-in vec3 meh_position;
-out vec2 Texcoord;
-// this vertex shader is from AMD RenderMonkey
+attribute vec2 meh_texcoord;
+attribute vec3 meh_position;
+
+varying vec2 Texcoord;
+
 uniform mat4 meh_modelViewMatrix;
 
+// this vertex shader is from AMD RenderMonkey
 void main(void)
 {
     gl_Position = meh_modelViewMatrix*vec4( meh_position, 1.0 );

@@ -14,6 +14,7 @@ class VertexAttributes {
     public: // static
         static string positionAttribute;
         static string textureCoordinatesAttribute;
+        static string tintColorAttribute;
 
     private:
         vector<VertexAttribute> attributes;
@@ -36,7 +37,8 @@ class VertexAttributes {
          * The total dimension of these vertices (every components of every attributes added).
          * @return the total dimension of these vertices.
          */
-        int totalDimension() {
+        int getTotalDimension()
+        {
             return totalDim;
         }
 };

@@ -15,6 +15,7 @@ class Mesh {
          * Vertex definition.
          */
         VertexAttributes attributes;
+
         VBO* vbo;
         IBO* ibo;
 
@@ -52,6 +53,7 @@ class Mesh {
          * @param vertices the elements describing the vertices of this Mesh.
          */
         void setElements(unsigned int size, unsigned int dimension, GLuint* elements);
+
         /**
          * Deletes this Mesh's IBO.
          */

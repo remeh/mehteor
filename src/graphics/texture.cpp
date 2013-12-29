@@ -9,26 +9,32 @@ using namespace std;
 namespace meh {
 
 Texture::Texture() :
-    bitmap(nullptr) {
+    bitmap(nullptr) 
+{
     glGenTextures(1, &texId);
 }
 
 Texture::Texture(string filename) :
-    bitmap(nullptr) {
+    bitmap(nullptr) 
+{
     glGenTextures(1, &texId);
     load(filename);
 }
 
-Texture::~Texture() {
+Texture::~Texture() 
+{
     glDeleteTextures(1, &texId);
-    if (bitmap) {
+    if (bitmap)
+    {
         delete bitmap;
         bitmap = nullptr;
     }
 }
 
-bool Texture::bind(int unit) {
-    if (!bitmap) {
+bool Texture::bind(int unit) 
+{
+    if (!bitmap) 
+    {
         return false;
     }
     glActiveTexture(GL_TEXTURE0 + unit);
@@ -36,39 +42,46 @@ bool Texture::bind(int unit) {
     return true;
 }
 
-bool Texture::load(string filename) {
+bool Texture::load(string filename) 
+{
     int width;
     int height;
     int channels;
 
-    // Loads the image 
+    // Loads the image, force to 4 channels
     unsigned char* img = SOIL_load_image(filename.c_str(), &width, &height, &channels, SOIL_LOAD_RGBA);
+    channels = 4; // we've forced to 4
 
-    if (!img) {
+    if (!img) 
+    {
         return false;
     }
 
     // Store it in a Bitmap
-    if (bitmap) {
+    if (bitmap) 
+    {
         delete bitmap;
         bitmap = nullptr;
     }
     w = width;
     h = height;
+
+    /*
+     * Loads it in a Bitmap
+     */
     int totalSize = width*height*channels;
     bitmap = new Bitmap(width,height,channels);
-    bitmap->buffer().write(img, totalSize); 
+    bitmap->getBuffer().reset();
+    bitmap->getBuffer().write(img, totalSize);
+
     // Upload the OpenGL texture loaded by SOIL
     glBindTexture(GL_TEXTURE_2D, texId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, img); 
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, bitmap->getBuffer().getData());
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-
-    // Was copied into the bitmap buffer.
-    SOIL_free_image_data(img);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 
     return true;
 }

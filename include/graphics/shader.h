@@ -29,8 +29,6 @@ class Shader {
 
         GLuint shaderId;
 
-        GLuint positionAttrib;
-
     protected:
     public:
         /**

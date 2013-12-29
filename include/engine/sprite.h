@@ -1,9 +1,16 @@
 #ifndef MEH_SPRITE_H
 #define MEH_SPRITE_H
 
+#include <map>
+#include <string>
+
 #include "core/rect.h"
+#include "core/vector4d.h"
 #include "graphics/texture.h"
 #include "engine/spriterenderer.h"
+#include "engine/spriteanimation.h"
+
+using namespace std;
 
 namespace meh {
 
@@ -17,6 +24,10 @@ class Sprite {
          * The number of vertices for one sprite
          */
         static int SIZE;
+        /**
+         * The name of the default animation.
+         */
+        static string DEFAULT_ANIMATION;
 
     private:
         /**
@@ -44,9 +55,16 @@ class Sprite {
         float rot;
 
         /**
+         * Tint color.
+         */
+        Vector4d<float> tint;
+
+        /**
          * Center on X for rotation and scaling
          */
         Vector2d<float> rotCenter;
+
+        map<string, SpriteAnimation*> anims;
 
         /**
          * Region to use in the Texture to represent this Sprite.
@@ -59,6 +77,11 @@ class Sprite {
          */
         bool vsible;
 
+        /**
+         * Pointer on the current animation. Do not delete memory of this pointer.
+         */
+        SpriteAnimation* currAnimation;
+
     protected:
     public:
         /**
@@ -66,6 +89,7 @@ class Sprite {
          * @param texture the texture to use to render this Sprite
          */
         Sprite(Texture* texture);
+
         /**
          * Constructs a Sprite based on a texture, with a size equals to the texture size, texture coordinates equals to the full texture and position at [x,y].
          * @param texture the texture to use to render this Sprite
@@ -73,6 +97,7 @@ class Sprite {
          * @param y position in screen coordinates on the y-axis.
          */
         Sprite(Texture* texture, float x, float y);
+
         /**
          * Constructs a Sprite based on a texture, with a size equals to the width and height provided, texture coordinates equals to the full texture and position at [x,y].
          * @param texture the texture to use to render this Sprite
@@ -82,6 +107,7 @@ class Sprite {
          * @param height height on this sprite in screen coordinates.
          */
         Sprite(Texture* texture, float x, float y, float width, float height);
+
         /**
          * Constructs a Sprite based on a texture, with a size equals to the width and height provided, texture coordinates equals to the textureRegion provided and position at [x,y].
          * @param texture the texture to use to render this Sprite
@@ -95,6 +121,8 @@ class Sprite {
 
         ~Sprite();
 
+        void addAnimation(string name, int nbFrames, const unsigned int* durations, const Rect<float>* texCoords);
+
         Texture* texture() {
             return tex;
         }
@@ -104,23 +132,23 @@ class Sprite {
          *
          * @return the rectangle of this Sprites in the screen coordinates (position and size). 
          */
-        Rect<float>& rect() {
+        Rect<float>& getRect() {
             return r;
         }
 
-        float x() {
+        float getX() {
             return r.x();
         }
 
-        float y() {
+        float getY() {
             return r.y();
         }
 
-        float width() {
+        float getWidth() {
             return r.width();
         }
 
-        float height() {
+        float getHeight() {
             return r.height();
         }
 
@@ -130,15 +158,27 @@ class Sprite {
          *
          * @return the region of the texture used to render the Sprite. 
          */
-        Rect<float>& textureRegion() {
-            return texRegion;
-        }
+        Rect<float>& getTextureRegion();
+
+        /**
+         * Returns a reference to the current SpriteAnimation.
+         * @return a reference to the current SpriteAnimation. 
+         */
+        SpriteAnimation& currentAnimation();
+
+        /**
+         * Sets the current animation of this sprite.
+         * @param name the name of the animation to set.
+         * @return true if the animation exists and everything went fine.
+         */
+        bool setAnimation(string name);
 
         /**
          * Returns the scale on this Sprite on the x-axis. Default to 1.0f.
          * @return the scale on this Sprite on the x-axis. Default to 1.0f. 
          */
-        float scaleX() {
+        float getScaleX()
+        {
             return scleX;
         }
 
@@ -146,7 +186,8 @@ class Sprite {
          * Returns the scale on this Sprite on the y-axis. Default to 1.0f.
          * @return the scale on this Sprite on the y-axis. Default to 1.0f. 
          */
-        float scaleY() {
+        float getScaleY()
+        {
             return scleY;
         }
 
@@ -154,15 +195,21 @@ class Sprite {
          * Returns the rotation applied to this Sprite. Default at 0.0f. (used the rotation center as center)
          * @return the rotation applied to this Sprite. Default at 0.0f. (used the rotation center as center) 
          */
-        float rotation() {
+        float getRotation()
+        {
             return rot;
+        }
+
+        Vector4d<float> getTint()
+        {
+            return tint;
         }
 
         /**
          * Returns the center of the Sprite used for rotation and scaling.
          * @return the center of the Sprite used for rotation and scaling. 
          */
-        Vector2d<float> rotationCenter() {
+        Vector2d<float> getRotationCenter() {
             return rotCenter;
         }
 
@@ -173,6 +220,68 @@ class Sprite {
          */
         void setPosition(float x, float y);
 
+        /**
+         * Sets the rotation angle.
+         * @param rot       the rotation
+         */
+        void setRotation(int rot)
+        {
+            this->rot = rot;
+        }
+
+        /**
+         * Sets the opacity of the sprite.
+         * Values must be between 0.0f (invisible) to 1.0f (opaque).
+         *
+         * @param   opacity         the opacity to set.
+         */
+        void setOpacity(float opacity)
+        {
+            if (opacity > 1.0f)
+            {
+                opacity = 1.0f;
+            }
+            else if (opacity < 0.0f)
+            {
+                opacity = 0.0f;
+            }
+
+            this->tint.setXYZI(tint.x(), tint.y(), tint.z(), opacity);
+        }
+
+        /**
+         * Returns the opacity of the sprite.
+         *
+         * @return the opacity of the sprite (value in [0.0f;1.0f]
+         */
+        float getOpacity()
+        {
+            return this->tint.i();
+        }
+
+        /**
+         * Sets the tint coloration of the sprite.
+         * You can use this method to change the opacity of the sprite.
+         * @param tint      the tint to apply.
+         */
+        void setTint(Vector4d<float> tint)
+        {
+            this->tint.set(tint);
+        }
+
+        /**
+         * Sets the tint coloration of the sprite.
+         * You can use this method to change the opacity of the sprite.
+         * @param r         red tint.
+         * @param g         green tint.
+         * @param b         blue tint.
+         * @param a         opacity of the sprite.
+         */
+        void setTint(float r, float g, float b, float a)
+        {
+            this->tint.setXYZI(r,g,b,a);
+        }
+        
         /**
          * Sets around which point the rotation and the scaling is computed.
          * @param x center on the x-axis
@@ -210,6 +319,11 @@ class Sprite {
         bool visible() {
             return vsible;
         }
+
+        /**
+         * Update the sprites (for animations).
+         */
+        void update();
 };
 
 } // namespace meh

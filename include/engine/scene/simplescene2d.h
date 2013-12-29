@@ -2,8 +2,10 @@
 #define MEH_SIMPLESCENE2D_H
 
 #include <deque>
+#include <memory>
 
 #include "engine/scene/scene.h"
+#include "engine/scene/scenenode.h"
 #include "engine/scene/actor.h"
 #include "graphics/shader.h"
 #include "graphics/shaderprogram.h"
@@ -21,27 +23,18 @@ class SimpleScene2D : public Scene {
         /**
          * Camera used to represent the scene.
          */
-        OrthographicCamera* cam;
+        unique_ptr<OrthographicCamera> cam;
 
         /**
          * The renderer used to render Sprites.
          */
         SpriteRenderer spriteRenderer;
 
-        /**
-         * scene width
-         */
-        float w;
-        /**
-         * scene height
-         */
-        float h;
-
         Shader vertexShader;
         Shader fragmentShader;
-        ShaderProgram shaderProgram;
+        ShaderProgram defaultShaderProgram;
 
-        deque<Actor*> actors;
+        deque< shared_ptr<SceneNode> > nodes;
 
     protected:
     public:
@@ -50,28 +43,30 @@ class SimpleScene2D : public Scene {
 
         void update();
         void render();
-        Camera* camera();
 
-        /**
-         * Adds an Actor in this Scene.
-         * The memory is managed by the Scene.
-         *
-         * @param actor the Actor to add to the Scene.
-         */
-        void addActor(Actor* actor);
+        const Camera* getCamera();
 
-        /**
-         * Removes an Actor from this Scene.
-         * The memory of the returned pointer must be handled by the caller.
-         *
-         * @param actor the Actor to remove.
-         * @return a pointer to the removed Actor.
-         */
-        Actor* removeActor(Actor* actor);
-
-        Renderer& renderer() {
+        Renderer& renderer()
+        {
             return spriteRenderer;
         }
+
+        Shader& getDefaultVertexShader()
+        {
+            return vertexShader;
+        }
+
+        Shader& getDefaultFragmentShader()
+        {
+            return fragmentShader;
+        }
+
+        /**
+         * Adds a node to this scene2D.
+         *
+         * @param node      the node to add.
+         */
+        void addNode(shared_ptr<SceneNode> node);
 };
 
 } // namespace meh

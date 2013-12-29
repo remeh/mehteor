@@ -7,6 +7,10 @@ set(
 # core
         src/core/system.cpp
         src/core/bytebuffer.cpp
+        src/core/jsonreader.cpp
+        src/core/jsonwriter.cpp
+        src/core/thread.cpp
+        src/core/mutex.cpp
 
 # graphics
         src/graphics/canvas.cpp
@@ -34,7 +38,12 @@ set(
         src/engine/camera/camera.cpp
         src/engine/camera/orthographiccamera.cpp
         src/engine/scene/simplescene2d.cpp
+        src/engine/scene/scenenode.cpp
         src/engine/scene/spriteactor.cpp
+        src/engine/scene/fontactor.cpp
+        src/engine/font/bmfontreader.cpp
+        src/engine/font/bmglyphinfo.cpp
+        src/engine/font/fontactorcreator.cpp
 
 # tests
         src/tests/testsmatrix4x4f.cpp
@@ -44,6 +53,11 @@ set(
         src/soil/image_helper.c
         src/soil/SOIL.c
         src/soil/stb_image_aug.c
+
+# json-cpp
+        src/lib_json/json_reader.cpp
+        src/lib_json/json_value.cpp
+        src/lib_json/json_writer.cpp
 
 # GLEW
         src/glew.c
@@ -71,8 +85,8 @@ if (WIN32 OR MINGW)
 else()
     # Linux
     # Note: HAVE_STAT, HAVE_USLEEP, HAVE_STDINT_H and HAVE_UNISTD_H are for alut
-    set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11 -DGLEW_STATIC -DOPENAL_STATIC")
-    set(CMAKE_C_FLAGS "-g -Wall -DGLEW_STATIC -DOPENAL_STATIC -DHAVE_STDINT_H -DHAVE_STAT -DHAVE_USLEEP -DHAVE_UNISTD_H")
+    set(CMAKE_CXX_FLAGS "-g -Wall -Wdeprecated-declarations -pedantic -std=c++11 -DGLEW_STATIC -DOPENAL_STATIC")
+    set(CMAKE_C_FLAGS "-g -Wall -Wdeprecated-declarations -pedantic -DGLEW_STATIC -DOPENAL_STATIC -DHAVE_STDINT_H -DHAVE_STAT -DHAVE_USLEEP -DHAVE_UNISTD_H")
 endif()
 
 # g++ flags

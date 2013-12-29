@@ -4,7 +4,8 @@
 namespace meh {
 
 OrthographicCamera::OrthographicCamera(float viewportWidth, float viewportHeight) :
-    zoom(1.0f) {
+    zoom(1.0f)
+{
     viewportW = viewportWidth;
     viewportH = viewportHeight;
     nr = 0.0f;
@@ -12,12 +13,14 @@ OrthographicCamera::OrthographicCamera(float viewportWidth, float viewportHeight
     dirty = true;
 }
 
-OrthographicCamera::~OrthographicCamera() {
-
+OrthographicCamera::~OrthographicCamera()
+{
 }
 
-void OrthographicCamera::update() {
-    if (dirty) {
+void OrthographicCamera::update()
+{
+    if (dirty) 
+    {
         projMatrix.toOrtho(zoom*(-viewportW)/2, zoom*viewportW/2, zoom*(-viewportH)/2, zoom*viewportH/2, fabs(near()), fabs(far()));
         
         viewMatrix.lookAt(pos, pos+dir, u);
@@ -31,9 +34,10 @@ void OrthographicCamera::update() {
     }
 }
 
-void OrthographicCamera::setZoom(float value) {
+void OrthographicCamera::setZoom(float value)
+{
     zoom = value;
     dirty = true;
 }
 
-}
+} // namespace meh

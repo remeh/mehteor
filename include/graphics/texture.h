@@ -21,8 +21,6 @@ class Texture {
         int w;
         int h;
 
-        unsigned char* d;
-
     protected:
     public:
         Texture();
@@ -42,15 +40,18 @@ class Texture {
          */
         bool load(string filename);
 
-        GLuint id() {
+        GLuint getId() 
+        {
             return texId;
         }
 
-        int width() {
+        int getWidth() 
+        {
             return w;
         }
 
-        int height() {
+        int getHeight() 
+        {
             return h;
         }
 };

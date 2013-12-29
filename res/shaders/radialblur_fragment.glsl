@@ -1,15 +1,13 @@
-#version 130
+#version 120
  
 // texture coordinates passed from the vertex shader
-in vec2 Texcoord;
+varying vec2 Texcoord;
 
 uniform sampler2D meh_texture;
 
-out vec4 outColor;
- 
 // some const, tweak for best look
 const float sampleDist = 1.0;
-const float sampleStrength = 2.2; 
+const float sampleStrength = 1.4; 
  
 void main(void)
 {
@@ -50,5 +48,5 @@ void main(void)
     t = clamp( t ,0.0,1.0);
 
     //Blend the original color with the averaged pixels
-    outColor = mix( color, sum, t );
+    gl_FragColor = mix( color, sum, t );
 } 

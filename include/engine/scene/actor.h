@@ -16,6 +16,7 @@ class Actor {
         virtual ~Actor() {};
 
         virtual void draw(Renderer* renderer) = 0;
+        virtual void update() = 0;
 };
 
 } // namespace meh

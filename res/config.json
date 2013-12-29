@@ -1,0 +1,7 @@
+{
+    "version": "1.0",
+    "object": {
+        "value1": 1.0,
+        "value2": "bonjour"
+    }
+}

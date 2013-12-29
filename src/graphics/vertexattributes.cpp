@@ -6,22 +6,28 @@
 
 using namespace std;
 
-namespace meh {
+namespace meh 
+{
 
 string VertexAttributes::positionAttribute = "meh_position";
 string VertexAttributes::textureCoordinatesAttribute = "meh_texcoord";
+string VertexAttributes::tintColorAttribute = "meh_tintcolor";
 
 VertexAttributes::VertexAttributes() :
-    totalDim(0) {
+    totalDim(0) 
+{
 }
 
-void VertexAttributes::addAttribute(VertexAttribute attribute) {
+void VertexAttributes::addAttribute(VertexAttribute attribute) 
+{
     attributes.push_back(attribute);
     totalDim += attribute.dimension();
 }
 
-void VertexAttributes::enable(ShaderProgram& shaderProgram) {
-    for (auto attribute = attributes.begin(); attribute != attributes.end(); attribute++) {
+void VertexAttributes::enable(ShaderProgram& shaderProgram) 
+{
+    for (auto attribute = attributes.begin(); attribute != attributes.end(); attribute++) 
+    {
         shaderProgram.enableVertexAttribute(attribute->name());
         shaderProgram.setVertexAttribute(attribute->name(), attribute->dimension(), attribute->offset(), totalDim, GL_FLOAT, false);
     }

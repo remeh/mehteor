@@ -1,3 +1,5 @@
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 
 #include "core/bytebuffer.h"
@@ -5,26 +7,32 @@
 namespace meh {
 
 ByteBuffer::ByteBuffer(int length) :
-    len(length) {
-    dta = new unsigned char[length];
+    len(length) 
+{
+    dta = (unsigned char*)malloc(length*sizeof(unsigned char));
     // Reset the cursor position
     reset();
 }
 
-ByteBuffer::~ByteBuffer() {
-    delete[] dta;
+ByteBuffer::~ByteBuffer()
+{
+    free(dta);
 }
 
-unsigned char ByteBuffer::readUChar() {
-    if (crsor >= len) {
+unsigned char ByteBuffer::readUChar() 
+{
+    if (crsor >= len)
+    {
         return -1;
     }
     char c = dta[crsor++];
     return c;
 }
 
-int ByteBuffer::writeUChar(unsigned char c) {
-    if (crsor >= len) {
+int ByteBuffer::writeUChar(unsigned char c)
+{
+    if (crsor >= len) 
+    {
         return -1;
     }
     dta[crsor] = c;
@@ -32,57 +40,75 @@ int ByteBuffer::writeUChar(unsigned char c) {
     return 0;
 }
 
-void ByteBuffer::reset() {
+void ByteBuffer::reset()
+{
     crsor = 0;
 }
 
-int ByteBuffer::write(unsigned char* data, int length) {
-    if (length+crsor >= len) {
+int ByteBuffer::write(unsigned char* data, int length) 
+{
+    if (length+crsor > len)
+    {
         return -1;
     }
     // Copy the data
-    memcpy(dta+crsor,data,length*sizeof(unsigned char));
-    for (int i = 0; i < length; i++) {
-        dta[crsor+i] = data[i];
-    }
+    dta = (unsigned char*)memcpy(dta+crsor,data,length*sizeof(unsigned char));
     crsor += length;
     return 0;
 }
 
-int ByteBuffer::write(char* data, int length) {
+int ByteBuffer::write(char* data, int length) 
+{
     return write((unsigned char*)data,length);
 }
 
-void ByteBuffer::resize(int newLength, bool saveData) {
-    if (!saveData) {
+void ByteBuffer::resize(int newLength, bool saveData)
+{
+    if (!saveData)
+    {
         // Deletes the old buffer
-        delete[] dta;
+        free(dta);
         // Allocates the new buffer
-        dta = new unsigned char[newLength];
-    } else {
+        dta = (unsigned char*)malloc(newLength*sizeof(unsigned char));
+    }
+    else
+    {
         // Keep the data somewhere
         unsigned char* tmp = dta;
         // Allocates the new buffer
-        dta = new unsigned char[newLength];
+        dta = (unsigned char*)malloc(newLength*sizeof(unsigned char));
         // Do not copy too much if the new 
         // ByteBuffer if smaller
         int l = len;
-        if (len > newLength) {
+        if (len > newLength) 
+        {
             l = newLength;
         }
         // Copy the data
         memcpy(dta,tmp,l*sizeof(unsigned char));
         // Releases the old buffer
-        delete[] tmp;
+        free(tmp);
     }
     len = newLength;
     reset();
 }
 
-ByteBuffer* ByteBuffer::clone() {
+ByteBuffer* ByteBuffer::clone() 
+{
     ByteBuffer* copy = new ByteBuffer(len);
     copy->write(dta, len);
     return copy;
 }
 
+void ByteBuffer::setData(unsigned char* data, int length) 
+{
+    // resize the buffer if necessary
+    if (length > len) 
+    {
+        resize(length);
+    }
+    dta = data;
+    len = length;
 }
+
+} // namespace meh

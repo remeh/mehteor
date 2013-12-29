@@ -26,21 +26,24 @@ class ByteBuffer {
         /**
          * Direct pointer to the data of this buffer.
          */
-        unsigned char* data() {
+        unsigned char* getData()
+        {
             return dta;
         }
         
         /**
          * Returns the length of this buffer.
          */
-        int length() {
+        int getLength()
+        {
             return len;
         }
 
         /**
          * Returns how many bytes remain before to reach the end of this buffer.
          */
-        int bytesRemaining() {
+        int getBytesRemaining()
+        {
             return len-crsor;
         }
 
@@ -56,7 +59,8 @@ class ByteBuffer {
         /**
          * Returns the cursor position in the buffer.
          */
-        int cursor() {
+        int getCursor() 
+        {
             return crsor;
         }
 
@@ -66,9 +70,20 @@ class ByteBuffer {
         void reset();
 
         /**
+         * Directly sets the data with the provided content.
+         * Warning: can resize the buffer if necessary.
+         * Warning: the array of uchar MUST NOT BE DELETED as it is managed by the ByteBuffer.
+         * Warning: the array of uchar must have been created with malloc and not new[]
+         * @param data the data
+         * @param length size of the data
+         */
+        void setData(unsigned char* data, int length);
+
+        /**
          * Alias for readUChar().
          */
-        unsigned char readByte() {
+        unsigned char readByte()
+        {
             return readUChar();
         }
 
@@ -84,7 +99,8 @@ class ByteBuffer {
          * @return 0 if the write succeed, -1 whether the end of the buffer is reached.
          * @param c the unsigned char to write.
          */
-        int writeByte(unsigned char c) {
+        int writeByte(unsigned char c)
+        {
             return writeUChar(c);
         }
 

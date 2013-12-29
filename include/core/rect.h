@@ -8,58 +8,66 @@ namespace meh {
 template<typename T>
 class Rect {
     private:
-        Vector2d<T> tl;
-        Vector2d<T> br;
+        Vector2d<T> pos;
+        Vector2d<T> sze;
+
     protected:
     public:
-        Rect() : tl(0,0), br(0,0) { }
-        Rect(T minX, T minY, T width, T height) : tl(minX,minY) {
-            br.setXY(width, height);
-        }
-        Rect(Vector2d<T>& size, Vector2d<T>& position) {
-            set(size,position);
+        Rect() : pos(0,0), sze(0,0) { }
+
+        Rect(T x, T y, T width, T height) : pos(x,y), sze(width, height) {
         }
 
-        void set(T minX, T minY, T width, T height) {
-            tl.setXY(minX,minY);
-            br.setXY(width,height);
+        Rect(Vector2d<T>& position, Vector2d<T>& size) {
+            set(position, size);
         }
 
-        void set(Vector2d<T>& size, Vector2d<T>& position) {
-            tl = size;
-            br = position;
+        void set(T x, T y, T width, T height) {
+            pos.setXY(x,y);
+            sze.setXY(width,height);
+        }
+
+        void set(Vector2d<T>& position, Vector2d<T>& size) {
+            pos = position;
+            sze = size;
+        }
+
+        void set(Rect<T>& rect)
+        {
+            pos = rect.position();
+            sze = rect.size();
         }
 
         void setPosition(T x, T y) {
-            tl.setXY(x,y);
+            pos.setXY(x,y);
         }
 
-        void setSize(T x, T y) {
-            br.setXY(x,y);
+        void setSize(T width, T height) {
+            sze.setXY(width, height);
         }
 
         Vector2d<T>& position() {
-            return tl;
+            return pos;
         }
 
         Vector2d<T>& size() {
-            return br;
+            return sze;
         }
 
         T x() {
-            return tl.x();
+            return pos.x();
         }
 
         T y() {
-            return tl.y();
+            return pos.y();
         }
 
         T width() {
-            return br.x();
+            return sze.x();
         }
 
         T height() {
-            return br.y();
+            return sze.y();
         }
 
         bool intersects(Rect& r) {
