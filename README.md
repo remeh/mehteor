@@ -10,6 +10,7 @@ Current features :
     * sound with OpenAL,
     * many utility classes (vectors, matrices, quaternions, rects, byte buffers, ...),
     * keyboard/mouse input,
+    * JSON reading/writing,
     * threading support.
 
 Roadmap
