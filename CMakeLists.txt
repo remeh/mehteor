@@ -10,6 +10,7 @@ set(
         src/core/jsonreader.cpp
         src/core/jsonwriter.cpp
         src/core/thread.cpp
+        src/core/mutex.cpp
 
 # graphics
         src/graphics/canvas.cpp
