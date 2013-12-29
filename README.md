@@ -1,7 +1,53 @@
 Mehteor
 =======
 
-A C++ OpenGL 2.1 Game engine - in progress!
+A multiplatform C++ OpenGL 2/3 Game engine.
+
+Current features :
+
+    * accelerated 2d scenes (texturing, cameras, sprites, animated sprite),
+    * accelerated font rendering (ATM through image atlases),
+    * sound with OpenAL,
+    * many utility classes (vectors, matrices, quaternions, rects, byte buffers, ...),
+    * keyboard/mouse input,
+    * threading support.
+
+Roadmap
+=======
+
+The goal of the final 1.0 is to have a 2D game engine capable of rendering many animated sprites, with text, sounds and keyboard/mouse inputs.
+This goal is nearly reached as I finish / optimize some of these tasks, but there all currently working.
+
+### 1.0-RC2
+
+```
+- the mouse click is sometimes ignored (IMO the input system must be redone)
+- semaphores, thread helpers (synchronized methods ?)
+```
+
+### 1.0-RC3
+
+```
+- improve 2d rendering performances
+- sprite flipX/flipY, rotation and scale
+- helper in sprites to increase/decrease opacity, to read a tint from vector4d, ...
+- maybe less inline methods ?
+```
+
+### 1.0
+
+```
+- use meh::Thread instead of SDL_Thread in `audio/audiosystem`
+- `bytebuffer.cpp` : more functions read/write
+- target for unit tests + unit tests!
+```
+
+### Next
+
+```
+- create font atlas with SDL_ttf 2.0
+- gamepads support
+```
 
 Build (Linux and Mac)
 =======
